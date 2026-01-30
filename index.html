@@ -26,7 +26,7 @@
   </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <style>
     @keyframes gradient {
       0%, 100% { background-position: 0% 50%; }
@@ -36,23 +36,22 @@
       0%, 100% { transform: translateY(0px); }
       50% { transform: translateY(-20px); }
     }
-    @keyframes glow {
-      from { box-shadow: 0 0 20px -10px rgba(139, 92, 246, 0.5); }
-      to { box-shadow: 0 0 30px -5px rgba(139, 92, 246, 0.8); }
-    }
     @keyframes reveal {
       from { opacity: 0; transform: translateY(30px); }
       to { opacity: 1; transform: translateY(0); }
     }
-    .reveal {
-      animation: reveal 0.8s ease-out forwards;
-      opacity: 0;
+    @keyframes glow {
+      from { box-shadow: 0 0 20px rgba(139, 92, 246, 0.3), 0 0 40px rgba(139, 92, 246, 0.1); }
+      to { box-shadow: 0 0 30px rgba(139, 92, 246, 0.5), 0 0 60px rgba(139, 92, 246, 0.2); }
     }
+    @keyframes glow-pink {
+      from { box-shadow: 0 0 20px rgba(236, 72, 153, 0.3), 0 0 40px rgba(236, 72, 153, 0.1); }
+      to { box-shadow: 0 0 30px rgba(236, 72, 153, 0.5), 0 0 60px rgba(236, 72, 153, 0.2); }
+    }
+    .reveal { animation: reveal 0.8s ease-out forwards; opacity: 0; }
     .reveal-delay-1 { animation-delay: 0.1s; }
     .reveal-delay-2 { animation-delay: 0.2s; }
     .reveal-delay-3 { animation-delay: 0.3s; }
-    .reveal-delay-4 { animation-delay: 0.4s; }
-    .reveal-delay-5 { animation-delay: 0.5s; }
     
     .gradient-text {
       background: linear-gradient(135deg, #a78bfa 0%, #818cf8 25%, #38bdf8 50%, #34d399 75%, #a78bfa 100%);
@@ -70,7 +69,7 @@
     }
     
     .glass {
-      background: rgba(15, 23, 42, 0.6);
+      background: rgba(15, 23, 42, 0.7);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
       border: 1px solid rgba(255, 255, 255, 0.08);
@@ -80,67 +79,53 @@
       transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     }
     .card-hover:hover {
-      transform: translateY(-8px) scale(1.02);
-      box-shadow: 0 25px 50px -12px rgba(139, 92, 246, 0.25);
+      transform: translateY(-4px);
       border-color: rgba(139, 92, 246, 0.4);
     }
     
-    .skill-icon {
-      transition: all 0.3s ease;
-    }
-    .card-hover:hover .skill-icon {
-      transform: scale(1.2) rotate(5deg);
-    }
-    
-    .glow-border {
+    .featured-card {
       position: relative;
+      border: 2px solid transparent;
+      background: linear-gradient(rgba(15, 23, 42, 0.95), rgba(15, 23, 42, 0.95)) padding-box,
+                  linear-gradient(135deg, #8b5cf6 0%, #ec4899 50%, #8b5cf6 100%) border-box;
+      animation: glow 2s ease-in-out infinite alternate;
     }
-    .glow-border::before {
-      content: '';
-      position: absolute;
-      inset: -2px;
-      background: linear-gradient(45deg, #a78bfa, #38bdf8, #34d399, #a78bfa);
-      background-size: 400% 400%;
-      animation: gradient 8s ease infinite;
-      border-radius: inherit;
-      z-index: -1;
-      opacity: 0;
-      transition: opacity 0.3s ease;
-    }
-    .glow-border:hover::before {
-      opacity: 1;
+    .featured-card-pink {
+      animation: glow-pink 2s ease-in-out infinite alternate;
+      background: linear-gradient(rgba(15, 23, 42, 0.95), rgba(15, 23, 42, 0.95)) padding-box,
+                  linear-gradient(135deg, #ec4899 0%, #8b5cf6 50%, #ec4899 100%) border-box;
     }
     
-    .particle {
-      position: absolute;
-      width: 4px;
-      height: 4px;
-      background: rgba(139, 92, 246, 0.4);
-      border-radius: 50%;
-      animation: float 6s ease-in-out infinite;
+    .featured-badge {
+      background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+      color: #1f2937;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      animation: pulse 2s ease-in-out infinite;
+    }
+    
+    .feature-tag {
+      transition: all 0.2s ease;
+    }
+    .feature-tag:hover {
+      transform: scale(1.05);
     }
     
     .dots-pattern {
-      background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
-      background-size: 40px 40px;
+      background-image: radial-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+      background-size: 32px 32px;
     }
     
     .code-block {
-      position: relative;
-      overflow: hidden;
+      font-family: 'JetBrains Mono', monospace;
     }
-    .code-block::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
-      transition: left 0.5s ease;
+    
+    .provider-badge {
+      transition: all 0.2s ease;
     }
-    .code-block:hover::before {
-      left: 100%;
+    .provider-badge:hover {
+      transform: translateY(-2px);
     }
     
     .link-arrow {
@@ -150,53 +135,68 @@
     a:hover .link-arrow {
       transform: translateX(4px);
     }
+
+    .skill-section {
+      scroll-margin-top: 2rem;
+    }
+
+    .stat-card {
+      transition: all 0.3s ease;
+    }
+    .stat-card:hover {
+      background: rgba(139, 92, 246, 0.1);
+      border-color: rgba(139, 92, 246, 0.3);
+    }
+
+    .use-case-card {
+      transition: all 0.2s ease;
+    }
+    .use-case-card:hover {
+      background: rgba(139, 92, 246, 0.15);
+      transform: translateX(4px);
+    }
   </style>
 </head>
-<body class="bg-slate-950 text-slate-100 antialiased font-sans overflow-x-hidden">
+<body class="bg-slate-950 text-slate-100 antialiased font-sans">
   
-  <!-- Floating particles (decorative) -->
-  <div class="fixed inset-0 pointer-events-none overflow-hidden">
-    <div class="particle" style="top: 10%; left: 10%; animation-delay: 0s;"></div>
-    <div class="particle" style="top: 20%; left: 80%; animation-delay: 1s;"></div>
-    <div class="particle" style="top: 60%; left: 15%; animation-delay: 2s;"></div>
-    <div class="particle" style="top: 70%; left: 70%; animation-delay: 3s;"></div>
-    <div class="particle" style="top: 40%; left: 90%; animation-delay: 4s;"></div>
-    <div class="particle" style="top: 80%; left: 40%; animation-delay: 5s;"></div>
-  </div>
-
   <div class="min-h-screen relative">
     
     <!-- Hero Section -->
     <header class="relative overflow-hidden hero-gradient">
-      <!-- Dot pattern overlay -->
       <div class="absolute inset-0 dots-pattern"></div>
       
       <!-- Gradient orbs -->
       <div class="absolute top-0 left-1/4 w-96 h-96 bg-violet-500/20 rounded-full blur-3xl animate-pulse-slow"></div>
       <div class="absolute bottom-0 right-1/4 w-96 h-96 bg-cyan-500/20 rounded-full blur-3xl animate-pulse-slow" style="animation-delay: 2s;"></div>
       
-      <nav class="relative max-w-6xl mx-auto px-6 py-6">
+      <nav class="relative max-w-7xl mx-auto px-6 py-6">
         <div class="flex items-center justify-between">
           <div class="flex items-center gap-3">
             <span class="text-3xl">🦞</span>
             <span class="font-bold text-xl">OpenClaw Skills</span>
           </div>
-          <a href="https://github.com/robbyczgw-cla" target="_blank" rel="noreferrer" 
-             class="glass px-4 py-2 rounded-full text-sm font-medium hover:bg-white/10 transition-colors flex items-center gap-2">
-            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
-            GitHub
-          </a>
+          <div class="flex items-center gap-4">
+            <a href="https://clawhub.ai" target="_blank" rel="noreferrer" 
+               class="text-slate-300 hover:text-white transition-colors text-sm font-medium hidden sm:block">
+              ClawHub
+            </a>
+            <a href="https://github.com/robbyczgw-cla" target="_blank" rel="noreferrer" 
+               class="glass px-4 py-2 rounded-full text-sm font-medium hover:bg-white/10 transition-colors flex items-center gap-2">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+              <span class="hidden sm:inline">GitHub</span>
+            </a>
+          </div>
         </div>
       </nav>
       
-      <div class="relative max-w-6xl mx-auto px-6 py-20 sm:py-32">
+      <div class="relative max-w-7xl mx-auto px-6 py-16 sm:py-24">
         <div class="reveal">
           <div class="inline-flex items-center gap-2 rounded-full glass px-4 py-2 text-sm">
             <span class="relative flex h-2 w-2">
               <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
               <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
             </span>
-            <span class="text-slate-300">5 Production-Ready Skills</span>
+            <span class="text-slate-300">5 Production Skills • Open Source • Ready to Install</span>
           </div>
         </div>
         
@@ -206,33 +206,38 @@
         </h1>
         
         <p class="reveal reveal-delay-2 mt-6 max-w-2xl text-xl text-slate-300 leading-relaxed">
-          Curated skills for search, voice synthesis, sports alerts, smart follow-ups, and AI personas. 
-          <span class="text-white font-medium">Built for real workflows.</span>
+          Battle-tested skills for intelligent search, voice synthesis, live sports, smart conversations, and AI personas. 
+          <span class="text-white font-medium">One command to install. Built for real workflows.</span>
         </p>
         
         <div class="reveal reveal-delay-3 mt-10 flex flex-wrap gap-4">
           <a href="#skills" class="group relative inline-flex items-center gap-2 bg-gradient-to-r from-violet-600 to-indigo-600 px-8 py-4 rounded-full font-semibold text-white shadow-lg shadow-violet-500/25 hover:shadow-violet-500/40 transition-all duration-300 hover:scale-105">
-            Explore Skills
+            Explore All Skills
             <svg class="w-5 h-5 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
           </a>
-          <a href="https://clawhub.ai" target="_blank" rel="noreferrer" class="inline-flex items-center gap-2 glass px-8 py-4 rounded-full font-semibold hover:bg-white/10 transition-all duration-300">
-            Visit ClawHub
+          <a href="https://openclaw.com" target="_blank" rel="noreferrer" class="inline-flex items-center gap-2 glass px-8 py-4 rounded-full font-semibold hover:bg-white/10 transition-all duration-300">
+            What's OpenClaw?
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
           </a>
         </div>
-        
-        <div class="reveal reveal-delay-4 mt-12 flex flex-wrap gap-6 text-sm text-slate-400">
-          <div class="flex items-center gap-2">
-            <svg class="w-5 h-5 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-            One-line install
+
+        <!-- Quick Stats -->
+        <div class="reveal reveal-delay-3 mt-16 grid grid-cols-2 sm:grid-cols-4 gap-4">
+          <div class="stat-card glass rounded-2xl p-4 text-center">
+            <div class="text-3xl font-bold text-violet-400">5</div>
+            <div class="text-sm text-slate-400 mt-1">Published Skills</div>
           </div>
-          <div class="flex items-center gap-2">
-            <svg class="w-5 h-5 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-            Open source
+          <div class="stat-card glass rounded-2xl p-4 text-center">
+            <div class="text-3xl font-bold text-cyan-400">3</div>
+            <div class="text-sm text-slate-400 mt-1">Search Providers</div>
           </div>
-          <div class="flex items-center gap-2">
-            <svg class="w-5 h-5 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-            Actively maintained
+          <div class="stat-card glass rounded-2xl p-4 text-center">
+            <div class="text-3xl font-bold text-emerald-400">31</div>
+            <div class="text-sm text-slate-400 mt-1">AI Personas</div>
+          </div>
+          <div class="stat-card glass rounded-2xl p-4 text-center">
+            <div class="text-3xl font-bold text-amber-400">9</div>
+            <div class="text-sm text-slate-400 mt-1">Channels Supported</div>
           </div>
         </div>
       </div>
@@ -247,150 +252,995 @@
 
     <!-- Skills Section -->
     <main id="skills" class="bg-slate-950 relative">
-      <div class="max-w-6xl mx-auto px-6 py-20">
+      <div class="max-w-7xl mx-auto px-6 py-16">
+        
+        <!-- Section Header -->
         <div class="text-center mb-16">
           <h2 class="text-3xl sm:text-4xl font-bold">
-            Skills That <span class="gradient-text">Actually Ship</span>
+            Skills Built for <span class="gradient-text">Real Work</span>
           </h2>
           <p class="mt-4 text-slate-400 text-lg max-w-2xl mx-auto">
-            Each skill is battle-tested, well-documented, and ready to enhance your agent's capabilities.
+            Each skill is documented, tested, and ready to enhance your agent. Click any skill to jump to details.
           </p>
         </div>
-        
-        <section class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-          
-          <!-- Card: web-search-plus -->
-          <article class="glass rounded-3xl p-8 card-hover glow-border group">
-            <div class="flex items-start justify-between mb-6">
-              <div class="skill-icon text-5xl">🔍</div>
-              <span class="px-3 py-1 rounded-full bg-violet-500/20 text-violet-300 text-xs font-medium">v2.2.2</span>
-            </div>
-            <h2 class="text-2xl font-bold mb-3 group-hover:text-violet-300 transition-colors">web-search-plus</h2>
-            <p class="text-slate-400 leading-relaxed mb-6">
-              Intelligent auto-routing across Serper (Google), Tavily (Research), and Exa (Neural). Multi-signal analysis picks the best engine.
-            </p>
-            <div class="code-block rounded-xl bg-slate-900/80 px-4 py-3 text-sm font-mono text-slate-200 mb-6 border border-slate-800">
-              <span class="text-slate-500">$</span> clawhub install web-search-plus
-            </div>
-            <div class="flex gap-4 text-sm font-medium">
-              <a class="text-violet-400 hover:text-violet-300 flex items-center gap-1" href="https://github.com/robbyczgw-cla/web-search-plus" target="_blank" rel="noreferrer">
-                GitHub <span class="link-arrow">→</span>
-              </a>
-              <a class="text-slate-400 hover:text-white flex items-center gap-1" href="https://www.clawhub.ai/skills/web-search-plus" target="_blank" rel="noreferrer">
-                ClawHub <span class="link-arrow">→</span>
-              </a>
-            </div>
-          </article>
 
-          <!-- Card: elevenlabs-voices -->
-          <article class="glass rounded-3xl p-8 card-hover glow-border group">
-            <div class="flex items-start justify-between mb-6">
-              <div class="skill-icon text-5xl">🎙️</div>
-              <span class="px-3 py-1 rounded-full bg-cyan-500/20 text-cyan-300 text-xs font-medium">v2.0.4</span>
-            </div>
-            <h2 class="text-2xl font-bold mb-3 group-hover:text-cyan-300 transition-colors">elevenlabs-voices</h2>
-            <p class="text-slate-400 leading-relaxed mb-6">
-              High-quality voice synthesis with 18 personas, 32 languages, sound effects, batch processing, and custom voice design.
-            </p>
-            <div class="code-block rounded-xl bg-slate-900/80 px-4 py-3 text-sm font-mono text-slate-200 mb-6 border border-slate-800">
-              <span class="text-slate-500">$</span> clawhub install elevenlabs-voices
-            </div>
-            <div class="flex gap-4 text-sm font-medium">
-              <a class="text-cyan-400 hover:text-cyan-300 flex items-center gap-1" href="https://github.com/robbyczgw-cla/elevenlabs-voices" target="_blank" rel="noreferrer">
-                GitHub <span class="link-arrow">→</span>
-              </a>
-              <a class="text-slate-400 hover:text-white flex items-center gap-1" href="https://www.clawhub.ai/skills/elevenlabs-voices" target="_blank" rel="noreferrer">
-                ClawHub <span class="link-arrow">→</span>
-              </a>
-            </div>
-          </article>
+        <!-- Quick Navigation -->
+        <div class="flex flex-wrap justify-center gap-3 mb-16">
+          <a href="#web-search-plus" class="feature-tag px-4 py-2 rounded-full glass text-sm font-medium hover:bg-violet-500/20 transition-colors flex items-center gap-2">
+            <span>🔍 web-search-plus</span>
+            <span class="px-1.5 py-0.5 rounded text-[10px] bg-amber-500/80 text-amber-950 font-bold">⭐ FEATURED</span>
+          </a>
+          <a href="#elevenlabs-voices" class="feature-tag px-4 py-2 rounded-full glass text-sm font-medium hover:bg-cyan-500/20 transition-colors">🎙️ elevenlabs-voices</a>
+          <a href="#sports-ticker" class="feature-tag px-4 py-2 rounded-full glass text-sm font-medium hover:bg-emerald-500/20 transition-colors">⚽ sports-ticker</a>
+          <a href="#smart-followups" class="feature-tag px-4 py-2 rounded-full glass text-sm font-medium hover:bg-amber-500/20 transition-colors">💡 smart-followups</a>
+          <a href="#personas" class="feature-tag px-4 py-2 rounded-full glass text-sm font-medium hover:bg-pink-500/20 transition-colors flex items-center gap-2">
+            <span>🎭 personas</span>
+            <span class="px-1.5 py-0.5 rounded text-[10px] bg-amber-500/80 text-amber-950 font-bold">⭐ FEATURED</span>
+          </a>
+        </div>
 
-          <!-- Card: sports-ticker -->
-          <article class="glass rounded-3xl p-8 card-hover glow-border group">
-            <div class="flex items-start justify-between mb-6">
-              <div class="skill-icon text-5xl">⚽</div>
-              <span class="px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 text-xs font-medium">v2.1.1</span>
+        <!-- ==================== SKILL 1: web-search-plus (FEATURED) ==================== -->
+        <section id="web-search-plus" class="skill-section mb-20">
+          <div class="featured-card rounded-3xl overflow-hidden">
+            <!-- Header -->
+            <div class="bg-gradient-to-r from-violet-600/30 to-indigo-600/30 p-8 border-b border-white/5 relative">
+              <!-- Featured Badge -->
+              <div class="absolute top-4 right-4">
+                <span class="featured-badge px-4 py-1.5 rounded-full text-sm flex items-center gap-1.5">
+                  ⭐ FLAGSHIP SKILL
+                </span>
+              </div>
+              <div class="flex flex-wrap items-start justify-between gap-4">
+                <div class="flex items-center gap-4">
+                  <div class="text-5xl">🔍</div>
+                  <div>
+                    <div class="flex items-center gap-3">
+                      <h3 class="text-3xl font-bold">web-search-plus</h3>
+                      <span class="px-3 py-1 rounded-full bg-violet-500/30 text-violet-200 text-xs font-medium">v2.2.2</span>
+                    </div>
+                    <p class="text-slate-300 mt-1">Unified multi-provider search with intelligent auto-routing</p>
+                  </div>
+                </div>
+                <div class="flex gap-3 mt-8 sm:mt-0">
+                  <a href="https://github.com/robbyczgw-cla/web-search-plus" target="_blank" rel="noreferrer" 
+                     class="px-4 py-2 rounded-lg bg-white/10 hover:bg-white/20 transition-colors text-sm font-medium flex items-center gap-2">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                    GitHub
+                  </a>
+                  <a href="https://www.clawhub.ai/skills/web-search-plus" target="_blank" rel="noreferrer" 
+                     class="px-4 py-2 rounded-lg bg-violet-600 hover:bg-violet-500 transition-colors text-sm font-medium">
+                    ClawHub →
+                  </a>
+                </div>
+              </div>
             </div>
-            <h2 class="text-2xl font-bold mb-3 group-hover:text-emerald-300 transition-colors">sports-ticker</h2>
-            <p class="text-slate-400 leading-relaxed mb-6">
-              Live sports alerts for Soccer, NFL, NBA, NHL, MLB, F1 and more. Real-time scoring via ESPN API. Track any team worldwide.
-            </p>
-            <div class="code-block rounded-xl bg-slate-900/80 px-4 py-3 text-sm font-mono text-slate-200 mb-6 border border-slate-800">
-              <span class="text-slate-500">$</span> clawhub install sports-ticker
-            </div>
-            <div class="flex gap-4 text-sm font-medium">
-              <a class="text-emerald-400 hover:text-emerald-300 flex items-center gap-1" href="https://github.com/robbyczgw-cla/sports-ticker" target="_blank" rel="noreferrer">
-                GitHub <span class="link-arrow">→</span>
-              </a>
-              <a class="text-slate-400 hover:text-white flex items-center gap-1" href="https://www.clawhub.ai/skills/sports-ticker" target="_blank" rel="noreferrer">
-                ClawHub <span class="link-arrow">→</span>
-              </a>
-            </div>
-          </article>
+            
+            <!-- Content -->
+            <div class="p-8">
+              <!-- Description -->
+              <div class="prose prose-invert max-w-none mb-8">
+                <p class="text-lg text-slate-300 leading-relaxed">
+                  Stop choosing search providers manually. <strong class="text-white">web-search-plus</strong> uses multi-signal analysis to automatically route your query to the optimal provider—whether that's <span class="text-violet-400">Serper</span> (Google results), <span class="text-cyan-400">Tavily</span> (AI-optimized research), or <span class="text-emerald-400">Exa</span> (neural semantic search). Each result includes confidence scoring so you know how reliable the routing decision was.
+                </p>
+              </div>
 
-          <!-- Card: smart-followups -->
-          <article class="glass rounded-3xl p-8 card-hover glow-border group">
-            <div class="flex items-start justify-between mb-6">
-              <div class="skill-icon text-5xl">💡</div>
-              <span class="px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 text-xs font-medium">v1.0.4</span>
-            </div>
-            <h2 class="text-2xl font-bold mb-3 group-hover:text-amber-300 transition-colors">smart-followups</h2>
-            <p class="text-slate-400 leading-relaxed mb-6">
-              Contextual follow-up suggestions after AI responses. Shows clickable buttons (Quick, Deep Dive, Related) for seamless conversation flow.
-            </p>
-            <div class="code-block rounded-xl bg-slate-900/80 px-4 py-3 text-sm font-mono text-slate-200 mb-6 border border-slate-800">
-              <span class="text-slate-500">$</span> clawhub install smart-followups
-            </div>
-            <div class="flex gap-4 text-sm font-medium">
-              <a class="text-amber-400 hover:text-amber-300 flex items-center gap-1" href="https://github.com/robbyczgw-cla/smart-followups" target="_blank" rel="noreferrer">
-                GitHub <span class="link-arrow">→</span>
-              </a>
-              <a class="text-slate-400 hover:text-white flex items-center gap-1" href="https://www.clawhub.ai/skills/smart-followups" target="_blank" rel="noreferrer">
-                ClawHub <span class="link-arrow">→</span>
-              </a>
-            </div>
-          </article>
+              <!-- Real-World Use Cases -->
+              <h4 class="text-lg font-semibold mb-4 flex items-center gap-2">
+                <span class="text-amber-400">🎯</span> Real-World Use Cases
+              </h4>
+              <div class="grid sm:grid-cols-3 gap-3 mb-8">
+                <div class="use-case-card bg-violet-500/10 rounded-xl p-4 border border-violet-500/20">
+                  <div class="text-violet-400 font-medium mb-2">📊 Competitive Research</div>
+                  <div class="text-sm text-slate-300">"Research competitor pricing across 20 sites"</div>
+                </div>
+                <div class="use-case-card bg-violet-500/10 rounded-xl p-4 border border-violet-500/20">
+                  <div class="text-violet-400 font-medium mb-2">🎓 Academic Deep Dive</div>
+                  <div class="text-sm text-slate-300">"Find academic papers on quantum computing breakthroughs"</div>
+                </div>
+                <div class="use-case-card bg-violet-500/10 rounded-xl p-4 border border-violet-500/20">
+                  <div class="text-violet-400 font-medium mb-2">📰 Breaking News</div>
+                  <div class="text-sm text-slate-300">"Get real-time news on tech layoffs today"</div>
+                </div>
+              </div>
 
-          <!-- Card: personas -->
-          <article class="glass rounded-3xl p-8 card-hover glow-border group sm:col-span-2 lg:col-span-2">
-            <div class="flex items-start justify-between mb-6">
-              <div class="skill-icon text-5xl">🎭</div>
-              <span class="px-3 py-1 rounded-full bg-pink-500/20 text-pink-300 text-xs font-medium">v1.0.12</span>
+              <!-- Three Providers -->
+              <h4 class="text-lg font-semibold mb-4 flex items-center gap-2">
+                <span class="text-violet-400">⚡</span> Three Providers, One Interface
+              </h4>
+              <div class="grid sm:grid-cols-3 gap-4 mb-8">
+                <div class="provider-badge bg-slate-800/50 rounded-xl p-5 border border-slate-700/50">
+                  <div class="flex items-center gap-3 mb-3">
+                    <div class="w-10 h-10 rounded-lg bg-blue-500/20 flex items-center justify-center text-xl">🔵</div>
+                    <div>
+                      <div class="font-semibold">Serper</div>
+                      <div class="text-xs text-slate-400">Google Results</div>
+                    </div>
+                  </div>
+                  <ul class="text-sm text-slate-400 space-y-1">
+                    <li>🛍️ Shopping & prices</li>
+                    <li>📍 Local businesses</li>
+                    <li>📰 News & weather</li>
+                    <li>🎯 Knowledge Graph</li>
+                  </ul>
+                </div>
+                <div class="provider-badge bg-slate-800/50 rounded-xl p-5 border border-slate-700/50">
+                  <div class="flex items-center gap-3 mb-3">
+                    <div class="w-10 h-10 rounded-lg bg-purple-500/20 flex items-center justify-center text-xl">🟣</div>
+                    <div>
+                      <div class="font-semibold">Tavily</div>
+                      <div class="text-xs text-slate-400">AI Research</div>
+                    </div>
+                  </div>
+                  <ul class="text-sm text-slate-400 space-y-1">
+                    <li>📚 Deep research</li>
+                    <li>🔬 Complex queries</li>
+                    <li>📄 Full page content</li>
+                    <li>🎓 Academic topics</li>
+                  </ul>
+                </div>
+                <div class="provider-badge bg-slate-800/50 rounded-xl p-5 border border-slate-700/50">
+                  <div class="flex items-center gap-3 mb-3">
+                    <div class="w-10 h-10 rounded-lg bg-green-500/20 flex items-center justify-center text-xl">🟢</div>
+                    <div>
+                      <div class="font-semibold">Exa</div>
+                      <div class="text-xs text-slate-400">Neural Search</div>
+                    </div>
+                  </div>
+                  <ul class="text-sm text-slate-400 space-y-1">
+                    <li>🔗 Similar pages</li>
+                    <li>🏢 Company discovery</li>
+                    <li>📝 Research papers</li>
+                    <li>💻 GitHub projects</li>
+                  </ul>
+                </div>
+              </div>
+
+              <!-- Key Features -->
+              <h4 class="text-lg font-semibold mb-4 flex items-center gap-2">
+                <span class="text-violet-400">🧠</span> Intelligent Routing Features
+              </h4>
+              <div class="grid sm:grid-cols-2 gap-3 mb-8">
+                <div class="flex items-start gap-3 bg-slate-800/30 rounded-lg p-3">
+                  <span class="text-violet-400 mt-0.5">✓</span>
+                  <div>
+                    <div class="font-medium">Intent Classification</div>
+                    <div class="text-sm text-slate-400">Shopping vs Research vs Discovery</div>
+                  </div>
+                </div>
+                <div class="flex items-start gap-3 bg-slate-800/30 rounded-lg p-3">
+                  <span class="text-violet-400 mt-0.5">✓</span>
+                  <div>
+                    <div class="font-medium">Linguistic Patterns</div>
+                    <div class="text-sm text-slate-400">"how much" → price, "how does" → research</div>
+                  </div>
+                </div>
+                <div class="flex items-start gap-3 bg-slate-800/30 rounded-lg p-3">
+                  <span class="text-violet-400 mt-0.5">✓</span>
+                  <div>
+                    <div class="font-medium">Entity Detection</div>
+                    <div class="text-sm text-slate-400">Product+brand combos, URLs, domains</div>
+                  </div>
+                </div>
+                <div class="flex items-start gap-3 bg-slate-800/30 rounded-lg p-3">
+                  <span class="text-violet-400 mt-0.5">✓</span>
+                  <div>
+                    <div class="font-medium">Confidence Scoring</div>
+                    <div class="text-sm text-slate-400">Know reliability of each routing decision</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Example Routing -->
+              <h4 class="text-lg font-semibold mb-4 flex items-center gap-2">
+                <span class="text-violet-400">💬</span> Auto-Routing Examples
+              </h4>
+              <div class="bg-slate-900/80 rounded-xl p-4 code-block text-sm mb-6 border border-slate-800 overflow-x-auto">
+                <div class="text-slate-400 mb-2"># These queries are automatically routed to the optimal provider:</div>
+                <div><span class="text-slate-500">$</span> <span class="text-cyan-300">"iPhone 16 price"</span> <span class="text-slate-500">→</span> <span class="text-blue-400">Serper</span> <span class="text-slate-500">(68% confidence)</span></div>
+                <div><span class="text-slate-500">$</span> <span class="text-cyan-300">"how does quantum entanglement work"</span> <span class="text-slate-500">→</span> <span class="text-purple-400">Tavily</span> <span class="text-slate-500">(86% HIGH)</span></div>
+                <div><span class="text-slate-500">$</span> <span class="text-cyan-300">"startups similar to Notion"</span> <span class="text-slate-500">→</span> <span class="text-green-400">Exa</span> <span class="text-slate-500">(76% HIGH)</span></div>
+                <div><span class="text-slate-500">$</span> <span class="text-cyan-300">"companies like stripe.com"</span> <span class="text-slate-500">→</span> <span class="text-green-400">Exa</span> <span class="text-slate-500">(100% HIGH - URL detected)</span></div>
+              </div>
+
+              <!-- Install -->
+              <div class="bg-gradient-to-r from-violet-600/20 to-indigo-600/20 rounded-xl p-4 border border-violet-500/30">
+                <div class="flex flex-wrap items-center justify-between gap-4">
+                  <div class="code-block text-lg">
+                    <span class="text-slate-500">$</span> <span class="text-white">clawhub install</span> <span class="text-violet-400">web-search-plus</span>
+                  </div>
+                  <div class="text-sm text-slate-400">Requires: SERPER_API_KEY, TAVILY_API_KEY, and/or EXA_API_KEY</div>
+                </div>
+              </div>
             </div>
-            <h2 class="text-2xl font-bold mb-3 group-hover:text-pink-300 transition-colors">personas</h2>
-            <p class="text-slate-400 leading-relaxed mb-6">
-              Transform into 31 specialized AI personalities on demand—from Dev (coding) to Chef Marco (cooking) to Dr. Med (medical). 
-              Switch mid-conversation, create custom personas. Token-efficient: loads only the active persona.
-            </p>
-            <div class="code-block rounded-xl bg-slate-900/80 px-4 py-3 text-sm font-mono text-slate-200 mb-6 border border-slate-800 max-w-md">
-              <span class="text-slate-500">$</span> clawhub install personas
-            </div>
-            <div class="flex gap-4 text-sm font-medium">
-              <a class="text-pink-400 hover:text-pink-300 flex items-center gap-1" href="https://github.com/robbyczgw-cla/clawdbot-personas" target="_blank" rel="noreferrer">
-                GitHub <span class="link-arrow">→</span>
-              </a>
-              <a class="text-slate-400 hover:text-white flex items-center gap-1" href="https://www.clawhub.ai/skills/personas" target="_blank" rel="noreferrer">
-                ClawHub <span class="link-arrow">→</span>
-              </a>
-            </div>
-          </article>
+          </div>
         </section>
 
-        <!-- Install CTA Section -->
-        <section class="mt-20 relative">
+        <!-- ==================== SKILL 2: elevenlabs-voices ==================== -->
+        <section id="elevenlabs-voices" class="skill-section mb-20">
+          <div class="glass rounded-3xl overflow-hidden card-hover">
+            <!-- Header -->
+            <div class="bg-gradient-to-r from-cyan-600/20 to-blue-600/20 p-8 border-b border-white/5">
+              <div class="flex flex-wrap items-start justify-between gap-4">
+                <div class="flex items-center gap-4">
+                  <div class="text-5xl">🎙️</div>
+                  <div>
+                    <div class="flex items-center gap-3">
+                      <h3 class="text-3xl font-bold">elevenlabs-voices</h3>
+                      <span class="px-3 py-1 rounded-full bg-cyan-500/30 text-cyan-200 text-xs font-medium">v2.0.4</span>
+                    </div>
+                    <p class="text-slate-300 mt-1">High-quality voice synthesis with 18 personas and 32 languages</p>
+                  </div>
+                </div>
+                <div class="flex gap-3">
+                  <a href="https://github.com/robbyczgw-cla/elevenlabs-voices" target="_blank" rel="noreferrer" 
+                     class="px-4 py-2 rounded-lg bg-white/10 hover:bg-white/20 transition-colors text-sm font-medium flex items-center gap-2">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                    GitHub
+                  </a>
+                  <a href="https://www.clawhub.ai/skills/elevenlabs-voices" target="_blank" rel="noreferrer" 
+                     class="px-4 py-2 rounded-lg bg-cyan-600 hover:bg-cyan-500 transition-colors text-sm font-medium">
+                    ClawHub →
+                  </a>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Content -->
+            <div class="p-8">
+              <div class="prose prose-invert max-w-none mb-8">
+                <p class="text-lg text-slate-300 leading-relaxed">
+                  Turn your agent into a voice powerhouse. <strong class="text-white">elevenlabs-voices</strong> integrates ElevenLabs' industry-leading TTS API with <span class="text-cyan-400">18 pre-configured voice personas</span>, <span class="text-emerald-400">32 language support</span>, sound effects generation, batch processing, and even custom voice design. Perfect for audiobooks, podcasts, notifications, or just making your bot talk.
+                </p>
+              </div>
+
+              <!-- Real-World Use Cases -->
+              <h4 class="text-lg font-semibold mb-4 flex items-center gap-2">
+                <span class="text-amber-400">🎯</span> Real-World Use Cases
+              </h4>
+              <div class="grid sm:grid-cols-3 gap-3 mb-8">
+                <div class="use-case-card bg-cyan-500/10 rounded-xl p-4 border border-cyan-500/20">
+                  <div class="text-cyan-400 font-medium mb-2">🎧 Podcast Production</div>
+                  <div class="text-sm text-slate-300">"Generate podcast intro in British accent"</div>
+                </div>
+                <div class="use-case-card bg-cyan-500/10 rounded-xl p-4 border border-cyan-500/20">
+                  <div class="text-cyan-400 font-medium mb-2">🌍 Multilingual Content</div>
+                  <div class="text-sm text-slate-300">"Create multilingual announcements for global team"</div>
+                </div>
+                <div class="use-case-card bg-cyan-500/10 rounded-xl p-4 border border-cyan-500/20">
+                  <div class="text-cyan-400 font-medium mb-2">🤖 AI Assistant Voice</div>
+                  <div class="text-sm text-slate-300">"Voice your AI assistant responses for Telegram"</div>
+                </div>
+              </div>
+
+              <!-- Stats Row -->
+              <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
+                <div class="bg-slate-800/50 rounded-xl p-4 text-center border border-slate-700/50">
+                  <div class="text-2xl font-bold text-cyan-400">18</div>
+                  <div class="text-sm text-slate-400">Voice Personas</div>
+                </div>
+                <div class="bg-slate-800/50 rounded-xl p-4 text-center border border-slate-700/50">
+                  <div class="text-2xl font-bold text-cyan-400">32</div>
+                  <div class="text-sm text-slate-400">Languages</div>
+                </div>
+                <div class="bg-slate-800/50 rounded-xl p-4 text-center border border-slate-700/50">
+                  <div class="text-2xl font-bold text-cyan-400">7</div>
+                  <div class="text-sm text-slate-400">Style Presets</div>
+                </div>
+                <div class="bg-slate-800/50 rounded-xl p-4 text-center border border-slate-700/50">
+                  <div class="text-2xl font-bold text-cyan-400">∞</div>
+                  <div class="text-sm text-slate-400">Custom Voices</div>
+                </div>
+              </div>
+
+              <!-- Features Grid -->
+              <h4 class="text-lg font-semibold mb-4 flex items-center gap-2">
+                <span class="text-cyan-400">✨</span> Capabilities
+              </h4>
+              <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-3 mb-8">
+                <div class="flex items-start gap-3 bg-slate-800/30 rounded-lg p-3">
+                  <span class="text-2xl">🗣️</span>
+                  <div>
+                    <div class="font-medium">Text-to-Speech</div>
+                    <div class="text-sm text-slate-400">High-quality voice synthesis</div>
+                  </div>
+                </div>
+                <div class="flex items-start gap-3 bg-slate-800/30 rounded-lg p-3">
+                  <span class="text-2xl">🌍</span>
+                  <div>
+                    <div class="font-medium">Multi-Language</div>
+                    <div class="text-sm text-slate-400">DE, FR, ES, IT, PT, and 26 more</div>
+                  </div>
+                </div>
+                <div class="flex items-start gap-3 bg-slate-800/30 rounded-lg p-3">
+                  <span class="text-2xl">📡</span>
+                  <div>
+                    <div class="font-medium">Streaming</div>
+                    <div class="text-sm text-slate-400">Real-time audio output</div>
+                  </div>
+                </div>
+                <div class="flex items-start gap-3 bg-slate-800/30 rounded-lg p-3">
+                  <span class="text-2xl">📦</span>
+                  <div>
+                    <div class="font-medium">Batch Processing</div>
+                    <div class="text-sm text-slate-400">Process entire text files</div>
+                  </div>
+                </div>
+                <div class="flex items-start gap-3 bg-slate-800/30 rounded-lg p-3">
+                  <span class="text-2xl">🔊</span>
+                  <div>
+                    <div class="font-medium">Sound Effects</div>
+                    <div class="text-sm text-slate-400">AI-generated SFX from prompts</div>
+                  </div>
+                </div>
+                <div class="flex items-start gap-3 bg-slate-800/30 rounded-lg p-3">
+                  <span class="text-2xl">🎨</span>
+                  <div>
+                    <div class="font-medium">Voice Design</div>
+                    <div class="text-sm text-slate-400">Create custom voice profiles</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Voice Presets -->
+              <h4 class="text-lg font-semibold mb-4 flex items-center gap-2">
+                <span class="text-cyan-400">🎭</span> Voice Style Presets
+              </h4>
+              <div class="flex flex-wrap gap-2 mb-8">
+                <span class="px-3 py-1.5 rounded-lg bg-cyan-500/20 text-cyan-200 text-sm">🎬 narrator</span>
+                <span class="px-3 py-1.5 rounded-lg bg-cyan-500/20 text-cyan-200 text-sm">📖 storyteller</span>
+                <span class="px-3 py-1.5 rounded-lg bg-cyan-500/20 text-cyan-200 text-sm">💼 professional</span>
+                <span class="px-3 py-1.5 rounded-lg bg-cyan-500/20 text-cyan-200 text-sm">🎓 educator</span>
+                <span class="px-3 py-1.5 rounded-lg bg-cyan-500/20 text-cyan-200 text-sm">🧘 calm</span>
+                <span class="px-3 py-1.5 rounded-lg bg-cyan-500/20 text-cyan-200 text-sm">⚡ energetic</span>
+                <span class="px-3 py-1.5 rounded-lg bg-cyan-500/20 text-cyan-200 text-sm">📺 broadcaster</span>
+              </div>
+
+              <!-- Usage Examples -->
+              <h4 class="text-lg font-semibold mb-4 flex items-center gap-2">
+                <span class="text-cyan-400">💻</span> Usage Examples
+              </h4>
+              <div class="bg-slate-900/80 rounded-xl p-4 code-block text-sm mb-6 border border-slate-800 overflow-x-auto">
+                <div class="text-slate-400 mb-2"># Basic TTS</div>
+                <div><span class="text-slate-500">$</span> python3 scripts/tts.py <span class="text-cyan-300">--text</span> "Hello world" <span class="text-cyan-300">--voice</span> rachel</div>
+                <div class="mt-2 text-slate-400"># Multi-language</div>
+                <div><span class="text-slate-500">$</span> python3 scripts/tts.py <span class="text-cyan-300">--text</span> "Bonjour!" <span class="text-cyan-300">--voice</span> rachel <span class="text-cyan-300">--lang</span> fr</div>
+                <div class="mt-2 text-slate-400"># Sound effects</div>
+                <div><span class="text-slate-500">$</span> python3 scripts/sfx.py <span class="text-cyan-300">--prompt</span> "Thunder rumbling in the distance"</div>
+                <div class="mt-2 text-slate-400"># Batch processing</div>
+                <div><span class="text-slate-500">$</span> python3 scripts/tts.py <span class="text-cyan-300">--batch</span> chapters.txt <span class="text-cyan-300">--voice</span> adam <span class="text-cyan-300">--output-dir</span> ./audiobook</div>
+              </div>
+
+              <!-- Install -->
+              <div class="bg-gradient-to-r from-cyan-600/10 to-blue-600/10 rounded-xl p-4 border border-cyan-500/20">
+                <div class="flex flex-wrap items-center justify-between gap-4">
+                  <div class="code-block text-lg">
+                    <span class="text-slate-500">$</span> <span class="text-white">clawhub install</span> <span class="text-cyan-400">elevenlabs-voices</span>
+                  </div>
+                  <div class="text-sm text-slate-400">Requires: ELEVEN_API_KEY from <a href="https://elevenlabs.io" class="text-cyan-400 hover:underline">elevenlabs.io</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ==================== SKILL 3: sports-ticker ==================== -->
+        <section id="sports-ticker" class="skill-section mb-20">
+          <div class="glass rounded-3xl overflow-hidden card-hover">
+            <!-- Header -->
+            <div class="bg-gradient-to-r from-emerald-600/20 to-teal-600/20 p-8 border-b border-white/5">
+              <div class="flex flex-wrap items-start justify-between gap-4">
+                <div class="flex items-center gap-4">
+                  <div class="text-5xl">⚽</div>
+                  <div>
+                    <div class="flex items-center gap-3">
+                      <h3 class="text-3xl font-bold">sports-ticker</h3>
+                      <span class="px-3 py-1 rounded-full bg-emerald-500/30 text-emerald-200 text-xs font-medium">v2.1.1</span>
+                      <span class="px-3 py-1 rounded-full bg-green-500/30 text-green-200 text-xs font-medium">FREE API</span>
+                    </div>
+                    <p class="text-slate-300 mt-1">Live sports alerts with real-time scoring — 100% free via ESPN API</p>
+                  </div>
+                </div>
+                <div class="flex gap-3">
+                  <a href="https://github.com/robbyczgw-cla/sports-ticker" target="_blank" rel="noreferrer" 
+                     class="px-4 py-2 rounded-lg bg-white/10 hover:bg-white/20 transition-colors text-sm font-medium flex items-center gap-2">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                    GitHub
+                  </a>
+                  <a href="https://www.clawhub.ai/skills/sports-ticker" target="_blank" rel="noreferrer" 
+                     class="px-4 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-500 transition-colors text-sm font-medium">
+                    ClawHub →
+                  </a>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Content -->
+            <div class="p-8">
+              <div class="prose prose-invert max-w-none mb-8">
+                <p class="text-lg text-slate-300 leading-relaxed">
+                  Never miss a goal again. <strong class="text-white">sports-ticker</strong> delivers live scoring alerts for your favorite teams across <span class="text-emerald-400">Soccer, NFL, NBA, NHL, MLB, and F1</span>. Track multiple teams, get goal scorer names, red cards, halftime/final results—all powered by ESPN's free public API. With OpenClaw integration, it auto-schedules cron jobs on match days so alerts only run when your team is playing.
+                </p>
+              </div>
+
+              <!-- Real-World Use Cases -->
+              <h4 class="text-lg font-semibold mb-4 flex items-center gap-2">
+                <span class="text-amber-400">🎯</span> Real-World Use Cases
+              </h4>
+              <div class="grid sm:grid-cols-3 gap-3 mb-8">
+                <div class="use-case-card bg-emerald-500/10 rounded-xl p-4 border border-emerald-500/20">
+                  <div class="text-emerald-400 font-medium mb-2">⚽ Goal Notifications</div>
+                  <div class="text-sm text-slate-300">"Get instant goal alerts for Manchester United"</div>
+                </div>
+                <div class="use-case-card bg-emerald-500/10 rounded-xl p-4 border border-emerald-500/20">
+                  <div class="text-emerald-400 font-medium mb-2">📊 Live Score Tracking</div>
+                  <div class="text-sm text-slate-300">"Track live match scores during work hours"</div>
+                </div>
+                <div class="use-case-card bg-emerald-500/10 rounded-xl p-4 border border-emerald-500/20">
+                  <div class="text-emerald-400 font-medium mb-2">⏰ Match Reminders</div>
+                  <div class="text-sm text-slate-300">"Set up pre-match reminders 30min before kickoff"</div>
+                </div>
+              </div>
+
+              <!-- Supported Sports -->
+              <h4 class="text-lg font-semibold mb-4 flex items-center gap-2">
+                <span class="text-emerald-400">🏆</span> Supported Sports & Leagues
+              </h4>
+              <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
+                <div class="bg-slate-800/50 rounded-xl p-4 border border-slate-700/50">
+                  <div class="flex items-center gap-2 mb-2">
+                    <span class="text-2xl">⚽</span>
+                    <span class="font-semibold">Soccer / Football</span>
+                  </div>
+                  <div class="text-sm text-slate-400">Premier League, La Liga, Bundesliga, Serie A, Champions League, Europa League, MLS, Liga MX, and 20+ more</div>
+                </div>
+                <div class="bg-slate-800/50 rounded-xl p-4 border border-slate-700/50">
+                  <div class="flex items-center gap-2 mb-2">
+                    <span class="text-2xl">🏈</span>
+                    <span class="font-semibold">American Football</span>
+                  </div>
+                  <div class="text-sm text-slate-400">NFL (all teams)</div>
+                </div>
+                <div class="bg-slate-800/50 rounded-xl p-4 border border-slate-700/50">
+                  <div class="flex items-center gap-2 mb-2">
+                    <span class="text-2xl">🏀</span>
+                    <span class="font-semibold">Basketball</span>
+                  </div>
+                  <div class="text-sm text-slate-400">NBA, WNBA, NCAA</div>
+                </div>
+                <div class="bg-slate-800/50 rounded-xl p-4 border border-slate-700/50">
+                  <div class="flex items-center gap-2 mb-2">
+                    <span class="text-2xl">🏒</span>
+                    <span class="font-semibold">Hockey</span>
+                  </div>
+                  <div class="text-sm text-slate-400">NHL (all teams)</div>
+                </div>
+                <div class="bg-slate-800/50 rounded-xl p-4 border border-slate-700/50">
+                  <div class="flex items-center gap-2 mb-2">
+                    <span class="text-2xl">⚾</span>
+                    <span class="font-semibold">Baseball</span>
+                  </div>
+                  <div class="text-sm text-slate-400">MLB (all teams)</div>
+                </div>
+                <div class="bg-slate-800/50 rounded-xl p-4 border border-slate-700/50">
+                  <div class="flex items-center gap-2 mb-2">
+                    <span class="text-2xl">🏎️</span>
+                    <span class="font-semibold">Racing</span>
+                  </div>
+                  <div class="text-sm text-slate-400">Formula 1</div>
+                </div>
+              </div>
+
+              <!-- Alert Types -->
+              <h4 class="text-lg font-semibold mb-4 flex items-center gap-2">
+                <span class="text-emerald-400">🔔</span> Alert Types
+              </h4>
+              <div class="grid sm:grid-cols-2 gap-3 mb-8">
+                <div class="flex items-start gap-3 bg-slate-800/30 rounded-lg p-3">
+                  <span class="text-emerald-400 mt-0.5">⚽</span>
+                  <div>
+                    <div class="font-medium">Goals / Touchdowns / Points</div>
+                    <div class="text-sm text-slate-400">With player name and time</div>
+                  </div>
+                </div>
+                <div class="flex items-start gap-3 bg-slate-800/30 rounded-lg p-3">
+                  <span class="text-red-400 mt-0.5">🟥</span>
+                  <div>
+                    <div class="font-medium">Red/Yellow Cards</div>
+                    <div class="text-sm text-slate-400">Disciplinary events</div>
+                  </div>
+                </div>
+                <div class="flex items-start gap-3 bg-slate-800/30 rounded-lg p-3">
+                  <span class="text-amber-400 mt-0.5">⏸️</span>
+                  <div>
+                    <div class="font-medium">Period Updates</div>
+                    <div class="text-sm text-slate-400">Halftime, quarters, intermissions</div>
+                  </div>
+                </div>
+                <div class="flex items-start gap-3 bg-slate-800/30 rounded-lg p-3">
+                  <span class="text-emerald-400 mt-0.5">🏁</span>
+                  <div>
+                    <div class="font-medium">Final Results</div>
+                    <div class="text-sm text-slate-400">WIN/LOSS/DRAW notifications</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Example Alerts -->
+              <h4 class="text-lg font-semibold mb-4 flex items-center gap-2">
+                <span class="text-emerald-400">📱</span> Example Alerts
+              </h4>
+              <div class="grid sm:grid-cols-2 gap-4 mb-8">
+                <div class="bg-slate-900/80 rounded-xl p-4 border border-slate-800">
+                  <div class="text-emerald-400 font-medium mb-2">⚽ Soccer Goal</div>
+                  <div class="text-sm text-slate-300">
+                    🎉 GOAL! 23'<br>
+                    ⚽ Marcus Rashford (Man United)<br>
+                    Manchester United 1-0 Liverpool
+                  </div>
+                </div>
+                <div class="bg-slate-900/80 rounded-xl p-4 border border-slate-800">
+                  <div class="text-amber-400 font-medium mb-2">🏈 NFL Touchdown</div>
+                  <div class="text-sm text-slate-300">
+                    🎉 TOUCHDOWN! Q2 3:42<br>
+                    🏈 Patrick Mahomes (Chiefs)<br>
+                    Chiefs 14-7 Bills
+                  </div>
+                </div>
+              </div>
+
+              <!-- Key Feature: Auto Scheduling -->
+              <div class="bg-emerald-500/10 rounded-xl p-5 border border-emerald-500/20 mb-6">
+                <div class="flex items-start gap-3">
+                  <span class="text-2xl">🤖</span>
+                  <div>
+                    <div class="font-semibold text-emerald-300 mb-1">OpenClaw Auto-Scheduling</div>
+                    <div class="text-sm text-slate-300">The skill creates cron jobs that only run on match days. Morning check at 9 AM detects if your team plays, then enables live ticker (every 2 min) and pre-match reminders automatically. No spam on off-days!</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Install -->
+              <div class="bg-gradient-to-r from-emerald-600/10 to-teal-600/10 rounded-xl p-4 border border-emerald-500/20">
+                <div class="flex flex-wrap items-center justify-between gap-4">
+                  <div class="code-block text-lg">
+                    <span class="text-slate-500">$</span> <span class="text-white">clawhub install</span> <span class="text-emerald-400">sports-ticker</span>
+                  </div>
+                  <div class="text-sm text-slate-400">No API key required! 🎉 Uses ESPN's free public API</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ==================== SKILL 4: smart-followups ==================== -->
+        <section id="smart-followups" class="skill-section mb-20">
+          <div class="glass rounded-3xl overflow-hidden card-hover">
+            <!-- Header -->
+            <div class="bg-gradient-to-r from-amber-600/20 to-orange-600/20 p-8 border-b border-white/5">
+              <div class="flex flex-wrap items-start justify-between gap-4">
+                <div class="flex items-center gap-4">
+                  <div class="text-5xl">💡</div>
+                  <div>
+                    <div class="flex items-center gap-3">
+                      <h3 class="text-3xl font-bold">smart-followups</h3>
+                      <span class="px-3 py-1 rounded-full bg-amber-500/30 text-amber-200 text-xs font-medium">v1.0.4</span>
+                    </div>
+                    <p class="text-slate-300 mt-1">Contextual follow-up suggestions with clickable buttons</p>
+                  </div>
+                </div>
+                <div class="flex gap-3">
+                  <a href="https://github.com/robbyczgw-cla/smart-followups" target="_blank" rel="noreferrer" 
+                     class="px-4 py-2 rounded-lg bg-white/10 hover:bg-white/20 transition-colors text-sm font-medium flex items-center gap-2">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                    GitHub
+                  </a>
+                  <a href="https://www.clawhub.ai/skills/smart-followups" target="_blank" rel="noreferrer" 
+                     class="px-4 py-2 rounded-lg bg-amber-600 hover:bg-amber-500 transition-colors text-sm font-medium">
+                    ClawHub →
+                  </a>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Content -->
+            <div class="p-8">
+              <div class="prose prose-invert max-w-none mb-8">
+                <p class="text-lg text-slate-300 leading-relaxed">
+                  Keep conversations flowing naturally. After any AI response, just say <strong class="text-amber-400">"followups"</strong> and get 3 smart suggestions for what to ask next—organized into <span class="text-amber-300">Quick</span> (clarifications), <span class="text-violet-300">Deep Dive</span> (technical depth), and <span class="text-cyan-300">Related</span> (connected topics). On platforms like Telegram and Discord, they appear as clickable buttons. One tap sends the question.
+                </p>
+              </div>
+
+              <!-- Real-World Use Cases -->
+              <h4 class="text-lg font-semibold mb-4 flex items-center gap-2">
+                <span class="text-amber-400">🎯</span> Real-World Use Cases
+              </h4>
+              <div class="grid sm:grid-cols-3 gap-3 mb-8">
+                <div class="use-case-card bg-amber-500/10 rounded-xl p-4 border border-amber-500/20">
+                  <div class="text-amber-400 font-medium mb-2">🔬 Research Continuation</div>
+                  <div class="text-sm text-slate-300">"Generate follow-up questions after research summary"</div>
+                </div>
+                <div class="use-case-card bg-amber-500/10 rounded-xl p-4 border border-amber-500/20">
+                  <div class="text-amber-400 font-medium mb-2">🌳 Topic Exploration</div>
+                  <div class="text-sm text-slate-300">"Explore related topics I hadn't considered"</div>
+                </div>
+                <div class="use-case-card bg-amber-500/10 rounded-xl p-4 border border-amber-500/20">
+                  <div class="text-amber-400 font-medium mb-2">🧠 Deepen Context</div>
+                  <div class="text-sm text-slate-300">"Dive deeper into conversation context"</div>
+                </div>
+              </div>
+
+              <!-- Three Categories -->
+              <h4 class="text-lg font-semibold mb-4 flex items-center gap-2">
+                <span class="text-amber-400">🎯</span> Three Suggestion Categories
+              </h4>
+              <div class="grid sm:grid-cols-3 gap-4 mb-8">
+                <div class="bg-amber-500/10 rounded-xl p-5 border border-amber-500/20">
+                  <div class="text-2xl mb-2">⚡</div>
+                  <div class="font-semibold text-amber-300 mb-1">Quick</div>
+                  <div class="text-sm text-slate-400">Clarifications and immediate follow-up questions</div>
+                </div>
+                <div class="bg-violet-500/10 rounded-xl p-5 border border-violet-500/20">
+                  <div class="text-2xl mb-2">🧠</div>
+                  <div class="font-semibold text-violet-300 mb-1">Deep Dive</div>
+                  <div class="text-sm text-slate-400">Technical depth and detailed exploration</div>
+                </div>
+                <div class="bg-cyan-500/10 rounded-xl p-5 border border-cyan-500/20">
+                  <div class="text-2xl mb-2">🔗</div>
+                  <div class="font-semibold text-cyan-300 mb-1">Related</div>
+                  <div class="text-sm text-slate-400">Connected topics and broader context</div>
+                </div>
+              </div>
+
+              <!-- Channel Support -->
+              <h4 class="text-lg font-semibold mb-4 flex items-center gap-2">
+                <span class="text-amber-400">📱</span> Channel Support (9 Platforms)
+              </h4>
+              <div class="grid sm:grid-cols-2 gap-4 mb-8">
+                <div class="bg-slate-800/50 rounded-xl p-4 border border-slate-700/50">
+                  <div class="font-medium mb-2 flex items-center gap-2">
+                    <span class="text-emerald-400">●</span> Inline Buttons
+                  </div>
+                  <div class="flex flex-wrap gap-2">
+                    <span class="px-2 py-1 rounded bg-slate-700/50 text-xs">Telegram</span>
+                    <span class="px-2 py-1 rounded bg-slate-700/50 text-xs">Discord</span>
+                    <span class="px-2 py-1 rounded bg-slate-700/50 text-xs">Slack</span>
+                  </div>
+                  <div class="text-sm text-slate-400 mt-2">Tap button → sends question automatically</div>
+                </div>
+                <div class="bg-slate-800/50 rounded-xl p-4 border border-slate-700/50">
+                  <div class="font-medium mb-2 flex items-center gap-2">
+                    <span class="text-blue-400">●</span> Numbered Text List
+                  </div>
+                  <div class="flex flex-wrap gap-2">
+                    <span class="px-2 py-1 rounded bg-slate-700/50 text-xs">Signal</span>
+                    <span class="px-2 py-1 rounded bg-slate-700/50 text-xs">WhatsApp</span>
+                    <span class="px-2 py-1 rounded bg-slate-700/50 text-xs">iMessage</span>
+                    <span class="px-2 py-1 rounded bg-slate-700/50 text-xs">SMS</span>
+                    <span class="px-2 py-1 rounded bg-slate-700/50 text-xs">Matrix</span>
+                    <span class="px-2 py-1 rounded bg-slate-700/50 text-xs">Email</span>
+                  </div>
+                  <div class="text-sm text-slate-400 mt-2">Reply with 1, 2, or 3</div>
+                </div>
+              </div>
+
+              <!-- Example -->
+              <h4 class="text-lg font-semibold mb-4 flex items-center gap-2">
+                <span class="text-amber-400">💬</span> Example Conversation
+              </h4>
+              <div class="bg-slate-900/80 rounded-xl p-5 border border-slate-800 mb-6">
+                <div class="space-y-3 text-sm">
+                  <div><span class="text-blue-400">You:</span> <span class="text-slate-300">What is Docker?</span></div>
+                  <div><span class="text-emerald-400">Bot:</span> <span class="text-slate-300">Docker is a containerization platform that packages applications and their dependencies into isolated containers...</span></div>
+                  <div><span class="text-blue-400">You:</span> <span class="text-slate-300">followups</span></div>
+                  <div class="mt-4 pl-4 border-l-2 border-amber-500/50">
+                    <div class="text-amber-300 font-medium mb-2">💡 What would you like to explore next?</div>
+                    <div class="flex flex-wrap gap-2">
+                      <span class="px-3 py-1.5 rounded-lg bg-amber-500/20 text-amber-200 text-sm">⚡ How do I install Docker?</span>
+                      <span class="px-3 py-1.5 rounded-lg bg-violet-500/20 text-violet-200 text-sm">🧠 Explain container architecture</span>
+                      <span class="px-3 py-1.5 rounded-lg bg-cyan-500/20 text-cyan-200 text-sm">🔗 Docker vs Kubernetes?</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Auth Options -->
+              <h4 class="text-lg font-semibold mb-4 flex items-center gap-2">
+                <span class="text-amber-400">🔐</span> Authentication Options
+              </h4>
+              <div class="grid sm:grid-cols-3 gap-3 mb-6">
+                <div class="flex items-start gap-2 bg-slate-800/30 rounded-lg p-3">
+                  <span class="text-emerald-400">★</span>
+                  <div>
+                    <div class="font-medium text-sm">OpenClaw Native</div>
+                    <div class="text-xs text-slate-400">Uses your session (default)</div>
+                  </div>
+                </div>
+                <div class="flex items-start gap-2 bg-slate-800/30 rounded-lg p-3">
+                  <span class="text-slate-400">○</span>
+                  <div>
+                    <div class="font-medium text-sm">OpenRouter</div>
+                    <div class="text-xs text-slate-400">With API key</div>
+                  </div>
+                </div>
+                <div class="flex items-start gap-2 bg-slate-800/30 rounded-lg p-3">
+                  <span class="text-slate-400">○</span>
+                  <div>
+                    <div class="font-medium text-sm">Anthropic Direct</div>
+                    <div class="text-xs text-slate-400">With API key</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Install -->
+              <div class="bg-gradient-to-r from-amber-600/10 to-orange-600/10 rounded-xl p-4 border border-amber-500/20">
+                <div class="flex flex-wrap items-center justify-between gap-4">
+                  <div class="code-block text-lg">
+                    <span class="text-slate-500">$</span> <span class="text-white">clawhub install</span> <span class="text-amber-400">smart-followups</span>
+                  </div>
+                  <div class="text-sm text-slate-400">No extra API key needed with OpenClaw native auth</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ==================== SKILL 5: personas (FEATURED) ==================== -->
+        <section id="personas" class="skill-section mb-20">
+          <div class="featured-card featured-card-pink rounded-3xl overflow-hidden">
+            <!-- Header -->
+            <div class="bg-gradient-to-r from-pink-600/30 to-rose-600/30 p-8 border-b border-white/5 relative">
+              <!-- Featured Badge -->
+              <div class="absolute top-4 right-4">
+                <span class="featured-badge px-4 py-1.5 rounded-full text-sm flex items-center gap-1.5">
+                  ⭐ FLAGSHIP SKILL
+                </span>
+              </div>
+              <div class="flex flex-wrap items-start justify-between gap-4">
+                <div class="flex items-center gap-4">
+                  <div class="text-5xl">🎭</div>
+                  <div>
+                    <div class="flex items-center gap-3">
+                      <h3 class="text-3xl font-bold">personas</h3>
+                      <span class="px-3 py-1 rounded-full bg-pink-500/30 text-pink-200 text-xs font-medium">v1.0.12</span>
+                      <span class="px-3 py-1 rounded-full bg-purple-500/30 text-purple-200 text-xs font-medium">31 Personas</span>
+                    </div>
+                    <p class="text-slate-300 mt-1">Transform into specialized AI personalities on demand</p>
+                  </div>
+                </div>
+                <div class="flex gap-3 mt-8 sm:mt-0">
+                  <a href="https://github.com/robbyczgw-cla/clawdbot-personas" target="_blank" rel="noreferrer" 
+                     class="px-4 py-2 rounded-lg bg-white/10 hover:bg-white/20 transition-colors text-sm font-medium flex items-center gap-2">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                    GitHub
+                  </a>
+                  <a href="https://www.clawhub.ai/skills/personas" target="_blank" rel="noreferrer" 
+                     class="px-4 py-2 rounded-lg bg-pink-600 hover:bg-pink-500 transition-colors text-sm font-medium">
+                    ClawHub →
+                  </a>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Content -->
+            <div class="p-8">
+              <div class="prose prose-invert max-w-none mb-8">
+                <p class="text-lg text-slate-300 leading-relaxed">
+                  One agent, infinite expertise. <strong class="text-white">personas</strong> gives your OpenClaw agent <span class="text-pink-400">31 specialized personalities</span> across 7 categories—from <span class="text-violet-300">Dev</span> (senior programmer) to <span class="text-amber-300">Chef Marco</span> (Italian cooking) to <span class="text-cyan-300">Dr. Med</span> (medical concepts). Switch mid-conversation, create custom personas, and the skill only loads the active persona for token efficiency.
+                </p>
+              </div>
+
+              <!-- Real-World Use Cases -->
+              <h4 class="text-lg font-semibold mb-4 flex items-center gap-2">
+                <span class="text-amber-400">🎯</span> Real-World Use Cases
+              </h4>
+              <div class="grid sm:grid-cols-3 gap-3 mb-8">
+                <div class="use-case-card bg-pink-500/10 rounded-xl p-4 border border-pink-500/20">
+                  <div class="text-pink-400 font-medium mb-2">💻 Coding Assistance</div>
+                  <div class="text-sm text-slate-300">"Switch to Dev persona for debugging help"</div>
+                </div>
+                <div class="use-case-card bg-pink-500/10 rounded-xl p-4 border border-pink-500/20">
+                  <div class="text-pink-400 font-medium mb-2">👨‍🍳 Cooking Guidance</div>
+                  <div class="text-sm text-slate-300">"Get authentic Italian cooking advice from Chef Marco"</div>
+                </div>
+                <div class="use-case-card bg-pink-500/10 rounded-xl p-4 border border-pink-500/20">
+                  <div class="text-pink-400 font-medium mb-2">🩺 Medical Explainer</div>
+                  <div class="text-sm text-slate-300">"Ask Dr. Med to explain medical concepts simply"</div>
+                </div>
+              </div>
+
+              <!-- Categories Grid -->
+              <h4 class="text-lg font-semibold mb-4 flex items-center gap-2">
+                <span class="text-pink-400">📂</span> 7 Persona Categories (31 Total)
+              </h4>
+              <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
+                <!-- Core -->
+                <div class="bg-slate-800/50 rounded-xl p-4 border border-slate-700/50">
+                  <div class="flex items-center gap-2 mb-3">
+                    <span class="text-xl">🦎</span>
+                    <span class="font-semibold">Core</span>
+                    <span class="text-xs text-slate-400">(5)</span>
+                  </div>
+                  <div class="flex flex-wrap gap-1.5">
+                    <span class="px-2 py-0.5 rounded bg-slate-700/50 text-xs">Cami 🦎</span>
+                    <span class="px-2 py-0.5 rounded bg-slate-700/50 text-xs">Dev 💻</span>
+                    <span class="px-2 py-0.5 rounded bg-slate-700/50 text-xs">Flash ⚡</span>
+                    <span class="px-2 py-0.5 rounded bg-slate-700/50 text-xs">Professor 🎓</span>
+                    <span class="px-2 py-0.5 rounded bg-slate-700/50 text-xs">Agent 🦎</span>
+                  </div>
+                </div>
+                <!-- Professional -->
+                <div class="bg-slate-800/50 rounded-xl p-4 border border-slate-700/50">
+                  <div class="flex items-center gap-2 mb-3">
+                    <span class="text-xl">💼</span>
+                    <span class="font-semibold">Professional</span>
+                    <span class="text-xs text-slate-400">(10)</span>
+                  </div>
+                  <div class="flex flex-wrap gap-1.5">
+                    <span class="px-2 py-0.5 rounded bg-slate-700/50 text-xs">Dr. Med 🩺</span>
+                    <span class="px-2 py-0.5 rounded bg-slate-700/50 text-xs">Legal ⚖️</span>
+                    <span class="px-2 py-0.5 rounded bg-slate-700/50 text-xs">Startup 🚀</span>
+                    <span class="px-2 py-0.5 rounded bg-slate-700/50 text-xs">DataViz 📊</span>
+                    <span class="px-2 py-0.5 rounded bg-slate-700/50 text-xs">+6 more</span>
+                  </div>
+                </div>
+                <!-- Lifestyle -->
+                <div class="bg-slate-800/50 rounded-xl p-4 border border-slate-700/50">
+                  <div class="flex items-center gap-2 mb-3">
+                    <span class="text-xl">🌟</span>
+                    <span class="font-semibold">Lifestyle</span>
+                    <span class="text-xs text-slate-400">(9)</span>
+                  </div>
+                  <div class="flex flex-wrap gap-1.5">
+                    <span class="px-2 py-0.5 rounded bg-slate-700/50 text-xs">Chef Marco 👨‍🍳</span>
+                    <span class="px-2 py-0.5 rounded bg-slate-700/50 text-xs">Fit 💪</span>
+                    <span class="px-2 py-0.5 rounded bg-slate-700/50 text-xs">Zen 🧘</span>
+                    <span class="px-2 py-0.5 rounded bg-slate-700/50 text-xs">Globe ✈️</span>
+                    <span class="px-2 py-0.5 rounded bg-slate-700/50 text-xs">+5 more</span>
+                  </div>
+                </div>
+                <!-- Learning -->
+                <div class="bg-slate-800/50 rounded-xl p-4 border border-slate-700/50">
+                  <div class="flex items-center gap-2 mb-3">
+                    <span class="text-xl">📚</span>
+                    <span class="font-semibold">Learning</span>
+                    <span class="text-xs text-slate-400">(3)</span>
+                  </div>
+                  <div class="flex flex-wrap gap-1.5">
+                    <span class="px-2 py-0.5 rounded bg-slate-700/50 text-xs">Herr Müller 👨‍🏫</span>
+                    <span class="px-2 py-0.5 rounded bg-slate-700/50 text-xs">Scholar 📚</span>
+                    <span class="px-2 py-0.5 rounded bg-slate-700/50 text-xs">Lingua 🗣️</span>
+                  </div>
+                </div>
+                <!-- Creative -->
+                <div class="bg-slate-800/50 rounded-xl p-4 border border-slate-700/50">
+                  <div class="flex items-center gap-2 mb-3">
+                    <span class="text-xl">🎨</span>
+                    <span class="font-semibold">Creative</span>
+                    <span class="text-xs text-slate-400">(2)</span>
+                  </div>
+                  <div class="flex flex-wrap gap-1.5">
+                    <span class="px-2 py-0.5 rounded bg-slate-700/50 text-xs">Luna 🎨</span>
+                    <span class="px-2 py-0.5 rounded bg-slate-700/50 text-xs">Mythos 🗺️</span>
+                  </div>
+                </div>
+                <!-- More -->
+                <div class="bg-slate-800/50 rounded-xl p-4 border border-slate-700/50">
+                  <div class="flex items-center gap-2 mb-3">
+                    <span class="text-xl">✨</span>
+                    <span class="font-semibold">+ More</span>
+                    <span class="text-xs text-slate-400">(2)</span>
+                  </div>
+                  <div class="flex flex-wrap gap-1.5">
+                    <span class="px-2 py-0.5 rounded bg-slate-700/50 text-xs">Vibe 🎧 Curator</span>
+                    <span class="px-2 py-0.5 rounded bg-slate-700/50 text-xs">Coach 🏆 Philosophy</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Usage Examples -->
+              <h4 class="text-lg font-semibold mb-4 flex items-center gap-2">
+                <span class="text-pink-400">💬</span> How to Use
+              </h4>
+              <div class="bg-slate-900/80 rounded-xl p-4 code-block text-sm mb-8 border border-slate-800 overflow-x-auto">
+                <div class="text-slate-400 mb-2"># Activate a persona</div>
+                <div>"Use Dev persona" <span class="text-slate-500">or</span> /persona dev</div>
+                <div>"Switch to Chef Marco"</div>
+                <div>"Activate Dr. Med"</div>
+                <div class="mt-3 text-slate-400"># List all personas</div>
+                <div>"List all personas" <span class="text-slate-500">or</span> /personas</div>
+                <div class="mt-3 text-slate-400"># Create custom persona</div>
+                <div>"Create a new persona called Game Master"</div>
+                <div class="mt-3 text-slate-400"># Exit persona mode</div>
+                <div>"Exit persona mode" <span class="text-slate-500">or</span> /persona exit</div>
+              </div>
+
+              <!-- Use Cases -->
+              <h4 class="text-lg font-semibold mb-4 flex items-center gap-2">
+                <span class="text-pink-400">🎯</span> Example Workflows
+              </h4>
+              <div class="grid sm:grid-cols-2 gap-4 mb-8">
+                <div class="bg-pink-500/10 rounded-xl p-4 border border-pink-500/20">
+                  <div class="font-medium text-pink-300 mb-2">💻 Coding Project</div>
+                  <div class="text-sm text-slate-400">
+                    <span class="text-pink-300">Dev</span> → code help →
+                    <span class="text-pink-300">CyberGuard</span> → security review →
+                    <span class="text-pink-300">Canvas</span> → UI feedback
+                  </div>
+                </div>
+                <div class="bg-pink-500/10 rounded-xl p-4 border border-pink-500/20">
+                  <div class="font-medium text-pink-300 mb-2">📝 Content Creation</div>
+                  <div class="text-sm text-slate-400">
+                    <span class="text-pink-300">Wordsmith</span> → write blog →
+                    <span class="text-pink-300">Social Pro</span> → optimize for IG →
+                    <span class="text-pink-300">Canvas</span> → design image
+                  </div>
+                </div>
+                <div class="bg-pink-500/10 rounded-xl p-4 border border-pink-500/20">
+                  <div class="font-medium text-pink-300 mb-2">📚 Learning</div>
+                  <div class="text-sm text-slate-400">
+                    <span class="text-pink-300">Scholar</span> → study for exam →
+                    <span class="text-pink-300">Herr Müller</span> → simplify topic →
+                    <span class="text-pink-300">Professor</span> → deep dive
+                  </div>
+                </div>
+                <div class="bg-pink-500/10 rounded-xl p-4 border border-pink-500/20">
+                  <div class="font-medium text-pink-300 mb-2">🚀 Business Planning</div>
+                  <div class="text-sm text-slate-400">
+                    <span class="text-pink-300">Startup Sam</span> → validate idea →
+                    <span class="text-pink-300">Finny</span> → budget →
+                    <span class="text-pink-300">Career Coach</span> → pitch practice
+                  </div>
+                </div>
+              </div>
+
+              <!-- Token Efficient Notice -->
+              <div class="bg-pink-500/10 rounded-xl p-5 border border-pink-500/20 mb-6">
+                <div class="flex items-start gap-3">
+                  <span class="text-2xl">⚡</span>
+                  <div>
+                    <div class="font-semibold text-pink-300 mb-1">Token-Efficient Loading</div>
+                    <div class="text-sm text-slate-300">Only the active persona is loaded into context—not all 31. Switch instantly mid-conversation without wasting tokens on unused personas.</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Install -->
+              <div class="bg-gradient-to-r from-pink-600/20 to-rose-600/20 rounded-xl p-4 border border-pink-500/30">
+                <div class="flex flex-wrap items-center justify-between gap-4">
+                  <div class="code-block text-lg">
+                    <span class="text-slate-500">$</span> <span class="text-white">clawhub install</span> <span class="text-pink-400">personas</span>
+                  </div>
+                  <div class="text-sm text-slate-400">Based on Chameleon AI Chat • MIT License</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ==================== CTA Section ==================== -->
+        <section class="mt-8 relative">
           <div class="absolute inset-0 bg-gradient-to-r from-violet-600/10 via-cyan-600/10 to-emerald-600/10 rounded-3xl blur-xl"></div>
           <div class="relative glass rounded-3xl p-10 sm:p-14 text-center">
-            <div class="text-5xl mb-6">⚡</div>
-            <h3 class="text-3xl font-bold mb-4">Install in Seconds</h3>
+            <div class="text-6xl mb-6">🦞</div>
+            <h3 class="text-3xl sm:text-4xl font-bold mb-4">Ready to Supercharge Your Agent?</h3>
             <p class="text-slate-400 text-lg max-w-xl mx-auto mb-8">
-              One command. That's it. Each skill auto-configures and integrates with your OpenClaw agent.
+              All skills are open source, well-documented, and install in seconds. Pick one or install them all.
             </p>
-            <div class="inline-block code-block rounded-xl bg-slate-900/80 px-6 py-4 text-lg font-mono text-slate-200 border border-slate-700">
+            <div class="inline-block code-block rounded-xl bg-slate-900/80 px-6 py-4 text-lg text-slate-200 border border-slate-700 mb-8">
               <span class="text-violet-400">$</span> clawhub install <span class="text-cyan-400">&lt;skill-name&gt;</span>
             </div>
-            <p class="mt-8 text-sm text-slate-500">
-              Browse all skills at <a href="https://clawhub.ai" class="text-violet-400 hover:text-violet-300 underline underline-offset-2">clawhub.ai</a>
-            </p>
+            <div class="flex flex-wrap justify-center gap-4">
+              <a href="https://clawhub.ai" target="_blank" rel="noreferrer" 
+                 class="inline-flex items-center gap-2 bg-gradient-to-r from-violet-600 to-indigo-600 px-6 py-3 rounded-full font-semibold text-white hover:scale-105 transition-transform">
+                Browse ClawHub
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+              </a>
+              <a href="https://openclaw.com" target="_blank" rel="noreferrer" 
+                 class="inline-flex items-center gap-2 glass px-6 py-3 rounded-full font-semibold hover:bg-white/10 transition-colors">
+                Get OpenClaw
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+              </a>
+            </div>
           </div>
         </section>
       </div>
@@ -398,7 +1248,7 @@
 
     <!-- Footer -->
     <footer class="bg-slate-950 border-t border-slate-800/50">
-      <div class="max-w-6xl mx-auto px-6 py-14">
+      <div class="max-w-7xl mx-auto px-6 py-14">
         <div class="flex flex-col sm:flex-row items-center justify-between gap-8">
           <div class="flex items-center gap-3">
             <span class="text-3xl">🦞</span>
@@ -417,21 +1267,21 @@
                class="text-slate-400 hover:text-white transition-colors" title="ClawHub">
               <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
             </a>
-            <a href="https://x.com" target="_blank" rel="noreferrer" 
-               class="text-slate-400 hover:text-white transition-colors" title="X (Twitter)">
-              <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            <a href="https://openclaw.com" target="_blank" rel="noreferrer" 
+               class="text-slate-400 hover:text-white transition-colors" title="OpenClaw">
+              <span class="text-2xl">🦞</span>
             </a>
           </div>
         </div>
         
         <div class="mt-10 pt-8 border-t border-slate-800/50 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-slate-500">
-          <div>© 2026 Robby • Made with ❤️ on Earth</div>
+          <div>© 2026 Robby • Made with ❤️ in Vienna</div>
           <div class="flex items-center gap-2">
             <span class="relative flex h-2 w-2">
               <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
               <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
             </span>
-            All systems operational
+            All skills actively maintained
           </div>
         </div>
       </div>
@@ -447,20 +1297,6 @@
           behavior: 'smooth'
         });
       });
-    });
-    
-    // Intersection Observer for scroll reveal
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.style.animationPlayState = 'running';
-        }
-      });
-    }, { threshold: 0.1 });
-    
-    document.querySelectorAll('.reveal').forEach(el => {
-      el.style.animationPlayState = 'paused';
-      observer.observe(el);
     });
   </script>
 </body>
