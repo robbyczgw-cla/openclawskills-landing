@@ -306,6 +306,7 @@
                     <div class="flex items-center gap-3">
                       <h3 class="text-3xl font-bold">web-search-plus</h3>
                       <span class="px-3 py-1 rounded-full bg-violet-500/30 text-violet-200 text-xs font-medium">v2.6.0</span>
+                      <span class="px-3 py-1 rounded-full bg-emerald-500/30 text-emerald-200 text-xs font-medium">✨ Updated Feb 2026</span>
                     </div>
                     <p class="text-slate-300 mt-1">Unified multi-provider search with intelligent auto-routing</p>
                   </div>
@@ -465,6 +466,20 @@
                   <div>
                     <div class="font-medium">Confidence Scoring</div>
                     <div class="text-sm text-slate-400">Know reliability of each routing decision</div>
+                  </div>
+                </div>
+                <div class="flex items-start gap-3 bg-emerald-800/30 rounded-lg p-3 border border-emerald-500/20">
+                  <span class="text-emerald-400 mt-0.5">✨</span>
+                  <div>
+                    <div class="font-medium">Result Caching <span class="text-emerald-400 text-xs">NEW</span></div>
+                    <div class="text-sm text-slate-400">File-based cache with 1h TTL — save API calls</div>
+                  </div>
+                </div>
+                <div class="flex items-start gap-3 bg-emerald-800/30 rounded-lg p-3 border border-emerald-500/20">
+                  <span class="text-emerald-400 mt-0.5">✨</span>
+                  <div>
+                    <div class="font-medium">Cache Controls <span class="text-emerald-400 text-xs">NEW</span></div>
+                    <div class="text-sm text-slate-400">--no-cache, --clear-cache, --cache-stats</div>
                   </div>
                 </div>
               </div>
@@ -698,6 +713,7 @@
                       <h3 class="text-3xl font-bold">personas</h3>
                       <span class="px-3 py-1 rounded-full bg-pink-500/30 text-pink-200 text-xs font-medium">v2.1.0</span>
                       <span class="px-3 py-1 rounded-full bg-purple-500/30 text-purple-200 text-xs font-medium">20 Curated Personas</span>
+                      <span class="px-3 py-1 rounded-full bg-emerald-500/30 text-emerald-200 text-xs font-medium">✨ Updated Feb 2026</span>
                     </div>
                     <p class="text-slate-300 mt-1">Transform into specialized AI personalities on demand</p>
                   </div>
@@ -844,6 +860,22 @@
                 <div>"Create a new persona called Game Master"</div>
                 <div class="mt-3 text-slate-400"># Exit persona mode</div>
                 <div>"Exit persona mode" <span class="text-slate-500">or</span> /persona exit</div>
+                <div class="mt-3 text-emerald-400"># NEW: Python CLI (persona.py)</div>
+                <div><span class="text-slate-500">$</span> python3 persona.py <span class="text-pink-300">--list</span> <span class="text-slate-500"># List all personas</span></div>
+                <div><span class="text-slate-500">$</span> python3 persona.py <span class="text-pink-300">--activate</span> dev <span class="text-slate-500"># Activate (alias: chef → chef-marco)</span></div>
+                <div><span class="text-slate-500">$</span> python3 persona.py <span class="text-pink-300">--current</span> <span class="text-slate-500"># Show current persona</span></div>
+                <div><span class="text-slate-500">$</span> python3 persona.py <span class="text-pink-300">--reset</span> <span class="text-slate-500"># Reset to default</span></div>
+              </div>
+
+              <!-- NEW: CLI Features Box -->
+              <div class="bg-emerald-500/10 rounded-xl p-5 border border-emerald-500/20 mb-6">
+                <div class="flex items-start gap-3">
+                  <span class="text-2xl">✨</span>
+                  <div>
+                    <div class="font-semibold text-emerald-300 mb-1">NEW: Python CLI + State Persistence</div>
+                    <div class="text-sm text-slate-300">Full CLI with <code class="bg-slate-800 px-1 rounded">--list</code>, <code class="bg-slate-800 px-1 rounded">--show</code>, <code class="bg-slate-800 px-1 rounded">--activate</code>, <code class="bg-slate-800 px-1 rounded">--current</code>, <code class="bg-slate-800 px-1 rounded">--reset</code> commands. Supports aliases (e.g., <code class="bg-slate-800 px-1 rounded">chef</code> → <code class="bg-slate-800 px-1 rounded">chef-marco</code>) and tracks activation history.</div>
+                  </div>
+                </div>
               </div>
 
               <!-- Use Cases -->
@@ -891,7 +923,7 @@
                   <span class="text-2xl">⚡</span>
                   <div>
                     <div class="font-semibold text-pink-300 mb-1">Token-Efficient Loading</div>
-                    <div class="text-sm text-slate-300">Only the active persona is loaded into context—not all 31. Switch instantly mid-conversation without wasting tokens on unused personas.</div>
+                    <div class="text-sm text-slate-300">Only the active persona is loaded into context—not all 20. Switch instantly mid-conversation without wasting tokens on unused personas.</div>
                   </div>
                 </div>
               </div>
@@ -1451,6 +1483,7 @@
                       <h3 class="text-3xl font-bold">topic-monitor</h3>
                       <span class="px-3 py-1 rounded-full bg-amber-500/30 text-amber-200 text-xs font-medium">v1.2.0</span>
                       <span class="px-3 py-1 rounded-full bg-green-500/30 text-green-200 text-xs font-medium">QUICK START</span>
+                      <span class="px-3 py-1 rounded-full bg-emerald-500/30 text-emerald-200 text-xs font-medium">✨ Updated Feb 2026</span>
                     </div>
                     <p class="text-slate-300 mt-1">Automated topic monitoring with AI-powered importance scoring</p>
                   </div>
@@ -1552,12 +1585,21 @@
               </div>
 
               <!-- Key Features -->
+              <div class="bg-emerald-500/10 rounded-xl p-5 border border-emerald-500/20 mb-4">
+                <div class="flex items-start gap-3">
+                  <span class="text-2xl">✨</span>
+                  <div>
+                    <div class="font-semibold text-emerald-300 mb-1">NEW: Real Alerting Implementation</div>
+                    <div class="text-sm text-slate-300">Full alerting system (previously a stub). State files now stored in workspace memory for persistence across sessions.</div>
+                  </div>
+                </div>
+              </div>
               <div class="bg-amber-500/10 rounded-xl p-5 border border-amber-500/20 mb-6">
                 <div class="flex items-start gap-3">
                   <span class="text-2xl">🔗</span>
                   <div>
-                    <div class="font-semibold text-amber-300 mb-1">Works with web-search-plus</div>
-                    <div class="text-sm text-slate-300">Automatically uses web-search-plus for intelligent multi-provider search routing if installed. Falls back to built-in web_search otherwise.</div>
+                    <div class="font-semibold text-amber-300 mb-1">Powered by web-search-plus</div>
+                    <div class="text-sm text-slate-300">Uses web-search-plus for intelligent multi-provider search routing. Automatically benefits from result caching to reduce API costs.</div>
                   </div>
                 </div>
               </div>
@@ -1593,6 +1635,7 @@
                     <div class="flex items-center gap-3">
                       <h3 class="text-3xl font-bold">youtube-apify-transcript</h3>
                       <span class="px-3 py-1 rounded-full bg-red-500/30 text-red-200 text-xs font-medium">v1.0.4</span>
+                      <span class="px-3 py-1 rounded-full bg-emerald-500/30 text-emerald-200 text-xs font-medium">✨ Updated Feb 2026</span>
                     </div>
                     <p class="text-slate-300 mt-1">Fetch YouTube transcripts via APIFY API — works from cloud IPs</p>
                   </div>
@@ -1711,6 +1754,27 @@
                     <div class="text-sm text-slate-400">youtube.com, youtu.be, shorts</div>
                   </div>
                 </div>
+                <div class="flex items-start gap-3 bg-emerald-800/30 rounded-lg p-3 border border-emerald-500/20">
+                  <span class="text-2xl">💾</span>
+                  <div>
+                    <div class="font-medium">Local Caching <span class="text-emerald-400 text-xs">NEW</span></div>
+                    <div class="text-sm text-slate-400">Permanent cache by video ID — save $0.007/video</div>
+                  </div>
+                </div>
+                <div class="flex items-start gap-3 bg-emerald-800/30 rounded-lg p-3 border border-emerald-500/20">
+                  <span class="text-2xl">📦</span>
+                  <div>
+                    <div class="font-medium">Batch Mode <span class="text-emerald-400 text-xs">NEW</span></div>
+                    <div class="text-sm text-slate-400">--batch file.txt for bulk processing</div>
+                  </div>
+                </div>
+                <div class="flex items-start gap-3 bg-emerald-800/30 rounded-lg p-3 border border-emerald-500/20">
+                  <span class="text-2xl">📊</span>
+                  <div>
+                    <div class="font-medium">Cache Stats <span class="text-emerald-400 text-xs">NEW</span></div>
+                    <div class="text-sm text-slate-400">--cache-stats for cache overview</div>
+                  </div>
+                </div>
               </div>
 
               <!-- Usage Examples -->
@@ -1726,6 +1790,10 @@
                 <div><span class="text-slate-500">$</span> python3 scripts/fetch_transcript.py <span class="text-red-300">"https://youtu.be/VIDEO_ID"</span> <span class="text-red-300">--output</span> transcript.txt</div>
                 <div class="mt-2 text-slate-400"># Specify language preference</div>
                 <div><span class="text-slate-500">$</span> python3 scripts/fetch_transcript.py <span class="text-red-300">"https://youtu.be/VIDEO_ID"</span> <span class="text-red-300">--lang</span> de</div>
+                <div class="mt-2 text-emerald-400"># NEW: Batch processing (save costs!)</div>
+                <div><span class="text-slate-500">$</span> python3 scripts/fetch_transcript.py <span class="text-red-300">--batch</span> video_urls.txt <span class="text-red-300">--output-dir</span> ./transcripts</div>
+                <div class="mt-2 text-emerald-400"># NEW: Check cache statistics</div>
+                <div><span class="text-slate-500">$</span> python3 scripts/fetch_transcript.py <span class="text-red-300">--cache-stats</span></div>
               </div>
 
               <!-- Setup -->
