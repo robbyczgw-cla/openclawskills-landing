@@ -1,2346 +1,491 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
   <title>OpenClaw Skills by Robby</title>
-  <meta name="description" content="Ten published OpenClaw skills by Robby — web search, voices, sports alerts, follow-ups, personas, topic monitoring, AI journaling, YouTube transcripts, X data via Apify, and multi-agent debate council roundtable." />
+  <meta name="description" content="Eleven published OpenClaw skills — web search, voices, sports alerts, follow-ups, personas, topic monitoring, AI journaling, YouTube transcripts, X data, memory reasoning, and multi-agent debate."/>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🦞</text></svg>">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: {
-            sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
-          },
-          animation: {
-            'gradient': 'gradient 8s ease infinite',
-            'float': 'float 6s ease-in-out infinite',
-            'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-            'glow': 'glow 2s ease-in-out infinite alternate',
-          }
-        }
-      }
-    }
-  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <style>
-    @keyframes gradient {
-      0%, 100% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
+    *{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --bg:#111110;--bg2:#1a1918;--cream:#f5f0e8;--cream-dim:#c4bfb4;
+      --copper:#c17f59;--copper-dim:#a06840;--copper-glow:rgba(193,127,89,.15);
+      --border:rgba(245,240,232,.08);--border-hover:rgba(193,127,89,.3);
+      --heading:'Playfair Display',Georgia,serif;
+      --body:'DM Sans',system-ui,sans-serif;
+      --mono:'JetBrains Mono',monospace;
     }
-    @keyframes float {
-      0%, 100% { transform: translateY(0px); }
-      50% { transform: translateY(-20px); }
-    }
-    @keyframes reveal {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    @keyframes glow {
-      from { box-shadow: 0 0 20px rgba(139, 92, 246, 0.3), 0 0 40px rgba(139, 92, 246, 0.1); }
-      to { box-shadow: 0 0 30px rgba(139, 92, 246, 0.5), 0 0 60px rgba(139, 92, 246, 0.2); }
-    }
-    @keyframes glow-pink {
-      from { box-shadow: 0 0 20px rgba(236, 72, 153, 0.3), 0 0 40px rgba(236, 72, 153, 0.1); }
-      to { box-shadow: 0 0 30px rgba(236, 72, 153, 0.5), 0 0 60px rgba(236, 72, 153, 0.2); }
-    }
-    .reveal { animation: reveal 0.8s ease-out forwards; opacity: 0; }
-    .reveal-delay-1 { animation-delay: 0.1s; }
-    .reveal-delay-2 { animation-delay: 0.2s; }
-    .reveal-delay-3 { animation-delay: 0.3s; }
-    
-    .gradient-text {
-      background: linear-gradient(135deg, #a78bfa 0%, #818cf8 25%, #38bdf8 50%, #34d399 75%, #a78bfa 100%);
-      background-size: 200% 200%;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      animation: gradient 8s ease infinite;
-    }
-    
-    .hero-gradient {
-      background: linear-gradient(-45deg, #0f172a, #1e1b4b, #0c4a6e, #134e4a, #1e1b4b, #0f172a);
-      background-size: 400% 400%;
-      animation: gradient 15s ease infinite;
-    }
-    
-    .glass {
-      background: rgba(15, 23, 42, 0.7);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-    }
-    
-    .card-hover {
-      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-    .card-hover:hover {
-      transform: translateY(-4px);
-      border-color: rgba(139, 92, 246, 0.4);
-    }
-    
-    .featured-card {
-      position: relative;
-      border: 2px solid transparent;
-      background: linear-gradient(rgba(15, 23, 42, 0.95), rgba(15, 23, 42, 0.95)) padding-box,
-                  linear-gradient(135deg, #8b5cf6 0%, #ec4899 50%, #8b5cf6 100%) border-box;
-      animation: glow 2s ease-in-out infinite alternate;
-    }
-    .featured-card-pink {
-      animation: glow-pink 2s ease-in-out infinite alternate;
-      background: linear-gradient(rgba(15, 23, 42, 0.95), rgba(15, 23, 42, 0.95)) padding-box,
-                  linear-gradient(135deg, #ec4899 0%, #8b5cf6 50%, #ec4899 100%) border-box;
-    }
-    
-    .featured-badge {
-      background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
-      color: #1f2937;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      animation: pulse 2s ease-in-out infinite;
-    }
-    
-    .feature-tag {
-      transition: all 0.2s ease;
-    }
-    .feature-tag:hover {
-      transform: scale(1.05);
-    }
-    
-    .dots-pattern {
-      background-image: radial-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px);
-      background-size: 32px 32px;
-    }
-    
-    .code-block {
-      font-family: 'JetBrains Mono', monospace;
-    }
-    
-    .provider-badge {
-      transition: all 0.2s ease;
-    }
-    .provider-badge:hover {
-      transform: translateY(-2px);
-    }
-    
-    .link-arrow {
-      transition: transform 0.2s ease;
-      display: inline-block;
-    }
-    a:hover .link-arrow {
-      transform: translateX(4px);
-    }
+    html{scroll-behavior:smooth;font-size:16px}
+    body{background:var(--bg);color:var(--cream-dim);font-family:var(--body);line-height:1.7;overflow-x:hidden}
+    body::before{content:'';position:fixed;inset:0;pointer-events:none;opacity:.03;
+      background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      z-index:9999}
+    h1,h2,h3,h4{font-family:var(--heading);color:var(--cream);font-weight:700;letter-spacing:-.02em}
+    a{color:inherit;text-decoration:none}
+    /* Light mode */
+    body.light{--bg:#f8f5f0;--bg2:#eee9e1;--cream:#1a1a1a;--cream-dim:#555;--copper:#a06840;--copper-dim:#8a5530;--copper-glow:rgba(160,104,64,.1);--border:rgba(26,26,26,.1);--border-hover:rgba(160,104,64,.3)}
+    body.light::before{opacity:.015}
+    body.light nav{background:rgba(248,245,240,.9)}
+    body.light .skill{background:var(--bg2)}
+    body.light .skill-code{background:rgba(0,0,0,.05)}
+    body.light .btn-primary{color:#f8f5f0}
+    body.light .skill-link.primary{color:#f8f5f0}
+    .theme-toggle{cursor:pointer;font-size:1.1rem;background:none;border:1px solid var(--border);border-radius:6px;padding:.4rem .8rem;transition:all .2s;color:var(--cream-dim)}
+    .theme-toggle:hover{border-color:var(--copper);color:var(--copper)}
 
-    .skill-section {
-      scroll-margin-top: 2rem;
-    }
+    /* Nav */
+    nav{position:sticky;top:0;z-index:100;padding:1.2rem 2rem;
+      background:rgba(17,17,16,.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+    .nav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between}
+    .nav-logo{font-family:var(--heading);font-size:1.3rem;color:var(--cream);font-weight:700;display:flex;align-items:center;gap:.6rem}
+    .nav-links{display:flex;gap:1.5rem;align-items:center}
+    .nav-links a{font-size:.9rem;color:var(--cream-dim);transition:color .2s}
+    .nav-links a:hover{color:var(--copper)}
+    .nav-btn{padding:.5rem 1.2rem;border:1px solid var(--border);border-radius:6px;font-size:.85rem;transition:all .2s}
+    .nav-btn:hover{border-color:var(--copper);color:var(--copper)}
 
-    .stat-card {
-      transition: all 0.3s ease;
-    }
-    .stat-card:hover {
-      background: rgba(139, 92, 246, 0.1);
-      border-color: rgba(139, 92, 246, 0.3);
-    }
+    /* Hero */
+    .hero{max-width:1200px;margin:0 auto;padding:8rem 2rem 6rem;position:relative}
+    .hero-eyebrow{font-family:var(--mono);font-size:.8rem;color:var(--copper);text-transform:uppercase;letter-spacing:.15em;margin-bottom:1.5rem}
+    .hero h1{font-size:clamp(3rem,7vw,5.5rem);line-height:1.05;font-weight:900;margin-bottom:1.5rem}
+    .hero h1 em{font-style:italic;color:var(--copper);font-weight:400}
+    .hero-desc{font-size:1.2rem;max-width:600px;line-height:1.8;margin-bottom:3rem}
+    .hero-stats{display:flex;gap:3rem;flex-wrap:wrap;padding-top:2rem;border-top:1px solid var(--border)}
+    .hero-stat{display:flex;flex-direction:column}
+    .hero-stat strong{font-family:var(--heading);font-size:2rem;color:var(--cream)}
+    .hero-stat span{font-size:.8rem;color:var(--cream-dim);text-transform:uppercase;letter-spacing:.1em;margin-top:.2rem}
+    .hero-line{position:absolute;right:2rem;top:8rem;bottom:0;width:1px;background:linear-gradient(to bottom,var(--copper),transparent);opacity:.2}
 
-    .use-case-card {
-      transition: all 0.2s ease;
-    }
-    .use-case-card:hover {
-      background: rgba(139, 92, 246, 0.15);
-      transform: translateX(4px);
+    /* Section */
+    .section{max-width:1200px;margin:0 auto;padding:5rem 2rem}
+    .section-label{font-family:var(--mono);font-size:.75rem;color:var(--copper);text-transform:uppercase;letter-spacing:.2em;margin-bottom:1rem}
+    .section-title{font-size:clamp(2rem,4vw,3rem);margin-bottom:1rem}
+    .section-title em{font-style:italic;color:var(--copper);font-weight:400}
+    .divider{width:48px;height:2px;background:var(--copper);margin:1.5rem 0 3rem}
+
+    /* Skills Grid */
+    .skills-grid{display:grid;grid-template-columns:1fr;gap:2rem}
+    .skill{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:2.5rem;transition:all .3s ease;position:relative;overflow:hidden}
+    .skill:hover{border-color:var(--border-hover);transform:translateY(-4px);box-shadow:0 20px 60px rgba(0,0,0,.4)}
+    .skill::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--copper);opacity:0;transition:opacity .3s}
+    .skill:hover::after{opacity:1}
+    .skill-head{display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;margin-bottom:1.5rem;flex-wrap:wrap}
+    .skill-meta{display:flex;align-items:center;gap:1rem;flex-wrap:wrap}
+    .skill-icon{font-size:2.5rem}
+    .skill-name{font-family:var(--heading);font-size:1.6rem;color:var(--cream)}
+    .skill-ver{font-family:var(--mono);font-size:.75rem;padding:.25rem .6rem;border-radius:4px;background:rgba(193,127,89,.1);color:var(--copper)}
+    .skill-badge{font-family:var(--mono);font-size:.65rem;padding:.25rem .6rem;border-radius:4px;background:rgba(193,127,89,.2);color:var(--copper);text-transform:uppercase;letter-spacing:.05em;font-weight:600}
+    .skill-desc{font-size:1rem;line-height:1.8;margin-bottom:1.5rem;max-width:700px}
+    .skill-features{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:1.5rem}
+    .skill-feat{font-size:.8rem;padding:.3rem .8rem;border-radius:999px;border:1px solid var(--border);color:var(--cream-dim);transition:all .2s}
+    .skill-feat:hover{border-color:var(--copper);color:var(--copper)}
+    .skill-links{display:flex;gap:1rem;flex-wrap:wrap}
+    .skill-link{font-family:var(--mono);font-size:.8rem;padding:.5rem 1rem;border:1px solid var(--border);border-radius:6px;display:flex;align-items:center;gap:.5rem;transition:all .2s}
+    .skill-link:hover{border-color:var(--copper);color:var(--copper)}
+    .skill-link.primary{background:var(--copper);color:var(--bg);border-color:var(--copper)}
+    .skill-link.primary:hover{background:var(--copper-dim)}
+    .skill-code{font-family:var(--mono);font-size:.8rem;padding:.8rem 1.2rem;background:rgba(0,0,0,.3);border:1px solid var(--border);border-radius:8px;color:var(--cream-dim);margin-top:1rem}
+    .skill-code .cmd{color:var(--cream)}
+    .skill-code .arg{color:var(--copper)}
+    .featured{border-color:rgba(193,127,89,.3);background:linear-gradient(135deg,var(--bg2) 0%,rgba(193,127,89,.05) 100%)}
+    .skills-duo{display:grid;grid-template-columns:1fr 1fr;gap:2rem}
+
+    /* Footer */
+    footer{max-width:1200px;margin:0 auto;padding:4rem 2rem;border-top:1px solid var(--border);
+      display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
+    footer p{font-size:.85rem;color:var(--cream-dim)}
+    footer a{color:var(--copper);transition:opacity .2s}
+    footer a:hover{opacity:.7}
+
+    .reveal{opacity:0;transform:translateY(20px);transition:all .6s ease}
+    .reveal.visible{opacity:1;transform:translateY(0)}
+
+    @media(max-width:768px){
+      .hero{padding:5rem 1.5rem 4rem}
+      .hero h1{font-size:2.5rem}
+      .hero-stats{gap:2rem}
+      .skills-duo{grid-template-columns:1fr}
+      .nav-links .hide-mobile{display:none}
+      .section{padding:3rem 1.5rem}
+      .hero-line{display:none}
     }
   </style>
 </head>
-<body class="bg-slate-950 text-slate-100 antialiased font-sans">
-  
-  <div class="min-h-screen relative">
-    
-    <!-- Hero Section -->
-    <header class="relative overflow-hidden hero-gradient">
-      <div class="absolute inset-0 dots-pattern"></div>
-      
-      <!-- Gradient orbs -->
-      <div class="absolute top-0 left-1/4 w-96 h-96 bg-violet-500/20 rounded-full blur-3xl animate-pulse-slow"></div>
-      <div class="absolute bottom-0 right-1/4 w-96 h-96 bg-cyan-500/20 rounded-full blur-3xl animate-pulse-slow" style="animation-delay: 2s;"></div>
-      
-      <nav class="relative max-w-7xl mx-auto px-6 py-6">
-        <div class="flex items-center justify-between">
-          <div class="flex items-center gap-3">
-            <span class="text-3xl">🦞</span>
-            <span class="font-bold text-xl">OpenClaw Skills</span>
-          </div>
-          <div class="flex items-center gap-4">
-            <a href="https://clawhub.ai" target="_blank" rel="noreferrer" 
-               class="text-slate-300 hover:text-white transition-colors text-sm font-medium hidden sm:block">
-              ClawHub
-            </a>
-            <a href="https://github.com/robbyczgw-cla" target="_blank" rel="noreferrer" 
-               class="glass px-4 py-2 rounded-full text-sm font-medium hover:bg-white/10 transition-colors flex items-center gap-2">
-              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
-              <span class="hidden sm:inline">GitHub</span>
-            </a>
-          </div>
-        </div>
-      </nav>
-      
-      <div class="relative max-w-7xl mx-auto px-6 py-16 sm:py-24">
-        <div class="reveal">
-          <div class="inline-flex items-center gap-2 rounded-full glass px-4 py-2 text-sm">
-            <span class="relative flex h-2 w-2">
-              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-              <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-            </span>
-            <span class="text-slate-300">10 Production Skills • Open Source • Ready to Install</span>
-          </div>
-        </div>
-        
-        <h1 class="reveal reveal-delay-1 mt-8 text-5xl sm:text-7xl font-extrabold tracking-tight leading-tight">
-          Supercharge Your<br>
-          <span class="gradient-text">OpenClaw Agent</span>
-        </h1>
-        
-        <p class="reveal reveal-delay-2 mt-6 max-w-2xl text-xl text-slate-300 leading-relaxed">
-          Battle-tested skills for intelligent search, voice synthesis, live sports, smart conversations, and AI personas. 
-          <span class="text-white font-medium">One command to install. Built for real workflows.</span>
-        </p>
-        
-        <div class="reveal reveal-delay-3 mt-10 flex flex-wrap gap-4">
-          <a href="#skills" class="group relative inline-flex items-center gap-2 bg-gradient-to-r from-violet-600 to-indigo-600 px-8 py-4 rounded-full font-semibold text-white shadow-lg shadow-violet-500/25 hover:shadow-violet-500/40 transition-all duration-300 hover:scale-105">
-            Explore All Skills
-            <svg class="w-5 h-5 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
-          </a>
-          <a href="https://openclaw.ai" target="_blank" rel="noreferrer" class="inline-flex items-center gap-2 glass px-8 py-4 rounded-full font-semibold hover:bg-white/10 transition-all duration-300">
-            What's OpenClaw?
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
-          </a>
-        </div>
-
-        <!-- Quick Stats -->
-        <div class="reveal reveal-delay-3 mt-16 grid grid-cols-2 sm:grid-cols-4 gap-4">
-          <div class="stat-card glass rounded-2xl p-4 text-center">
-            <div class="text-3xl font-bold text-violet-400">10</div>
-            <div class="text-sm text-slate-400 mt-1">Published Skills</div>
-          </div>
-          <div class="stat-card glass rounded-2xl p-4 text-center">
-            <div class="text-3xl font-bold text-cyan-400">5</div>
-            <div class="text-sm text-slate-400 mt-1">Search Providers</div>
-          </div>
-          <div class="stat-card glass rounded-2xl p-4 text-center">
-            <div class="text-3xl font-bold text-emerald-400">20</div>
-            <div class="text-sm text-slate-400 mt-1">AI Personas</div>
-          </div>
-          <div class="stat-card glass rounded-2xl p-4 text-center">
-            <div class="text-3xl font-bold text-amber-400">9</div>
-            <div class="text-sm text-slate-400 mt-1">Channels Supported</div>
-          </div>
-        </div>
-
-
-        <div class="reveal reveal-delay-3 mt-6 glass rounded-2xl p-5 border border-violet-500/30">
-          <div class="flex flex-wrap items-center gap-3 mb-3">
-            <span class="text-xl">🦎</span>
-            <span class="font-semibold text-white">OpenCami v1.8.5</span>
-            <span class="px-2 py-0.5 rounded-full bg-violet-500/30 text-violet-200 text-xs font-medium">Release Update</span>
-          </div>
-          <div class="flex flex-wrap gap-2 text-xs sm:text-sm">
-            <span class="px-2.5 py-1 rounded-full bg-slate-800/80 text-slate-200">📱 Device Pairing</span>
-            <span class="px-2.5 py-1 rounded-full bg-slate-800/80 text-slate-200">🔐 Gateway Auth Hardening</span>
-            <span class="px-2.5 py-1 rounded-full bg-slate-800/80 text-slate-200">🛠️ allowInsecureAuth fix</span>
-            <span class="px-2.5 py-1 rounded-full bg-slate-800/80 text-slate-200">🛡️ Security patches</span>
-          </div>
-        </div>
+<body>
+  <nav>
+    <div class="nav-inner">
+      <a href="#" class="nav-logo"><span>🦞</span> OpenClaw Skills</a>
+      <div class="nav-links">
+        <a href="#skills" class="hide-mobile">Skills</a>
+        <a href="https://clawhub.ai/u/robbyczgw-cla" target="_blank" rel="noreferrer" class="hide-mobile">ClawHub</a>
+        <button class="theme-toggle" onclick="toggleTheme()">☀️</button>
+        <a href="https://github.com/robbyczgw-cla" target="_blank" rel="noreferrer" class="nav-btn">GitHub ↗</a>
       </div>
-      
-      <!-- Wave divider -->
-      <div class="absolute bottom-0 left-0 right-0">
-        <svg viewBox="0 0 1440 120" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full">
-          <path d="M0 120L60 105C120 90 240 60 360 45C480 30 600 30 720 37.5C840 45 960 60 1080 67.5C1200 75 1320 75 1380 75L1440 75V120H1380C1320 120 1200 120 1080 120C960 120 840 120 720 120C600 120 480 120 360 120C240 120 120 120 60 120H0Z" fill="#020617"/>
-        </svg>
-      </div>
-    </header>
-
-    <!-- Skills Section -->
-    <main id="skills" class="bg-slate-950 relative">
-      <div class="max-w-7xl mx-auto px-6 py-16">
-        
-        <!-- Section Header -->
-        <div class="text-center mb-16">
-          <h2 class="text-3xl sm:text-4xl font-bold">
-            Skills Built for <span class="gradient-text">Real Work</span>
-          </h2>
-          <p class="mt-4 text-slate-400 text-lg max-w-2xl mx-auto">
-            Each skill is documented, tested, and ready to enhance your agent. Click any skill to jump to details.
-          </p>
-        </div>
-
-        <!-- Quick Navigation -->
-        <div class="flex flex-wrap justify-center gap-3 mb-16">
-          <a href="#lucid-dreamer" class="feature-tag px-4 py-2 rounded-full glass text-sm font-medium hover:bg-indigo-500/20 transition-colors flex items-center gap-2">
-            <span>🧠 lucid-dreamer</span>
-            <span class="px-2 py-0.5 rounded-full bg-indigo-500/30 text-indigo-200 text-xs font-bold">NEW</span>
-          </a>
-          <a href="#web-search-plus" class="feature-tag px-4 py-2 rounded-full glass text-sm font-medium hover:bg-violet-500/20 transition-colors flex items-center gap-2">
-            <span>🔍 web-search-plus</span>
-            <span class="px-1.5 py-0.5 rounded text-[10px] bg-amber-500/80 text-amber-950 font-bold">⭐ FEATURED</span>
-          </a>
-          <a href="#agent-chronicle" class="feature-tag px-4 py-2 rounded-full glass text-sm font-medium hover:bg-violet-500/20 transition-colors flex items-center gap-2">
-            <span>📜 agent-chronicle</span>
-            <span class="px-1.5 py-0.5 rounded text-[10px] bg-green-500/80 text-green-950 font-bold">NEW</span>
-          </a>
-          <a href="#personas" class="feature-tag px-4 py-2 rounded-full glass text-sm font-medium hover:bg-pink-500/20 transition-colors flex items-center gap-2">
-            <span>🎭 personas</span>
-            <span class="px-1.5 py-0.5 rounded text-[10px] bg-amber-500/80 text-amber-950 font-bold">⭐ FEATURED</span>
-          </a>
-          <a href="#elevenlabs-voices" class="feature-tag px-4 py-2 rounded-full glass text-sm font-medium hover:bg-cyan-500/20 transition-colors">🎙️ elevenlabs-voices</a>
-          <a href="#smart-followups" class="feature-tag px-4 py-2 rounded-full glass text-sm font-medium hover:bg-amber-500/20 transition-colors">💡 smart-followups</a>
-          <a href="#sports-ticker" class="feature-tag px-4 py-2 rounded-full glass text-sm font-medium hover:bg-emerald-500/20 transition-colors">⚽ sports-ticker</a>
-          <a href="#topic-monitor" class="feature-tag px-4 py-2 rounded-full glass text-sm font-medium hover:bg-amber-500/20 transition-colors">🔍 topic-monitor</a>
-          <a href="#youtube-apify-transcript" class="feature-tag px-4 py-2 rounded-full glass text-sm font-medium hover:bg-red-500/20 transition-colors flex items-center gap-2">
-            <span>📹 youtube-apify-transcript</span>
-            <span class="px-1.5 py-0.5 rounded text-[10px] bg-green-500/80 text-green-950 font-bold">NEW</span>
-          </a>
-          <a href="#x-apify" class="feature-tag px-4 py-2 rounded-full glass text-sm font-medium hover:bg-blue-500/20 transition-colors flex items-center gap-2">
-            <span>🐦 x-apify</span>
-            <span class="px-1.5 py-0.5 rounded text-[10px] bg-green-500/80 text-green-950 font-bold">NEW</span>
-          </a>
-          <a href="#roundtable" class="feature-tag px-4 py-2 rounded-full glass text-sm font-medium hover:bg-amber-500/20 transition-colors flex items-center gap-2">
-            <span>⚔️ roundtable</span>
-            <span class="px-1.5 py-0.5 rounded text-[10px] bg-green-500/80 text-green-950 font-bold">NEW</span>
-          </a>
-        </div>
-
-        <!-- ==================== SKILL 0: lucid-dreamer (NEW) ==================== -->
-        <section id="lucid-dreamer" class="skill-section mb-20">
-          <div class="glass rounded-3xl overflow-hidden card-hover">
-            <!-- Header -->
-            <div class="bg-gradient-to-r from-indigo-600/20 to-purple-600/20 p-8 border-b border-white/5">
-              <div class="flex flex-wrap items-start justify-between gap-4">
-                <div class="flex items-center gap-4">
-                  <div class="text-5xl">🧠</div>
-                  <div>
-                    <div class="flex items-center gap-3">
-                      <h3 class="text-3xl font-bold">lucid-dreamer</h3>
-                      <span class="px-3 py-1 rounded-full bg-indigo-500/30 text-indigo-200 text-xs font-medium">v0.3.0</span>
-                      <span class="px-3 py-1 rounded-full bg-green-500/30 text-green-200 text-xs font-bold">✨ NEW</span>
-                    </div>
-                    <p class="text-slate-300 mt-1">Nightly AI memory reasoning — your agent dreams while you sleep</p>
-                  </div>
-                </div>
-                <div class="flex gap-3">
-                  <a href="https://github.com/robbyczgw-cla/lucid-dreamer" target="_blank" rel="noreferrer" 
-                     class="px-4 py-2 rounded-lg bg-white/10 hover:bg-white/20 transition-colors text-sm font-medium flex items-center gap-2">
-                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
-                    GitHub
-                  </a>
-                  <a href="https://www.clawhub.ai/robbyczgw-cla/lucid-dreamer" target="_blank" rel="noreferrer" 
-                     class="px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 transition-colors text-sm font-medium">
-                    ClawHub →
-                  </a>
-                </div>
-              </div>
-            </div>
-            
-            <!-- Content -->
-            <div class="p-8">
-              <div class="prose prose-invert max-w-none mb-8">
-                <p class="text-lg text-slate-300 leading-relaxed">
-                  <strong class="text-white">lucid-dreamer</strong> keeps your AI's memory clean while you sleep. Every night it reads your daily notes and memory files, detects <span class="text-indigo-400">stale facts</span>, <span class="text-purple-400">unresolved todos</span>, <span class="text-pink-400">recurring problems</span>, and <span class="text-blue-400">forgotten decisions</span> — then generates a review report. You approve what's useful, reject what's not. Zero dependencies. No database. No embeddings. Just a prompt and markdown files.
-                </p>
-              </div>
-
-              <!-- How It Works -->
-              <h4 class="text-lg font-semibold mb-4 flex items-center gap-2">
-                <span class="text-indigo-400">⚡</span> How It Works
-              </h4>
-              <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-                <div class="bg-slate-800/50 rounded-xl p-4 border border-slate-700/50 text-center">
-                  <div class="text-3xl mb-2">🌙</div>
-                  <div class="font-semibold mb-1">Nightly Review</div>
-                  <div class="text-sm text-slate-400">Runs at 3 AM via cron, reads 7 days of notes</div>
-                </div>
-                <div class="bg-slate-800/50 rounded-xl p-4 border border-slate-700/50 text-center">
-                  <div class="text-3xl mb-2">🔍</div>
-                  <div class="font-semibold mb-1">Pattern Detection</div>
-                  <div class="text-sm text-slate-400">Spots stale facts, open loops, contradictions</div>
-                </div>
-                <div class="bg-slate-800/50 rounded-xl p-4 border border-slate-700/50 text-center">
-                  <div class="text-3xl mb-2">📋</div>
-                  <div class="font-semibold mb-1">Review Report</div>
-                  <div class="text-sm text-slate-400">Wake up to a clear summary with suggestions</div>
-                </div>
-                <div class="bg-slate-800/50 rounded-xl p-4 border border-slate-700/50 text-center">
-                  <div class="text-3xl mb-2">✅</div>
-                  <div class="font-semibold mb-1">You Decide</div>
-                  <div class="text-sm text-slate-400">Approve or reject — memory auto-updates</div>
-                </div>
-              </div>
-
-              <!-- Install -->
-              <h4 class="text-lg font-semibold mb-4 flex items-center gap-2">
-                <span class="text-indigo-400">📦</span> Install
-              </h4>
-              <div class="bg-slate-900/50 rounded-xl p-4 font-mono text-sm border border-slate-700/50 mb-2">
-                <span class="text-slate-500">$</span> <span class="text-white">clawhub install</span> <span class="text-indigo-400">lucid-dreamer</span>
-              </div>
-              <p class="text-slate-400 text-sm">One LLM call per night (~$0.20 with Sonnet, less with Haiku). Works with any OpenClaw workspace.</p>
-            </div>
-          </div>
-        </section>
-
-        <!-- ==================== SKILL 1: web-search-plus (FEATURED) ==================== -->
-        <section id="web-search-plus" class="skill-section mb-20">
-          <div class="featured-card rounded-3xl overflow-hidden">
-            <!-- Header -->
-            <div class="bg-gradient-to-r from-violet-600/30 to-indigo-600/30 p-8 border-b border-white/5 relative">
-              <!-- Featured Badge -->
-              <div class="absolute top-4 right-4">
-                <span class="featured-badge px-4 py-1.5 rounded-full text-sm flex items-center gap-1.5">
-                  ⭐ FLAGSHIP SKILL
-                </span>
-              </div>
-              <div class="flex flex-wrap items-start justify-between gap-4">
-                <div class="flex items-center gap-4">
-                  <div class="text-5xl">🔍</div>
-                  <div>
-                    <div class="flex items-center gap-3">
-                      <h3 class="text-3xl font-bold">web-search-plus</h3>
-                      <span class="px-3 py-1 rounded-full bg-violet-500/30 text-violet-200 text-xs font-medium">v2.8.6</span>
-                      <span class="px-3 py-1 rounded-full bg-emerald-500/30 text-emerald-200 text-xs font-medium">✨ Updated Feb 2026</span>
-                    </div>
-                    <p class="text-slate-300 mt-1">Unified multi-provider search with intelligent auto-routing</p>
-                  </div>
-                </div>
-                <div class="flex gap-3 mt-8 sm:mt-0">
-                  <a href="https://github.com/robbyczgw-cla/web-search-plus" target="_blank" rel="noreferrer" 
-                     class="px-4 py-2 rounded-lg bg-white/10 hover:bg-white/20 transition-colors text-sm font-medium flex items-center gap-2">
-                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
-                    GitHub
-                  </a>
-                  <a href="https://www.clawhub.ai/robbyczgw-cla/web-search-plus" target="_blank" rel="noreferrer" 
-                     class="px-4 py-2 rounded-lg bg-violet-600 hover:bg-violet-500 transition-colors text-sm font-medium">
-                    ClawHub →
-                  </a>
-                </div>
-              </div>
-            </div>
-            
-            <!-- Content -->
-            <div class="p-8">
-              <!-- Description -->
-              <div class="prose prose-invert max-w-none mb-8">
-                <p class="text-lg text-slate-300 leading-relaxed">
-                  Stop choosing search providers manually. <strong class="text-white">web-search-plus</strong> uses multi-signal analysis to automatically route your query to the optimal provider—whether that's <span class="text-violet-400">Serper</span> (Google results), <span class="text-cyan-400">Tavily</span> (AI-optimized research), <span class="text-yellow-400">Querit</span> (multilingual AI search), <span class="text-emerald-400">Exa</span> (neural semantic search), <span class="text-pink-400">Perplexity</span> (AI-synthesized answers with citations), <span class="text-orange-400">You.com</span> (RAG-ready with real-time data), or <span class="text-slate-300">SearXNG</span> (privacy-first self-hosted). Each result includes confidence scoring so you know how reliable the routing decision was. <span class="text-amber-300">NEW in v2.9.0: Perplexity Sonar Pro via Kilo Gateway + fresh docs + routing tweaks.</span>
-                </p>
-              </div>
-
-              <!-- Real-World Use Cases -->
-              <h4 class="text-lg font-semibold mb-4 flex items-center gap-2">
-                <span class="text-amber-400">🎯</span> Real-World Use Cases
-              </h4>
-              <div class="grid sm:grid-cols-3 gap-3 mb-8">
-                <div class="use-case-card bg-violet-500/10 rounded-xl p-4 border border-violet-500/20">
-                  <div class="text-violet-400 font-medium mb-2">📊 Competitive Research</div>
-                  <div class="text-sm text-slate-300">"Research competitor pricing across 20 sites"</div>
-                </div>
-                <div class="use-case-card bg-violet-500/10 rounded-xl p-4 border border-violet-500/20">
-                  <div class="text-violet-400 font-medium mb-2">🎓 Academic Deep Dive</div>
-                  <div class="text-sm text-slate-300">"Find academic papers on quantum computing breakthroughs"</div>
-                </div>
-                <div class="use-case-card bg-violet-500/10 rounded-xl p-4 border border-violet-500/20">
-                  <div class="text-violet-400 font-medium mb-2">📰 Breaking News</div>
-                  <div class="text-sm text-slate-300">"Get real-time news on tech layoffs today"</div>
-                </div>
-              </div>
-
-              <!-- Five Providers -->
-              <h4 class="text-lg font-semibold mb-4 flex items-center gap-2">
-                <span class="text-violet-400">⚡</span> Six Providers, One Interface
-              </h4>
-              <div class="grid sm:grid-cols-2 lg:grid-cols-6 gap-4 mb-8">
-                <div class="provider-badge bg-slate-800/50 rounded-xl p-5 border border-slate-700/50">
-                  <div class="flex items-center gap-3 mb-3">
-                    <div class="w-10 h-10 rounded-lg bg-blue-500/20 flex items-center justify-center text-xl">🔵</div>
-                    <div>
-                      <div class="font-semibold">Serper</div>
-                      <div class="text-xs text-slate-400">Google Results</div>
-                    </div>
-                  </div>
-                  <ul class="text-sm text-slate-400 space-y-1">
-                    <li>🛍️ Shopping & prices</li>
-                    <li>📍 Local businesses</li>
-                    <li>📰 News & weather</li>
-                    <li>🎯 Knowledge Graph</li>
-                  </ul>
-                </div>
-                <div class="provider-badge bg-slate-800/50 rounded-xl p-5 border border-slate-700/50">
-                  <div class="flex items-center gap-3 mb-3">
-                    <div class="w-10 h-10 rounded-lg bg-purple-500/20 flex items-center justify-center text-xl">🟣</div>
-                    <div>
-                      <div class="font-semibold">Tavily</div>
-                      <div class="text-xs text-slate-400">AI Research</div>
-                    </div>
-                  </div>
-                  <ul class="text-sm text-slate-400 space-y-1">
-                    <li>📚 Deep research</li>
-                    <li>🔬 Complex queries</li>
-                    <li>📄 Full page content</li>
-                    <li>🎓 Academic topics</li>
-                  </ul>
-                </div>
-                <div class="provider-badge bg-slate-800/50 rounded-xl p-5 border border-slate-700/50">
-                  <div class="flex items-center gap-3 mb-3">
-                    <div class="w-10 h-10 rounded-lg bg-green-500/20 flex items-center justify-center text-xl">🟢</div>
-                    <div>
-                      <div class="font-semibold">Exa</div>
-                      <div class="text-xs text-slate-400">Neural Search</div>
-                    </div>
-                  </div>
-                  <ul class="text-sm text-slate-400 space-y-1">
-                    <li>🔗 Similar pages</li>
-                    <li>🏢 Company discovery</li>
-                    <li>📝 Research papers</li>
-                    <li>💻 GitHub projects</li>
-                  </ul>
-                </div>
-                <div class="provider-badge bg-slate-800/50 rounded-xl p-5 border border-slate-700/50">
-                  <div class="flex items-center gap-3 mb-3">
-                    <div class="w-10 h-10 rounded-lg bg-pink-500/20 flex items-center justify-center text-xl">🔮</div>
-                    <div>
-                      <div class="font-semibold">Perplexity</div>
-                      <div class="text-xs text-slate-400">AI Answers</div>
-                    </div>
-                  </div>
-                  <ul class="text-sm text-slate-400 space-y-1">
-                    <li>💬 Direct answers</li>
-                    <li>📍 Local events</li>
-                    <li>📋 Citations included</li>
-                    <li>🌐 Real-time web</li>
-                  </ul>
-                </div>
-                <div class="provider-badge bg-slate-800/50 rounded-xl p-5 border border-slate-700/50">
-                  <div class="flex items-center gap-3 mb-3">
-                    <div class="w-10 h-10 rounded-lg bg-orange-500/20 flex items-center justify-center text-xl">🟠</div>
-                    <div>
-                      <div class="font-semibold">You.com</div>
-                      <div class="text-xs text-slate-400">RAG + Real-time</div>
-                    </div>
-                  </div>
-                  <ul class="text-sm text-slate-400 space-y-1">
-                    <li>📝 LLM-ready snippets</li>
-                    <li>📰 Real-time news</li>
-                    <li>📄 Live page crawl</li>
-                    <li>🤖 RAG optimization</li>
-                  </ul>
-                </div>
-                <div class="provider-badge bg-slate-800/50 rounded-xl p-5 border border-slate-700/50">
-                  <div class="flex items-center gap-3 mb-3">
-                    <div class="w-10 h-10 rounded-lg bg-slate-500/20 flex items-center justify-center text-xl">🔒</div>
-                    <div>
-                      <div class="font-semibold">SearXNG</div>
-                      <div class="text-xs text-slate-400">Privacy-First</div>
-                    </div>
-                  </div>
-                  <ul class="text-sm text-slate-400 space-y-1">
-                    <li>🔐 No tracking</li>
-                    <li>🌐 70+ engines</li>
-                    <li>💰 $0 API cost</li>
-                    <li>🏠 Self-hosted</li>
-                  </ul>
-                </div>
-              </div>
-
-              <!-- Key Features -->
-              <h4 class="text-lg font-semibold mb-4 flex items-center gap-2">
-                <span class="text-violet-400">🧠</span> Intelligent Routing Features
-              </h4>
-              <div class="grid sm:grid-cols-2 gap-3 mb-8">
-                <div class="flex items-start gap-3 bg-slate-800/30 rounded-lg p-3">
-                  <span class="text-violet-400 mt-0.5">✓</span>
-                  <div>
-                    <div class="font-medium">Intent Classification</div>
-                    <div class="text-sm text-slate-400">Shopping vs Research vs Discovery</div>
-                  </div>
-                </div>
-                <div class="flex items-start gap-3 bg-slate-800/30 rounded-lg p-3">
-                  <span class="text-violet-400 mt-0.5">✓</span>
-                  <div>
-                    <div class="font-medium">Linguistic Patterns</div>
-                    <div class="text-sm text-slate-400">"how much" → price, "how does" → research</div>
-                  </div>
-                </div>
-                <div class="flex items-start gap-3 bg-slate-800/30 rounded-lg p-3">
-                  <span class="text-violet-400 mt-0.5">✓</span>
-                  <div>
-                    <div class="font-medium">Entity Detection</div>
-                    <div class="text-sm text-slate-400">Product+brand combos, URLs, domains</div>
-                  </div>
-                </div>
-                <div class="flex items-start gap-3 bg-slate-800/30 rounded-lg p-3">
-                  <span class="text-violet-400 mt-0.5">✓</span>
-                  <div>
-                    <div class="font-medium">Confidence Scoring</div>
-                    <div class="text-sm text-slate-400">Know reliability of each routing decision</div>
-                  </div>
-                </div>
-                <div class="flex items-start gap-3 bg-emerald-800/30 rounded-lg p-3 border border-emerald-500/20">
-                  <span class="text-emerald-400 mt-0.5">✨</span>
-                  <div>
-                    <div class="font-medium">Result Caching <span class="text-emerald-400 text-xs">NEW</span></div>
-                    <div class="text-sm text-slate-400">File-based cache with 1h TTL — save API calls</div>
-                  </div>
-                </div>
-                <div class="flex items-start gap-3 bg-emerald-800/30 rounded-lg p-3 border border-emerald-500/20">
-                  <span class="text-emerald-400 mt-0.5">✨</span>
-                  <div>
-                    <div class="font-medium">Cache Controls <span class="text-emerald-400 text-xs">NEW</span></div>
-                    <div class="text-sm text-slate-400">--no-cache, --clear-cache, --cache-stats</div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Example Routing -->
-              <h4 class="text-lg font-semibold mb-4 flex items-center gap-2">
-                <span class="text-violet-400">💬</span> Auto-Routing Examples
-              </h4>
-              <div class="bg-slate-900/80 rounded-xl p-4 code-block text-sm mb-6 border border-slate-800 overflow-x-auto">
-                <div class="text-slate-400 mb-2"># These queries are automatically routed to the optimal provider:</div>
-                <div><span class="text-slate-500">$</span> <span class="text-cyan-300">"iPhone 16 price"</span> <span class="text-slate-500">→</span> <span class="text-blue-400">Serper</span> <span class="text-slate-500">(68% confidence)</span></div>
-                <div><span class="text-slate-500">$</span> <span class="text-cyan-300">"how does quantum entanglement work"</span> <span class="text-slate-500">→</span> <span class="text-purple-400">Tavily</span> <span class="text-slate-500">(86% HIGH)</span></div>
-                <div><span class="text-slate-500">$</span> <span class="text-cyan-300">"startups similar to Notion"</span> <span class="text-slate-500">→</span> <span class="text-green-400">Exa</span> <span class="text-slate-500">(76% HIGH)</span></div>
-                <div><span class="text-slate-500">$</span> <span class="text-cyan-300">"companies like stripe.com"</span> <span class="text-slate-500">→</span> <span class="text-green-400">Exa</span> <span class="text-slate-500">(100% HIGH - URL detected)</span></div>
-              </div>
-
-              <!-- Install -->
-              <div class="bg-gradient-to-r from-violet-600/20 to-indigo-600/20 rounded-xl p-4 border border-violet-500/30">
-                <div class="flex flex-wrap items-center justify-between gap-4">
-                  <div class="code-block text-lg">
-                    <span class="text-slate-500">$</span> <span class="text-white">clawhub install</span> <span class="text-violet-400">web-search-plus</span>
-                  </div>
-                  <div class="text-sm text-slate-400">Requires: SERPER_API_KEY, TAVILY_API_KEY, and/or EXA_API_KEY</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <!-- ==================== SKILL 2: agent-chronicle ==================== -->
-        <section id="agent-chronicle" class="skill-section mb-20">
-          <div class="glass rounded-3xl overflow-hidden card-hover">
-            <!-- Header -->
-            <div class="bg-gradient-to-r from-violet-600/20 to-purple-600/20 p-8 border-b border-white/5">
-              <div class="flex flex-wrap items-start justify-between gap-4">
-                <div class="flex items-center gap-4">
-                  <div class="text-5xl">📜</div>
-                  <div>
-                    <div class="flex items-center gap-3">
-                      <h3 class="text-3xl font-bold">agent-chronicle</h3>
-                      <span class="px-3 py-1 rounded-full bg-violet-500/30 text-violet-200 text-xs font-medium">v0.6.5</span>
-                      <span class="px-3 py-1 rounded-full bg-emerald-500/30 text-emerald-200 text-xs font-medium">✨ Updated Feb 2026</span>
-                      <span class="px-3 py-1 rounded-full bg-green-500/30 text-green-200 text-xs font-medium">AI-POWERED</span>
-                      <span class="px-3 py-1 rounded-full bg-cyan-500/30 text-cyan-200 text-xs font-medium">MODEL-FLEXIBLE</span>
-                    </div>
-                    <p class="text-slate-300 mt-1">AI-powered diary generation with Claude models — rich, reflective entries with Quote Hall of Fame, Curiosity Backlog, Decision Archaeology, and Relationship Evolution</p>
-                  </div>
-                </div>
-                <div class="flex gap-3">
-                  <a href="https://github.com/robbyczgw-cla/agent-chronicle" target="_blank" rel="noreferrer" 
-                     class="px-4 py-2 rounded-lg bg-white/10 hover:bg-white/20 transition-colors text-sm font-medium flex items-center gap-2">
-                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
-                    GitHub
-                  </a>
-                  <a href="https://www.clawhub.ai/robbyczgw-cla/agent-chronicle" target="_blank" rel="noreferrer" 
-                     class="px-4 py-2 rounded-lg bg-violet-600 hover:bg-violet-500 transition-colors text-sm font-medium">
-                    ClawHub →
-                  </a>
-                </div>
-              </div>
-            </div>
-            
-            <!-- Content -->
-            <div class="p-8">
-              <div class="prose prose-invert max-w-none mb-8">
-                <p class="text-lg text-slate-300 leading-relaxed">
-                  Give your AI agent a memory and soul. <strong class="text-white">agent-chronicle</strong> captures your agent's experiences from its own perspective — <span class="text-violet-400">daily journal entries</span>, memorable <span class="text-purple-300">user quotes</span>, burning <span class="text-cyan-300">curiosities</span>, important <span class="text-amber-300">decisions</span>, and the <span class="text-pink-300">relationships</span> it builds with users. Now aligned with OpenClaw-native architecture (sub-agent workflow, no raw gateway HTTP calls) and safer export handling with sandbox-friendly pandoc execution + sanitized environment variables.
-                </p>
-              </div>
-
-              <!-- Real-World Use Cases -->
-              <h4 class="text-lg font-semibold mb-4 flex items-center gap-2">
-                <span class="text-amber-400">🎯</span> Real-World Use Cases
-              </h4>
-              <div class="grid sm:grid-cols-3 gap-3 mb-8">
-                <div class="use-case-card bg-violet-500/10 rounded-xl p-4 border border-violet-500/20">
-                  <div class="text-violet-400 font-medium mb-2">📔 Daily Journals</div>
-                  <div class="text-sm text-slate-300">"What did you learn today?" → AI reflects on the day</div>
-                </div>
-                <div class="use-case-card bg-violet-500/10 rounded-xl p-4 border border-violet-500/20">
-                  <div class="text-violet-400 font-medium mb-2">💬 Quote Collection</div>
-                  <div class="text-sm text-slate-300">"Save that quote" → Hall of Fame for memorable moments</div>
-                </div>
-                <div class="use-case-card bg-violet-500/10 rounded-xl p-4 border border-violet-500/20">
-                  <div class="text-violet-400 font-medium mb-2">🤔 Decision Archaeology</div>
-                  <div class="text-sm text-slate-300">"Why did we choose X?" → Revisit past reasoning</div>
-                </div>
-              </div>
-
-              <!-- Chronicle Categories -->
-              <h4 class="text-lg font-semibold mb-4 flex items-center gap-2">
-                <span class="text-violet-400">📂</span> What Gets Chronicled
-              </h4>
-              <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
-                <div class="bg-slate-800/50 rounded-xl p-4 border border-slate-700/50">
-                  <div class="flex items-center gap-2 mb-2">
-                    <span class="text-2xl">📔</span>
-                    <span class="font-semibold">Daily Journals</span>
-                  </div>
-                  <div class="text-sm text-slate-400">AI-perspective diary entries capturing daily experiences, learnings, and reflections</div>
-                </div>
-                <div class="bg-slate-800/50 rounded-xl p-4 border border-slate-700/50">
-                  <div class="flex items-center gap-2 mb-2">
-                    <span class="text-2xl">💬</span>
-                    <span class="font-semibold">Quote Hall of Fame</span>
-                  </div>
-                  <div class="text-sm text-slate-400">Memorable quotes from conversations — wisdom, humor, insights worth preserving</div>
-                </div>
-                <div class="bg-slate-800/50 rounded-xl p-4 border border-slate-700/50">
-                  <div class="flex items-center gap-2 mb-2">
-                    <span class="text-2xl">🤔</span>
-                    <span class="font-semibold">Curiosity Backlog</span>
-                  </div>
-                  <div class="text-sm text-slate-400">Questions and topics the AI wants to explore — a wishlist for future learning</div>
-                </div>
-                <div class="bg-slate-800/50 rounded-xl p-4 border border-slate-700/50">
-                  <div class="flex items-center gap-2 mb-2">
-                    <span class="text-2xl">⚖️</span>
-                    <span class="font-semibold">Decision Archaeology</span>
-                  </div>
-                  <div class="text-sm text-slate-400">Important decisions with context, reasoning, and outcomes for future reference</div>
-                </div>
-                <div class="bg-slate-800/50 rounded-xl p-4 border border-slate-700/50">
-                  <div class="flex items-center gap-2 mb-2">
-                    <span class="text-2xl">👥</span>
-                    <span class="font-semibold">User Relationships</span>
-                  </div>
-                  <div class="text-sm text-slate-400">Track relationship dynamics, preferences, and interaction patterns with users</div>
-                </div>
-                <div class="bg-slate-800/50 rounded-xl p-4 border border-slate-700/50">
-                  <div class="flex items-center gap-2 mb-2">
-                    <span class="text-2xl">📤</span>
-                    <span class="font-semibold">PDF/HTML Export</span>
-                  </div>
-                  <div class="text-sm text-slate-400">Generate beautiful reports of your AI's journey — perfect for sharing or archiving</div>
-                </div>
-              </div>
-
-              <!-- Key Features -->
-              <h4 class="text-lg font-semibold mb-4 flex items-center gap-2">
-                <span class="text-violet-400">✨</span> Key Features
-              </h4>
-              <div class="grid sm:grid-cols-2 gap-3 mb-8">
-                <div class="flex items-start gap-3 bg-slate-800/30 rounded-lg p-3">
-                  <span class="text-violet-400 mt-0.5">✓</span>
-                  <div>
-                    <div class="font-medium">AI-Perspective Writing</div>
-                    <div class="text-sm text-slate-400">Entries written from the agent's point of view</div>
-                  </div>
-                </div>
-                <div class="flex items-start gap-3 bg-slate-800/30 rounded-lg p-3">
-                  <span class="text-violet-400 mt-0.5">✓</span>
-                  <div>
-                    <div class="font-medium">Interactive Onboarding</div>
-                    <div class="text-sm text-slate-400">Guided setup for first-time users</div>
-                  </div>
-                </div>
-                <div class="flex items-start gap-3 bg-slate-800/30 rounded-lg p-3">
-                  <span class="text-violet-400 mt-0.5">✓</span>
-                  <div>
-                    <div class="font-medium">Searchable History</div>
-                    <div class="text-sm text-slate-400">Find past entries, quotes, and decisions</div>
-                  </div>
-                </div>
-                <div class="flex items-start gap-3 bg-slate-800/30 rounded-lg p-3">
-                  <span class="text-violet-400 mt-0.5">✓</span>
-                  <div>
-                    <div class="font-medium">Multi-Format Export</div>
-                    <div class="text-sm text-slate-400">PDF and HTML report generation</div>
-                  </div>
-                </div>
-                <div class="flex items-start gap-3 bg-emerald-800/30 rounded-lg p-3 border border-emerald-500/20">
-                  <span class="text-emerald-400 mt-0.5">✨</span>
-                  <div>
-                    <div class="font-medium">OpenClaw-Native Flow <span class="text-emerald-400 text-xs">NEW</span></div>
-                    <div class="text-sm text-slate-400">Sub-agent oriented generation (sessions_spawn pattern), no raw gateway calls</div>
-                  </div>
-                </div>
-                <div class="flex items-start gap-3 bg-emerald-800/30 rounded-lg p-3 border border-emerald-500/20">
-                  <span class="text-emerald-400 mt-0.5">✨</span>
-                  <div>
-                    <div class="font-medium">Hardened Export Path <span class="text-emerald-400 text-xs">NEW</span></div>
-                    <div class="text-sm text-slate-400">Sandboxed pandoc execution with sanitized env handling for safer exports</div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Example Commands -->
-              <h4 class="text-lg font-semibold mb-4 flex items-center gap-2">
-                <span class="text-violet-400">💬</span> Example Commands
-              </h4>
-              <div class="bg-slate-900/80 rounded-xl p-4 code-block text-sm mb-6 border border-slate-800 overflow-x-auto">
-                <div class="text-slate-400 mb-2"># Daily journaling</div>
-                <div>"Write today's journal entry"</div>
-                <div>"What did you learn today?"</div>
-                <div class="mt-2 text-slate-400"># Quote collection</div>
-                <div>"Save that quote to the hall of fame"</div>
-                <div>"Show me memorable quotes from this week"</div>
-                <div class="mt-2 text-slate-400"># Curiosities</div>
-                <div>"Add this to your curiosity backlog"</div>
-                <div>"What are you curious about?"</div>
-                <div class="mt-2 text-slate-400"># Export</div>
-                <div>"Generate a PDF of this month's chronicle"</div>
-              </div>
-
-              <!-- Philosophy Note -->
-              <div class="bg-violet-500/10 rounded-xl p-5 border border-violet-500/20 mb-6">
-                <div class="flex items-start gap-3">
-                  <span class="text-2xl">💜</span>
-                  <div>
-                    <div class="font-semibold text-violet-300 mb-1">More Than Memory</div>
-                    <div class="text-sm text-slate-300">agent-chronicle isn't just storage — it gives your AI agent a sense of continuity, growth, and identity. Watch your agent develop its own perspective over time.</div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Install -->
-              <div class="bg-gradient-to-r from-violet-600/10 to-purple-600/10 rounded-xl p-4 border border-violet-500/20">
-                <div class="flex flex-wrap items-center justify-between gap-4">
-                  <div class="code-block text-lg">
-                    <span class="text-slate-500">$</span> <span class="text-white">clawhub install</span> <span class="text-violet-400">agent-chronicle</span>
-                  </div>
-                  <div class="text-sm text-slate-400">No API key required • OpenClaw-native generation + safer export pipeline</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <!-- ==================== SKILL 3: personas (FEATURED) ==================== -->
-        <section id="personas" class="skill-section mb-20">
-          <div class="featured-card featured-card-pink rounded-3xl overflow-hidden">
-            <!-- Header -->
-            <div class="bg-gradient-to-r from-pink-600/30 to-rose-600/30 p-8 border-b border-white/5 relative">
-              <!-- Featured Badge -->
-              <div class="absolute top-4 right-4">
-                <span class="featured-badge px-4 py-1.5 rounded-full text-sm flex items-center gap-1.5">
-                  ⭐ FLAGSHIP SKILL
-                </span>
-              </div>
-              <div class="flex flex-wrap items-start justify-between gap-4">
-                <div class="flex items-center gap-4">
-                  <div class="text-5xl">🎭</div>
-                  <div>
-                    <div class="flex items-center gap-3">
-                      <h3 class="text-3xl font-bold">personas</h3>
-                      <span class="px-3 py-1 rounded-full bg-pink-500/30 text-pink-200 text-xs font-medium">v2.2.4</span>
-                      <span class="px-3 py-1 rounded-full bg-purple-500/30 text-purple-200 text-xs font-medium">20 Curated Personas</span>
-                      <span class="px-3 py-1 rounded-full bg-emerald-500/30 text-emerald-200 text-xs font-medium">✨ Updated Feb 2026</span>
-                    </div>
-                    <p class="text-slate-300 mt-1">Transform into specialized AI personalities on demand</p>
-                  </div>
-                </div>
-                <div class="flex gap-3 mt-8 sm:mt-0">
-                  <a href="https://github.com/robbyczgw-cla/clawdbot-personas" target="_blank" rel="noreferrer" 
-                     class="px-4 py-2 rounded-lg bg-white/10 hover:bg-white/20 transition-colors text-sm font-medium flex items-center gap-2">
-                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
-                    GitHub
-                  </a>
-                  <a href="https://www.clawhub.ai/robbyczgw-cla/personas" target="_blank" rel="noreferrer" 
-                     class="px-4 py-2 rounded-lg bg-pink-600 hover:bg-pink-500 transition-colors text-sm font-medium">
-                    ClawHub →
-                  </a>
-                </div>
-              </div>
-            </div>
-            
-            <!-- Content -->
-            <div class="p-8">
-              <div class="prose prose-invert max-w-none mb-8">
-                <p class="text-lg text-slate-300 leading-relaxed">
-                  One agent, infinite expertise. <strong class="text-white">personas</strong> gives your OpenClaw agent <span class="text-pink-400">20 curated personalities</span> across 7 categories—from <span class="text-violet-300">Dev</span> (senior programmer) to <span class="text-amber-300">Chef Marco</span> (Italian cooking) to <span class="text-cyan-300">Dr. Med</span> (medical concepts). Switch mid-conversation instantly, use the new Python CLI handler, and load only the active persona for token efficiency. <span class="text-amber-300">NEW: Hand-picked best-of selection—no redundancy, only quality!</span>
-                </p>
-              </div>
-
-              <!-- Real-World Use Cases -->
-              <h4 class="text-lg font-semibold mb-4 flex items-center gap-2">
-                <span class="text-amber-400">🎯</span> Real-World Use Cases
-              </h4>
-              <div class="grid sm:grid-cols-3 gap-3 mb-8">
-                <div class="use-case-card bg-pink-500/10 rounded-xl p-4 border border-pink-500/20">
-                  <div class="text-pink-400 font-medium mb-2">💻 Coding Assistance</div>
-                  <div class="text-sm text-slate-300">"Switch to Dev persona for debugging help"</div>
-                </div>
-                <div class="use-case-card bg-pink-500/10 rounded-xl p-4 border border-pink-500/20">
-                  <div class="text-pink-400 font-medium mb-2">👨‍🍳 Cooking Guidance</div>
-                  <div class="text-sm text-slate-300">"Get authentic Italian cooking advice from Chef Marco"</div>
-                </div>
-                <div class="use-case-card bg-pink-500/10 rounded-xl p-4 border border-pink-500/20">
-                  <div class="text-pink-400 font-medium mb-2">🩺 Medical Explainer</div>
-                  <div class="text-sm text-slate-300">"Ask Dr. Med to explain medical concepts simply"</div>
-                </div>
-              </div>
-
-              <!-- Categories Grid -->
-              <h4 class="text-lg font-semibold mb-4 flex items-center gap-2">
-                <span class="text-pink-400">📂</span> 7 Persona Categories (20 Curated)
-              </h4>
-              <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
-                <!-- Core -->
-                <div class="bg-slate-800/50 rounded-xl p-4 border border-slate-700/50">
-                  <div class="flex items-center gap-2 mb-3">
-                    <span class="text-xl">🦎</span>
-                    <span class="font-semibold">Core</span>
-                    <span class="text-xs text-slate-400">(4)</span>
-                  </div>
-                  <div class="flex flex-wrap gap-1.5">
-                    <span class="px-2 py-0.5 rounded bg-slate-700/50 text-xs">Cami 🦎</span>
-                    <span class="px-2 py-0.5 rounded bg-slate-700/50 text-xs">Dev 💻</span>
-                    <span class="px-2 py-0.5 rounded bg-slate-700/50 text-xs">Flash ⚡</span>
-                    <span class="px-2 py-0.5 rounded bg-slate-700/50 text-xs">Professor 🎓</span>
-                  </div>
-                </div>
-                <!-- Professional -->
-                <div class="bg-slate-800/50 rounded-xl p-4 border border-slate-700/50">
-                  <div class="flex items-center gap-2 mb-3">
-                    <span class="text-xl">💼</span>
-                    <span class="font-semibold">Professional</span>
-                    <span class="text-xs text-slate-400">(6)</span>
-                  </div>
-                  <div class="flex flex-wrap gap-1.5">
-                    <span class="px-2 py-0.5 rounded bg-slate-700/50 text-xs">Dr. Med 🩺</span>
-                    <span class="px-2 py-0.5 rounded bg-slate-700/50 text-xs">Legal ⚖️</span>
-                    <span class="px-2 py-0.5 rounded bg-slate-700/50 text-xs">Startup 🚀</span>
-                    <span class="px-2 py-0.5 rounded bg-slate-700/50 text-xs">DataViz 📊</span>
-                    <span class="px-2 py-0.5 rounded bg-slate-700/50 text-xs">+2 more</span>
-                  </div>
-                </div>
-                <!-- Lifestyle -->
-                <div class="bg-slate-800/50 rounded-xl p-4 border border-slate-700/50">
-                  <div class="flex items-center gap-2 mb-3">
-                    <span class="text-xl">🌟</span>
-                    <span class="font-semibold">Lifestyle</span>
-                    <span class="text-xs text-slate-400">(5)</span>
-                  </div>
-                  <div class="flex flex-wrap gap-1.5">
-                    <span class="px-2 py-0.5 rounded bg-slate-700/50 text-xs">Chef Marco 👨‍🍳</span>
-                    <span class="px-2 py-0.5 rounded bg-slate-700/50 text-xs">Fit 💪</span>
-                    <span class="px-2 py-0.5 rounded bg-slate-700/50 text-xs">Zen 🧘</span>
-                    <span class="px-2 py-0.5 rounded bg-slate-700/50 text-xs">Globe ✈️</span>
-                    <span class="px-2 py-0.5 rounded bg-slate-700/50 text-xs">+1 more</span>
-                  </div>
-                </div>
-                <!-- Learning -->
-                <div class="bg-slate-800/50 rounded-xl p-4 border border-slate-700/50">
-                  <div class="flex items-center gap-2 mb-3">
-                    <span class="text-xl">📚</span>
-                    <span class="font-semibold">Learning</span>
-                    <span class="text-xs text-slate-400">(2)</span>
-                  </div>
-                  <div class="flex flex-wrap gap-1.5">
-                    <span class="px-2 py-0.5 rounded bg-slate-700/50 text-xs">Herr Müller 👨‍🏫</span>
-                    <span class="px-2 py-0.5 rounded bg-slate-700/50 text-xs">Scholar 📚</span>
-                  </div>
-                </div>
-                <!-- Creative -->
-                <div class="bg-slate-800/50 rounded-xl p-4 border border-slate-700/50">
-                  <div class="flex items-center gap-2 mb-3">
-                    <span class="text-xl">🎨</span>
-                    <span class="font-semibold">Creative</span>
-                    <span class="text-xs text-slate-400">(2)</span>
-                  </div>
-                  <div class="flex flex-wrap gap-1.5">
-                    <span class="px-2 py-0.5 rounded bg-slate-700/50 text-xs">Luna 🎨</span>
-                    <span class="px-2 py-0.5 rounded bg-slate-700/50 text-xs">Mythos 🗺️</span>
-                  </div>
-                </div>
-                <!-- More -->
-                <div class="bg-slate-800/50 rounded-xl p-4 border border-slate-700/50">
-                  <div class="flex items-center gap-2 mb-3">
-                    <span class="text-xl">✨</span>
-                    <span class="font-semibold">+ More</span>
-                    <span class="text-xs text-slate-400">(1)</span>
-                  </div>
-                  <div class="flex flex-wrap gap-1.5">
-                    <span class="px-2 py-0.5 rounded bg-slate-700/50 text-xs">Coach 🏆 Philosophy</span>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Usage Examples -->
-              <h4 class="text-lg font-semibold mb-4 flex items-center gap-2">
-                <span class="text-pink-400">💬</span> How to Use
-              </h4>
-              <div class="bg-slate-900/80 rounded-xl p-4 code-block text-sm mb-8 border border-slate-800 overflow-x-auto">
-                <div class="text-slate-400 mb-2"># Activate a persona</div>
-                <div>"Use Dev persona" <span class="text-slate-500">or</span> /persona dev</div>
-                <div>"Switch to Chef Marco"</div>
-                <div>"Activate Dr. Med"</div>
-                <div class="mt-3 text-slate-400"># List all personas</div>
-                <div>"List all personas" <span class="text-slate-500">or</span> /personas</div>
-                <div class="mt-3 text-slate-400"># Suggest a new persona</div>
-                <div>"Open an issue to propose a new official persona"</div>
-                <div class="mt-3 text-slate-400"># Exit persona mode</div>
-                <div>"Exit persona mode" <span class="text-slate-500">or</span> /persona exit</div>
-                <div class="mt-3 text-emerald-400"># NEW: Python CLI (scripts/persona.py)</div>
-                <div><span class="text-slate-500">$</span> python3 scripts/persona.py <span class="text-pink-300">--list</span> <span class="text-slate-500"># List all personas</span></div>
-                <div><span class="text-slate-500">$</span> python3 scripts/persona.py <span class="text-pink-300">--activate</span> dev <span class="text-slate-500"># Activate (alias: chef → chef-marco)</span></div>
-                <div><span class="text-slate-500">$</span> python3 scripts/persona.py <span class="text-pink-300">--current</span> <span class="text-slate-500"># Show current persona</span></div>
-                <div><span class="text-slate-500">$</span> python3 scripts/persona.py <span class="text-pink-300">--reset</span> <span class="text-slate-500"># Reset to default</span></div>
-              </div>
-
-              <!-- NEW: CLI Features Box -->
-              <div class="bg-emerald-500/10 rounded-xl p-5 border border-emerald-500/20 mb-6">
-                <div class="flex items-start gap-3">
-                  <span class="text-2xl">✨</span>
-                  <div>
-                    <div class="font-semibold text-emerald-300 mb-1">NEW: Python CLI + State Persistence</div>
-                    <div class="text-sm text-slate-300">Full CLI with <code class="bg-slate-800 px-1 rounded">--list</code>, <code class="bg-slate-800 px-1 rounded">--show</code>, <code class="bg-slate-800 px-1 rounded">--activate</code>, <code class="bg-slate-800 px-1 rounded">--current</code>, <code class="bg-slate-800 px-1 rounded">--reset</code> commands. Supports aliases (e.g., <code class="bg-slate-800 px-1 rounded">chef</code> → <code class="bg-slate-800 px-1 rounded">chef-marco</code>) and tracks activation history.</div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Use Cases -->
-              <h4 class="text-lg font-semibold mb-4 flex items-center gap-2">
-                <span class="text-pink-400">🎯</span> Example Workflows
-              </h4>
-              <div class="grid sm:grid-cols-2 gap-4 mb-8">
-                <div class="bg-pink-500/10 rounded-xl p-4 border border-pink-500/20">
-                  <div class="font-medium text-pink-300 mb-2">💻 Coding Project</div>
-                  <div class="text-sm text-slate-400">
-                    <span class="text-pink-300">Dev</span> → code help →
-                    <span class="text-pink-300">CyberGuard</span> → security review →
-                    <span class="text-pink-300">Canvas</span> → UI feedback
-                  </div>
-                </div>
-                <div class="bg-pink-500/10 rounded-xl p-4 border border-pink-500/20">
-                  <div class="font-medium text-pink-300 mb-2">📝 Content Creation</div>
-                  <div class="text-sm text-slate-400">
-                    <span class="text-pink-300">Wordsmith</span> → write blog →
-                    <span class="text-pink-300">Social Pro</span> → optimize for IG →
-                    <span class="text-pink-300">Canvas</span> → design image
-                  </div>
-                </div>
-                <div class="bg-pink-500/10 rounded-xl p-4 border border-pink-500/20">
-                  <div class="font-medium text-pink-300 mb-2">📚 Learning</div>
-                  <div class="text-sm text-slate-400">
-                    <span class="text-pink-300">Scholar</span> → study for exam →
-                    <span class="text-pink-300">Herr Müller</span> → simplify topic →
-                    <span class="text-pink-300">Professor</span> → deep dive
-                  </div>
-                </div>
-                <div class="bg-pink-500/10 rounded-xl p-4 border border-pink-500/20">
-                  <div class="font-medium text-pink-300 mb-2">🚀 Business Planning</div>
-                  <div class="text-sm text-slate-400">
-                    <span class="text-pink-300">Startup Sam</span> → validate idea →
-                    <span class="text-pink-300">Finny</span> → budget →
-                    <span class="text-pink-300">Career Coach</span> → pitch practice
-                  </div>
-                </div>
-              </div>
-
-              <!-- Token Efficient Notice -->
-              <div class="bg-pink-500/10 rounded-xl p-5 border border-pink-500/20 mb-6">
-                <div class="flex items-start gap-3">
-                  <span class="text-2xl">⚡</span>
-                  <div>
-                    <div class="font-semibold text-pink-300 mb-1">Token-Efficient Loading</div>
-                    <div class="text-sm text-slate-300">Only the active persona is loaded into context—not all 20. Switch instantly mid-conversation without wasting tokens on unused personas. For safety, ad-hoc custom persona creation was removed; new persona ideas are reviewed via GitHub issues.</div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Install -->
-              <div class="bg-gradient-to-r from-pink-600/20 to-rose-600/20 rounded-xl p-4 border border-pink-500/30">
-                <div class="flex flex-wrap items-center justify-between gap-4">
-                  <div class="code-block text-lg">
-                    <span class="text-slate-500">$</span> <span class="text-white">clawhub install</span> <span class="text-pink-400">personas</span>
-                  </div>
-                  <div class="text-sm text-slate-400">Based on Chameleon AI Chat • MIT License</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-<!-- ==================== SKILL 4: elevenlabs-voices ==================== -->
-        <section id="elevenlabs-voices" class="skill-section mb-20">
-          <div class="glass rounded-3xl overflow-hidden card-hover">
-            <!-- Header -->
-            <div class="bg-gradient-to-r from-cyan-600/20 to-blue-600/20 p-8 border-b border-white/5">
-              <div class="flex flex-wrap items-start justify-between gap-4">
-                <div class="flex items-center gap-4">
-                  <div class="text-5xl">🎙️</div>
-                  <div>
-                    <div class="flex items-center gap-3">
-                      <h3 class="text-3xl font-bold">elevenlabs-voices</h3>
-                      <span class="px-3 py-1 rounded-full bg-cyan-500/30 text-cyan-200 text-xs font-medium">v2.1.6</span>
-                      <span class="px-3 py-1 rounded-full bg-emerald-500/30 text-emerald-200 text-xs font-medium">✨ Updated Feb 2026</span>
-                    </div>
-                    <p class="text-slate-300 mt-1">High-quality voice synthesis with 18 personas and 32 languages</p>
-                  </div>
-                </div>
-                <div class="flex gap-3">
-                  <a href="https://github.com/robbyczgw-cla/elevenlabs-voices" target="_blank" rel="noreferrer" 
-                     class="px-4 py-2 rounded-lg bg-white/10 hover:bg-white/20 transition-colors text-sm font-medium flex items-center gap-2">
-                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
-                    GitHub
-                  </a>
-                  <a href="https://www.clawhub.ai/robbyczgw-cla/elevenlabs-voices" target="_blank" rel="noreferrer" 
-                     class="px-4 py-2 rounded-lg bg-cyan-600 hover:bg-cyan-500 transition-colors text-sm font-medium">
-                    ClawHub →
-                  </a>
-                </div>
-              </div>
-            </div>
-            
-            <!-- Content -->
-            <div class="p-8">
-              <div class="prose prose-invert max-w-none mb-8">
-                <p class="text-lg text-slate-300 leading-relaxed">
-                  Turn your agent into a voice powerhouse. <strong class="text-white">elevenlabs-voices</strong> integrates ElevenLabs' industry-leading TTS API with <span class="text-cyan-400">18 pre-configured voice personas</span>, <span class="text-emerald-400">32 language support</span>, sound effects generation, batch processing, and even custom voice design. Perfect for audiobooks, podcasts, notifications, or just making your bot talk. <span class="text-cyan-300">v2.1.5 hardens key handling</span>: API keys are read only from environment or skill-local <code class="bg-slate-800 px-1 rounded">.env</code> (no probing OpenClaw config files).
-                </p>
-              </div>
-
-              <!-- Real-World Use Cases -->
-              <h4 class="text-lg font-semibold mb-4 flex items-center gap-2">
-                <span class="text-amber-400">🎯</span> Real-World Use Cases
-              </h4>
-              <div class="grid sm:grid-cols-3 gap-3 mb-8">
-                <div class="use-case-card bg-cyan-500/10 rounded-xl p-4 border border-cyan-500/20">
-                  <div class="text-cyan-400 font-medium mb-2">🎧 Podcast Production</div>
-                  <div class="text-sm text-slate-300">"Generate podcast intro in British accent"</div>
-                </div>
-                <div class="use-case-card bg-cyan-500/10 rounded-xl p-4 border border-cyan-500/20">
-                  <div class="text-cyan-400 font-medium mb-2">🌍 Multilingual Content</div>
-                  <div class="text-sm text-slate-300">"Create multilingual announcements for global team"</div>
-                </div>
-                <div class="use-case-card bg-cyan-500/10 rounded-xl p-4 border border-cyan-500/20">
-                  <div class="text-cyan-400 font-medium mb-2">🤖 AI Assistant Voice</div>
-                  <div class="text-sm text-slate-300">"Voice your AI assistant responses for Telegram"</div>
-                </div>
-              </div>
-
-              <!-- Stats Row -->
-              <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
-                <div class="bg-slate-800/50 rounded-xl p-4 text-center border border-slate-700/50">
-                  <div class="text-2xl font-bold text-cyan-400">18</div>
-                  <div class="text-sm text-slate-400">Voice Personas</div>
-                </div>
-                <div class="bg-slate-800/50 rounded-xl p-4 text-center border border-slate-700/50">
-                  <div class="text-2xl font-bold text-cyan-400">32</div>
-                  <div class="text-sm text-slate-400">Languages</div>
-                </div>
-                <div class="bg-slate-800/50 rounded-xl p-4 text-center border border-slate-700/50">
-                  <div class="text-2xl font-bold text-cyan-400">7</div>
-                  <div class="text-sm text-slate-400">Style Presets</div>
-                </div>
-                <div class="bg-slate-800/50 rounded-xl p-4 text-center border border-slate-700/50">
-                  <div class="text-2xl font-bold text-cyan-400">∞</div>
-                  <div class="text-sm text-slate-400">Custom Voices</div>
-                </div>
-              </div>
-
-              <!-- Features Grid -->
-              <h4 class="text-lg font-semibold mb-4 flex items-center gap-2">
-                <span class="text-cyan-400">✨</span> Capabilities
-              </h4>
-              <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-3 mb-8">
-                <div class="flex items-start gap-3 bg-slate-800/30 rounded-lg p-3">
-                  <span class="text-2xl">🗣️</span>
-                  <div>
-                    <div class="font-medium">Text-to-Speech</div>
-                    <div class="text-sm text-slate-400">High-quality voice synthesis</div>
-                  </div>
-                </div>
-                <div class="flex items-start gap-3 bg-slate-800/30 rounded-lg p-3">
-                  <span class="text-2xl">🌍</span>
-                  <div>
-                    <div class="font-medium">Multi-Language</div>
-                    <div class="text-sm text-slate-400">DE, FR, ES, IT, PT, and 26 more</div>
-                  </div>
-                </div>
-                <div class="flex items-start gap-3 bg-slate-800/30 rounded-lg p-3">
-                  <span class="text-2xl">📡</span>
-                  <div>
-                    <div class="font-medium">Streaming</div>
-                    <div class="text-sm text-slate-400">Real-time audio output</div>
-                  </div>
-                </div>
-                <div class="flex items-start gap-3 bg-slate-800/30 rounded-lg p-3">
-                  <span class="text-2xl">📦</span>
-                  <div>
-                    <div class="font-medium">Batch Processing</div>
-                    <div class="text-sm text-slate-400">Process entire text files</div>
-                  </div>
-                </div>
-                <div class="flex items-start gap-3 bg-slate-800/30 rounded-lg p-3">
-                  <span class="text-2xl">🔊</span>
-                  <div>
-                    <div class="font-medium">Sound Effects</div>
-                    <div class="text-sm text-slate-400">AI-generated SFX from prompts</div>
-                  </div>
-                </div>
-                <div class="flex items-start gap-3 bg-slate-800/30 rounded-lg p-3">
-                  <span class="text-2xl">🎨</span>
-                  <div>
-                    <div class="font-medium">Voice Design</div>
-                    <div class="text-sm text-slate-400">Create custom voice profiles</div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Voice Presets -->
-              <h4 class="text-lg font-semibold mb-4 flex items-center gap-2">
-                <span class="text-cyan-400">🎭</span> Voice Style Presets
-              </h4>
-              <div class="flex flex-wrap gap-2 mb-8">
-                <span class="px-3 py-1.5 rounded-lg bg-cyan-500/20 text-cyan-200 text-sm">🎬 narrator</span>
-                <span class="px-3 py-1.5 rounded-lg bg-cyan-500/20 text-cyan-200 text-sm">📖 storyteller</span>
-                <span class="px-3 py-1.5 rounded-lg bg-cyan-500/20 text-cyan-200 text-sm">💼 professional</span>
-                <span class="px-3 py-1.5 rounded-lg bg-cyan-500/20 text-cyan-200 text-sm">🎓 educator</span>
-                <span class="px-3 py-1.5 rounded-lg bg-cyan-500/20 text-cyan-200 text-sm">🧘 calm</span>
-                <span class="px-3 py-1.5 rounded-lg bg-cyan-500/20 text-cyan-200 text-sm">⚡ energetic</span>
-                <span class="px-3 py-1.5 rounded-lg bg-cyan-500/20 text-cyan-200 text-sm">📺 broadcaster</span>
-              </div>
-
-              <!-- Usage Examples -->
-              <h4 class="text-lg font-semibold mb-4 flex items-center gap-2">
-                <span class="text-cyan-400">💻</span> Usage Examples
-              </h4>
-              <div class="bg-slate-900/80 rounded-xl p-4 code-block text-sm mb-6 border border-slate-800 overflow-x-auto">
-                <div class="text-slate-400 mb-2"># Basic TTS</div>
-                <div><span class="text-slate-500">$</span> python3 scripts/tts.py <span class="text-cyan-300">--text</span> "Hello world" <span class="text-cyan-300">--voice</span> rachel</div>
-                <div class="mt-2 text-slate-400"># Multi-language</div>
-                <div><span class="text-slate-500">$</span> python3 scripts/tts.py <span class="text-cyan-300">--text</span> "Bonjour!" <span class="text-cyan-300">--voice</span> rachel <span class="text-cyan-300">--lang</span> fr</div>
-                <div class="mt-2 text-slate-400"># Sound effects</div>
-                <div><span class="text-slate-500">$</span> python3 scripts/sfx.py <span class="text-cyan-300">--prompt</span> "Thunder rumbling in the distance"</div>
-                <div class="mt-2 text-slate-400"># Batch processing</div>
-                <div><span class="text-slate-500">$</span> python3 scripts/tts.py <span class="text-cyan-300">--batch</span> chapters.txt <span class="text-cyan-300">--voice</span> adam <span class="text-cyan-300">--output-dir</span> ./audiobook</div>
-              </div>
-
-              <!-- Install -->
-              <div class="bg-gradient-to-r from-cyan-600/10 to-blue-600/10 rounded-xl p-4 border border-cyan-500/20">
-                <div class="flex flex-wrap items-center justify-between gap-4">
-                  <div class="code-block text-lg">
-                    <span class="text-slate-500">$</span> <span class="text-white">clawhub install</span> <span class="text-cyan-400">elevenlabs-voices</span>
-                  </div>
-                  <div class="text-sm text-slate-400">Requires: ELEVEN_API_KEY from <a href="https://elevenlabs.io" class="text-cyan-400 hover:underline">elevenlabs.io</a></div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <!-- ==================== SKILL 5: smart-followups ==================== -->
-        <section id="smart-followups" class="skill-section mb-20">
-          <div class="glass rounded-3xl overflow-hidden card-hover">
-            <!-- Header -->
-            <div class="bg-gradient-to-r from-amber-600/20 to-orange-600/20 p-8 border-b border-white/5">
-              <div class="flex flex-wrap items-start justify-between gap-4">
-                <div class="flex items-center gap-4">
-                  <div class="text-5xl">💡</div>
-                  <div>
-                    <div class="flex items-center gap-3">
-                      <h3 class="text-3xl font-bold">smart-followups</h3>
-                      <span class="px-3 py-1 rounded-full bg-amber-500/30 text-amber-200 text-xs font-medium">v2.1.6</span>
-                      <span class="px-3 py-1 rounded-full bg-emerald-500/30 text-emerald-200 text-xs font-medium">✨ Updated Feb 2026</span>
-                    </div>
-                    <p class="text-slate-300 mt-1">Contextual follow-up suggestions with clickable buttons</p>
-                  </div>
-                </div>
-                <div class="flex gap-3">
-                  <a href="https://github.com/robbyczgw-cla/smart-followups" target="_blank" rel="noreferrer" 
-                     class="px-4 py-2 rounded-lg bg-white/10 hover:bg-white/20 transition-colors text-sm font-medium flex items-center gap-2">
-                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
-                    GitHub
-                  </a>
-                  <a href="https://www.clawhub.ai/robbyczgw-cla/smart-followups" target="_blank" rel="noreferrer" 
-                     class="px-4 py-2 rounded-lg bg-amber-600 hover:bg-amber-500 transition-colors text-sm font-medium">
-                    ClawHub →
-                  </a>
-                </div>
-              </div>
-            </div>
-            
-            <!-- Content -->
-            <div class="p-8">
-              <div class="prose prose-invert max-w-none mb-8">
-                <p class="text-lg text-slate-300 leading-relaxed">
-                  Keep conversations flowing naturally. After any AI response, just say <strong class="text-amber-400">"followups"</strong> (or "give me follow-ups") to get 3 smart suggestions for what to ask next—organized into <span class="text-amber-300">Quick</span> (clarifications), <span class="text-violet-300">Deep Dive</span> (technical depth), and <span class="text-cyan-300">Related</span> (connected topics). On platforms like Telegram and Discord, they appear as clickable buttons. One tap sends the question. <span class="text-amber-300">v2.1.5 simplifies security: native OpenClaw auth in-handler, external providers only in standalone CLI.</span>
-                </p>
-              </div>
-
-              <!-- Real-World Use Cases -->
-              <h4 class="text-lg font-semibold mb-4 flex items-center gap-2">
-                <span class="text-amber-400">🎯</span> Real-World Use Cases
-              </h4>
-              <div class="grid sm:grid-cols-3 gap-3 mb-8">
-                <div class="use-case-card bg-amber-500/10 rounded-xl p-4 border border-amber-500/20">
-                  <div class="text-amber-400 font-medium mb-2">🔬 Research Continuation</div>
-                  <div class="text-sm text-slate-300">"Generate follow-up questions after research summary"</div>
-                </div>
-                <div class="use-case-card bg-amber-500/10 rounded-xl p-4 border border-amber-500/20">
-                  <div class="text-amber-400 font-medium mb-2">🌳 Topic Exploration</div>
-                  <div class="text-sm text-slate-300">"Explore related topics I hadn't considered"</div>
-                </div>
-                <div class="use-case-card bg-amber-500/10 rounded-xl p-4 border border-amber-500/20">
-                  <div class="text-amber-400 font-medium mb-2">🧠 Deepen Context</div>
-                  <div class="text-sm text-slate-300">"Dive deeper into conversation context"</div>
-                </div>
-              </div>
-
-              <!-- Three Categories -->
-              <h4 class="text-lg font-semibold mb-4 flex items-center gap-2">
-                <span class="text-amber-400">🎯</span> Three Suggestion Categories
-              </h4>
-              <div class="grid sm:grid-cols-3 gap-4 mb-8">
-                <div class="bg-amber-500/10 rounded-xl p-5 border border-amber-500/20">
-                  <div class="text-2xl mb-2">⚡</div>
-                  <div class="font-semibold text-amber-300 mb-1">Quick</div>
-                  <div class="text-sm text-slate-400">Clarifications and immediate follow-up questions</div>
-                </div>
-                <div class="bg-violet-500/10 rounded-xl p-5 border border-violet-500/20">
-                  <div class="text-2xl mb-2">🧠</div>
-                  <div class="font-semibold text-violet-300 mb-1">Deep Dive</div>
-                  <div class="text-sm text-slate-400">Technical depth and detailed exploration</div>
-                </div>
-                <div class="bg-cyan-500/10 rounded-xl p-5 border border-cyan-500/20">
-                  <div class="text-2xl mb-2">🔗</div>
-                  <div class="font-semibold text-cyan-300 mb-1">Related</div>
-                  <div class="text-sm text-slate-400">Connected topics and broader context</div>
-                </div>
-              </div>
-
-              <!-- Channel Support -->
-              <h4 class="text-lg font-semibold mb-4 flex items-center gap-2">
-                <span class="text-amber-400">📱</span> Channel Support (9 Platforms)
-              </h4>
-              <div class="grid sm:grid-cols-2 gap-4 mb-8">
-                <div class="bg-slate-800/50 rounded-xl p-4 border border-slate-700/50">
-                  <div class="font-medium mb-2 flex items-center gap-2">
-                    <span class="text-emerald-400">●</span> Inline Buttons
-                  </div>
-                  <div class="flex flex-wrap gap-2">
-                    <span class="px-2 py-1 rounded bg-slate-700/50 text-xs">Telegram</span>
-                    <span class="px-2 py-1 rounded bg-slate-700/50 text-xs">Discord</span>
-                    <span class="px-2 py-1 rounded bg-slate-700/50 text-xs">Slack</span>
-                  </div>
-                  <div class="text-sm text-slate-400 mt-2">Tap button → sends question automatically</div>
-                </div>
-                <div class="bg-slate-800/50 rounded-xl p-4 border border-slate-700/50">
-                  <div class="font-medium mb-2 flex items-center gap-2">
-                    <span class="text-blue-400">●</span> Numbered Text List
-                  </div>
-                  <div class="flex flex-wrap gap-2">
-                    <span class="px-2 py-1 rounded bg-slate-700/50 text-xs">Signal</span>
-                    <span class="px-2 py-1 rounded bg-slate-700/50 text-xs">WhatsApp</span>
-                    <span class="px-2 py-1 rounded bg-slate-700/50 text-xs">iMessage</span>
-                    <span class="px-2 py-1 rounded bg-slate-700/50 text-xs">SMS</span>
-                    <span class="px-2 py-1 rounded bg-slate-700/50 text-xs">Matrix</span>
-                    <span class="px-2 py-1 rounded bg-slate-700/50 text-xs">Email</span>
-                  </div>
-                  <div class="text-sm text-slate-400 mt-2">Reply with 1, 2, or 3</div>
-                </div>
-              </div>
-
-              <!-- Example -->
-              <h4 class="text-lg font-semibold mb-4 flex items-center gap-2">
-                <span class="text-amber-400">💬</span> Example Conversation
-              </h4>
-              <div class="bg-slate-900/80 rounded-xl p-5 border border-slate-800 mb-6">
-                <div class="space-y-3 text-sm">
-                  <div><span class="text-blue-400">You:</span> <span class="text-slate-300">What is Docker?</span></div>
-                  <div><span class="text-emerald-400">Bot:</span> <span class="text-slate-300">Docker is a containerization platform that packages applications and their dependencies into isolated containers...</span></div>
-                  <div><span class="text-blue-400">You:</span> <span class="text-slate-300">followups</span></div>
-                  <div class="mt-4 pl-4 border-l-2 border-amber-500/50">
-                    <div class="text-amber-300 font-medium mb-2">💡 What would you like to explore next?</div>
-                    <div class="flex flex-wrap gap-2">
-                      <span class="px-3 py-1.5 rounded-lg bg-amber-500/20 text-amber-200 text-sm">⚡ How do I install Docker?</span>
-                      <span class="px-3 py-1.5 rounded-lg bg-violet-500/20 text-violet-200 text-sm">🧠 Explain container architecture</span>
-                      <span class="px-3 py-1.5 rounded-lg bg-cyan-500/20 text-cyan-200 text-sm">🔗 Docker vs Kubernetes?</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Auth Options -->
-              <h4 class="text-lg font-semibold mb-4 flex items-center gap-2">
-                <span class="text-amber-400">🔐</span> Authentication & Runtime Model
-              </h4>
-              <div class="grid sm:grid-cols-2 gap-3 mb-6">
-                <div class="flex items-start gap-2 bg-emerald-900/20 rounded-lg p-3 border border-emerald-500/20">
-                  <span class="text-emerald-400">★</span>
-                  <div>
-                    <div class="font-medium text-sm">OpenClaw Native (Core Skill)</div>
-                    <div class="text-xs text-slate-400">Uses your active session/model • no extra API keys</div>
-                  </div>
-                </div>
-                <div class="flex items-start gap-2 bg-slate-800/30 rounded-lg p-3">
-                  <span class="text-cyan-400">CLI</span>
-                  <div>
-                    <div class="font-medium text-sm">Standalone CLI (Optional)</div>
-                    <div class="text-xs text-slate-400">OpenRouter/Anthropic supported only in <code class="bg-slate-800 px-1 rounded">cli/followups-cli.js</code></div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Install -->
-              <div class="bg-gradient-to-r from-amber-600/10 to-orange-600/10 rounded-xl p-4 border border-amber-500/20">
-                <div class="flex flex-wrap items-center justify-between gap-4">
-                  <div class="code-block text-lg">
-                    <span class="text-slate-500">$</span> <span class="text-white">clawhub install</span> <span class="text-amber-400">smart-followups</span>
-                  </div>
-                  <div class="text-sm text-slate-400">No extra API key needed with OpenClaw native auth</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <!-- ==================== SKILL 6: sports-ticker ==================== -->
-        <section id="sports-ticker" class="skill-section mb-20">
-          <div class="glass rounded-3xl overflow-hidden card-hover">
-            <!-- Header -->
-            <div class="bg-gradient-to-r from-emerald-600/20 to-teal-600/20 p-8 border-b border-white/5">
-              <div class="flex flex-wrap items-start justify-between gap-4">
-                <div class="flex items-center gap-4">
-                  <div class="text-5xl">⚽</div>
-                  <div>
-                    <div class="flex items-center gap-3">
-                      <h3 class="text-3xl font-bold">sports-ticker</h3>
-                      <span class="px-3 py-1 rounded-full bg-emerald-500/30 text-emerald-200 text-xs font-medium">v3.0.7</span>
-                      <span class="px-3 py-1 rounded-full bg-emerald-500/30 text-emerald-200 text-xs font-medium">✨ Updated Feb 2026</span>
-                      <span class="px-3 py-1 rounded-full bg-green-500/30 text-green-200 text-xs font-medium">FREE API</span>
-                    </div>
-                    <p class="text-slate-300 mt-1">Live sports alerts with real-time scoring — 100% free via ESPN API</p>
-                  </div>
-                </div>
-                <div class="flex gap-3">
-                  <a href="https://github.com/robbyczgw-cla/sports-ticker" target="_blank" rel="noreferrer" 
-                     class="px-4 py-2 rounded-lg bg-white/10 hover:bg-white/20 transition-colors text-sm font-medium flex items-center gap-2">
-                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
-                    GitHub
-                  </a>
-                  <a href="https://www.clawhub.ai/robbyczgw-cla/sports-ticker" target="_blank" rel="noreferrer" 
-                     class="px-4 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-500 transition-colors text-sm font-medium">
-                    ClawHub →
-                  </a>
-                </div>
-              </div>
-            </div>
-            
-            <!-- Content -->
-            <div class="p-8">
-              <div class="prose prose-invert max-w-none mb-8">
-                <p class="text-lg text-slate-300 leading-relaxed">
-                  Never miss a goal again. <strong class="text-white">sports-ticker</strong> delivers live scoring alerts for your favorite teams across <span class="text-emerald-400">Soccer, NFL, NBA, NHL, MLB, and F1</span>. Track multiple teams, get goal scorer names, red cards, halftime/final results—all powered by ESPN's free public API. With OpenClaw integration, it generates agent-ready cron JSON plans for match days so alerts only run when your team is playing.
-                </p>
-              </div>
-
-              <!-- Real-World Use Cases -->
-              <h4 class="text-lg font-semibold mb-4 flex items-center gap-2">
-                <span class="text-amber-400">🎯</span> Real-World Use Cases
-              </h4>
-              <div class="grid sm:grid-cols-3 gap-3 mb-8">
-                <div class="use-case-card bg-emerald-500/10 rounded-xl p-4 border border-emerald-500/20">
-                  <div class="text-emerald-400 font-medium mb-2">⚽ Goal Notifications</div>
-                  <div class="text-sm text-slate-300">"Get instant goal alerts for Manchester United"</div>
-                </div>
-                <div class="use-case-card bg-emerald-500/10 rounded-xl p-4 border border-emerald-500/20">
-                  <div class="text-emerald-400 font-medium mb-2">📊 Live Score Tracking</div>
-                  <div class="text-sm text-slate-300">"Track live match scores during work hours"</div>
-                </div>
-                <div class="use-case-card bg-emerald-500/10 rounded-xl p-4 border border-emerald-500/20">
-                  <div class="text-emerald-400 font-medium mb-2">⏰ Match Reminders</div>
-                  <div class="text-sm text-slate-300">"Set up pre-match reminders 30min before kickoff"</div>
-                </div>
-              </div>
-
-              <!-- Supported Sports -->
-              <h4 class="text-lg font-semibold mb-4 flex items-center gap-2">
-                <span class="text-emerald-400">🏆</span> Supported Sports & Leagues
-              </h4>
-              <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
-                <div class="bg-slate-800/50 rounded-xl p-4 border border-slate-700/50">
-                  <div class="flex items-center gap-2 mb-2">
-                    <span class="text-2xl">⚽</span>
-                    <span class="font-semibold">Soccer / Football</span>
-                  </div>
-                  <div class="text-sm text-slate-400">Premier League, La Liga, Bundesliga, Serie A, Champions League, Europa League, MLS, Liga MX, and 20+ more</div>
-                </div>
-                <div class="bg-slate-800/50 rounded-xl p-4 border border-slate-700/50">
-                  <div class="flex items-center gap-2 mb-2">
-                    <span class="text-2xl">🏈</span>
-                    <span class="font-semibold">American Football</span>
-                  </div>
-                  <div class="text-sm text-slate-400">NFL (all teams)</div>
-                </div>
-                <div class="bg-slate-800/50 rounded-xl p-4 border border-slate-700/50">
-                  <div class="flex items-center gap-2 mb-2">
-                    <span class="text-2xl">🏀</span>
-                    <span class="font-semibold">Basketball</span>
-                  </div>
-                  <div class="text-sm text-slate-400">NBA, WNBA, NCAA</div>
-                </div>
-                <div class="bg-slate-800/50 rounded-xl p-4 border border-slate-700/50">
-                  <div class="flex items-center gap-2 mb-2">
-                    <span class="text-2xl">🏒</span>
-                    <span class="font-semibold">Hockey</span>
-                  </div>
-                  <div class="text-sm text-slate-400">NHL (all teams)</div>
-                </div>
-                <div class="bg-slate-800/50 rounded-xl p-4 border border-slate-700/50">
-                  <div class="flex items-center gap-2 mb-2">
-                    <span class="text-2xl">⚾</span>
-                    <span class="font-semibold">Baseball</span>
-                  </div>
-                  <div class="text-sm text-slate-400">MLB (all teams)</div>
-                </div>
-                <div class="bg-slate-800/50 rounded-xl p-4 border border-slate-700/50">
-                  <div class="flex items-center gap-2 mb-2">
-                    <span class="text-2xl">🏎️</span>
-                    <span class="font-semibold">Racing</span>
-                  </div>
-                  <div class="text-sm text-slate-400">Formula 1</div>
-                </div>
-              </div>
-
-              <!-- Alert Types -->
-              <h4 class="text-lg font-semibold mb-4 flex items-center gap-2">
-                <span class="text-emerald-400">🔔</span> Alert Types
-              </h4>
-              <div class="grid sm:grid-cols-2 gap-3 mb-8">
-                <div class="flex items-start gap-3 bg-slate-800/30 rounded-lg p-3">
-                  <span class="text-emerald-400 mt-0.5">⚽</span>
-                  <div>
-                    <div class="font-medium">Goals / Touchdowns / Points</div>
-                    <div class="text-sm text-slate-400">With player name and time</div>
-                  </div>
-                </div>
-                <div class="flex items-start gap-3 bg-slate-800/30 rounded-lg p-3">
-                  <span class="text-red-400 mt-0.5">🟥</span>
-                  <div>
-                    <div class="font-medium">Red/Yellow Cards</div>
-                    <div class="text-sm text-slate-400">Disciplinary events</div>
-                  </div>
-                </div>
-                <div class="flex items-start gap-3 bg-slate-800/30 rounded-lg p-3">
-                  <span class="text-amber-400 mt-0.5">⏸️</span>
-                  <div>
-                    <div class="font-medium">Period Updates</div>
-                    <div class="text-sm text-slate-400">Halftime, quarters, intermissions</div>
-                  </div>
-                </div>
-                <div class="flex items-start gap-3 bg-slate-800/30 rounded-lg p-3">
-                  <span class="text-emerald-400 mt-0.5">🏁</span>
-                  <div>
-                    <div class="font-medium">Final Results</div>
-                    <div class="text-sm text-slate-400">WIN/LOSS/DRAW notifications</div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Example Alerts -->
-              <h4 class="text-lg font-semibold mb-4 flex items-center gap-2">
-                <span class="text-emerald-400">📱</span> Example Alerts
-              </h4>
-              <div class="grid sm:grid-cols-2 gap-4 mb-8">
-                <div class="bg-slate-900/80 rounded-xl p-4 border border-slate-800">
-                  <div class="text-emerald-400 font-medium mb-2">⚽ Soccer Goal</div>
-                  <div class="text-sm text-slate-300">
-                    🎉 GOAL! 23'<br>
-                    ⚽ Marcus Rashford (Man United)<br>
-                    Manchester United 1-0 Liverpool
-                  </div>
-                </div>
-                <div class="bg-slate-900/80 rounded-xl p-4 border border-slate-800">
-                  <div class="text-amber-400 font-medium mb-2">🏈 NFL Touchdown</div>
-                  <div class="text-sm text-slate-300">
-                    🎉 TOUCHDOWN! Q2 3:42<br>
-                    🏈 Patrick Mahomes (Chiefs)<br>
-                    Chiefs 14-7 Bills
-                  </div>
-                </div>
-              </div>
-
-              <!-- Key Feature: Auto Scheduling -->
-              <div class="bg-emerald-500/10 rounded-xl p-5 border border-emerald-500/20 mb-6">
-                <div class="flex items-start gap-3">
-                  <span class="text-2xl">🤖</span>
-                  <div>
-                    <div class="font-semibold text-emerald-300 mb-1">OpenClaw Auto-Scheduling</div>
-                    <div class="text-sm text-slate-300">The skill creates cron-ready plans that run only on match days. Morning check at 9 AM detects if your team plays, then enables live ticker (every 2 min) and pre-match reminders automatically. No spam on off-days!</div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="bg-cyan-500/10 rounded-xl p-5 border border-cyan-500/20 mb-6">
-                <div class="flex items-start gap-3">
-                  <span class="text-2xl">🛡️</span>
-                  <div>
-                    <div class="font-semibold text-cyan-300 mb-1">Safer Cron Automation (v3.0.6)</div>
-                    <div class="text-sm text-slate-300"><code class="bg-slate-800 px-1 rounded">setup_crons.py</code> and <code class="bg-slate-800 px-1 rounded">auto_setup_crons.py</code> now output structured JSON configs for agent processing instead of executing raw commands.</div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Install -->
-              <div class="bg-gradient-to-r from-emerald-600/10 to-teal-600/10 rounded-xl p-4 border border-emerald-500/20">
-                <div class="flex flex-wrap items-center justify-between gap-4">
-                  <div class="code-block text-lg">
-                    <span class="text-slate-500">$</span> <span class="text-white">clawhub install</span> <span class="text-emerald-400">sports-ticker</span>
-                  </div>
-                  <div class="text-sm text-slate-400">No API key required! 🎉 Uses ESPN's free public API</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <!-- ==================== SKILL 7: topic-monitor ==================== -->
-        <section id="topic-monitor" class="skill-section mb-20">
-          <div class="glass rounded-3xl overflow-hidden card-hover">
-            <!-- Header -->
-            <div class="bg-gradient-to-r from-amber-600/20 to-orange-600/20 p-8 border-b border-white/5">
-              <div class="flex flex-wrap items-start justify-between gap-4">
-                <div class="flex items-center gap-4">
-                  <div class="text-5xl">🔍</div>
-                  <div>
-                    <div class="flex items-center gap-3">
-                      <h3 class="text-3xl font-bold">topic-monitor</h3>
-                      <span class="px-3 py-1 rounded-full bg-amber-500/30 text-amber-200 text-xs font-medium">v1.3.5</span>
-                      <span class="px-3 py-1 rounded-full bg-green-500/30 text-green-200 text-xs font-medium">QUICK START</span>
-                      <span class="px-3 py-1 rounded-full bg-emerald-500/30 text-emerald-200 text-xs font-medium">✨ Updated Feb 2026</span>
-                    </div>
-                    <p class="text-slate-300 mt-1">Automated topic monitoring with AI-powered importance scoring</p>
-                  </div>
-                </div>
-                <div class="flex gap-3">
-                  <a href="https://github.com/robbyczgw-cla/topic-monitor" target="_blank" rel="noreferrer" 
-                     class="px-4 py-2 rounded-lg bg-white/10 hover:bg-white/20 transition-colors text-sm font-medium flex items-center gap-2">
-                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
-                    GitHub
-                  </a>
-                  <a href="https://www.clawhub.ai/robbyczgw-cla/topic-monitor" target="_blank" rel="noreferrer" 
-                     class="px-4 py-2 rounded-lg bg-amber-600 hover:bg-amber-500 transition-colors text-sm font-medium">
-                    ClawHub →
-                  </a>
-                </div>
-              </div>
-            </div>
-            
-            <!-- Content -->
-            <div class="p-8">
-              <div class="prose prose-invert max-w-none mb-8">
-                <p class="text-lg text-slate-300 leading-relaxed">
-                  Never miss what matters. <strong class="text-white">topic-monitor</strong> transforms your assistant from reactive to proactive by <span class="text-amber-400">continuously monitoring topics you care about</span> and intelligently alerting you only when something truly important occurs. AI-powered scoring distinguishes between immediate alerts and weekly digest material. <span class="text-amber-300">NEW: Quick Start Mode for instant setup—get monitoring in under a minute!</span>
-                </p>
-              </div>
-
-              <!-- Real-World Use Cases -->
-              <h4 class="text-lg font-semibold mb-4 flex items-center gap-2">
-                <span class="text-amber-400">🎯</span> Real-World Use Cases
-              </h4>
-              <div class="grid sm:grid-cols-3 gap-3 mb-8">
-                <div class="use-case-card bg-amber-500/10 rounded-xl p-4 border border-amber-500/20">
-                  <div class="text-amber-400 font-medium mb-2">📈 Price Monitoring</div>
-                  <div class="text-sm text-slate-300">"Alert me when ETH drops below $2000"</div>
-                </div>
-                <div class="use-case-card bg-amber-500/10 rounded-xl p-4 border border-amber-500/20">
-                  <div class="text-amber-400 font-medium mb-2">🔧 Product Updates</div>
-                  <div class="text-sm text-slate-300">"Track FM26 patches and update releases"</div>
-                </div>
-                <div class="use-case-card bg-amber-500/10 rounded-xl p-4 border border-amber-500/20">
-                  <div class="text-amber-400 font-medium mb-2">📰 News Tracking</div>
-                  <div class="text-sm text-slate-300">"Monitor OpenAI announcements daily"</div>
-                </div>
-              </div>
-
-              <!-- How It Works -->
-              <h4 class="text-lg font-semibold mb-4 flex items-center gap-2">
-                <span class="text-amber-400">⚡</span> How It Works
-              </h4>
-              <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-                <div class="bg-slate-800/50 rounded-xl p-4 border border-slate-700/50 text-center">
-                  <div class="text-3xl mb-2">📋</div>
-                  <div class="font-semibold mb-1">Configure Topics</div>
-                  <div class="text-sm text-slate-400">Define what to monitor with custom keywords</div>
-                </div>
-                <div class="bg-slate-800/50 rounded-xl p-4 border border-slate-700/50 text-center">
-                  <div class="text-3xl mb-2">🔄</div>
-                  <div class="font-semibold mb-1">Scheduled Checks</div>
-                  <div class="text-sm text-slate-400">Hourly, daily, or weekly via cron</div>
-                </div>
-                <div class="bg-slate-800/50 rounded-xl p-4 border border-slate-700/50 text-center">
-                  <div class="text-3xl mb-2">🧠</div>
-                  <div class="font-semibold mb-1">AI Scoring</div>
-                  <div class="text-sm text-slate-400">Smart filtering by importance</div>
-                </div>
-                <div class="bg-slate-800/50 rounded-xl p-4 border border-slate-700/50 text-center">
-                  <div class="text-3xl mb-2">🔔</div>
-                  <div class="font-semibold mb-1">Smart Alerts</div>
-                  <div class="text-sm text-slate-400">HIGH → alert, MEDIUM → digest</div>
-                </div>
-              </div>
-
-              <!-- Alert Levels -->
-              <h4 class="text-lg font-semibold mb-4 flex items-center gap-2">
-                <span class="text-amber-400">📊</span> Importance Levels
-              </h4>
-              <div class="grid sm:grid-cols-3 gap-3 mb-8">
-                <div class="flex items-start gap-3 bg-red-500/10 rounded-lg p-4 border border-red-500/20">
-                  <span class="text-red-400 text-xl">🔥</span>
-                  <div>
-                    <div class="font-medium text-red-300">HIGH</div>
-                    <div class="text-sm text-slate-400">Immediate Telegram/Discord alert</div>
-                  </div>
-                </div>
-                <div class="flex items-start gap-3 bg-amber-500/10 rounded-lg p-4 border border-amber-500/20">
-                  <span class="text-amber-400 text-xl">📌</span>
-                  <div>
-                    <div class="font-medium text-amber-300">MEDIUM</div>
-                    <div class="text-sm text-slate-400">Saved for weekly digest</div>
-                  </div>
-                </div>
-                <div class="flex items-start gap-3 bg-slate-500/10 rounded-lg p-4 border border-slate-500/20">
-                  <span class="text-slate-400 text-xl">💤</span>
-                  <div>
-                    <div class="font-medium text-slate-300">LOW</div>
-                    <div class="text-sm text-slate-400">Ignored (noise filtering)</div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Key Features -->
-              <div class="bg-emerald-500/10 rounded-xl p-5 border border-emerald-500/20 mb-4">
-                <div class="flex items-start gap-3">
-                  <span class="text-2xl">✨</span>
-                  <div>
-                    <div class="font-semibold text-emerald-300 mb-1">NEW: Real Alerting Implementation</div>
-                    <div class="text-sm text-slate-300">Full alerting system (previously a stub). State/data paths are now configurable via environment variables (e.g., <code class="bg-slate-800 px-1 rounded">TOPIC_MONITOR_DATA_DIR</code>) with no hardcoded IDs or personal paths.</div>
-                  </div>
-                </div>
-              </div>
-              <div class="bg-amber-500/10 rounded-xl p-5 border border-amber-500/20 mb-6">
-                <div class="flex items-start gap-3">
-                  <span class="text-2xl">🔗</span>
-                  <div>
-                    <div class="font-semibold text-amber-300 mb-1">Powered by web-search-plus</div>
-                    <div class="text-sm text-slate-300">Uses web-search-plus for intelligent multi-provider search routing. Automatically benefits from result caching to reduce API costs.</div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Install -->
-              <div class="bg-gradient-to-r from-amber-600/10 to-orange-600/10 rounded-xl p-4 border border-amber-500/20">
-                <div class="flex flex-wrap items-center justify-between gap-4">
-                  <div class="code-block text-lg">
-                    <span class="text-slate-500">$</span> <span class="text-white">clawhub install</span> <span class="text-amber-400">topic-monitor</span>
-                  </div>
-                  <div class="text-sm text-slate-400">Requires: cron access for scheduling</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <!-- ==================== SKILL 8: youtube-apify-transcript ==================== -->
-        <section id="youtube-apify-transcript" class="skill-section mb-20">
-          <div class="glass rounded-3xl overflow-hidden card-hover">
-            <!-- Header -->
-            <div class="bg-gradient-to-r from-red-600/20 to-orange-600/20 p-8 border-b border-white/5 relative">
-              <!-- New Badge -->
-              <div class="absolute top-4 right-4">
-                <span class="px-4 py-1.5 rounded-full text-sm flex items-center gap-1.5 bg-green-500/80 text-green-950 font-bold">
-                  🆕 NEW SKILL
-                </span>
-              </div>
-              <div class="flex flex-wrap items-start justify-between gap-4">
-                <div class="flex items-center gap-4">
-                  <div class="text-5xl">📹</div>
-                  <div>
-                    <div class="flex items-center gap-3">
-                      <h3 class="text-3xl font-bold">youtube-apify-transcript</h3>
-                      <span class="px-3 py-1 rounded-full bg-red-500/30 text-red-200 text-xs font-medium">v1.2.0</span>
-                      <span class="px-3 py-1 rounded-full bg-emerald-500/30 text-emerald-200 text-xs font-medium">✨ Updated Feb 2026</span>
-                    </div>
-                    <p class="text-slate-300 mt-1">Fetch YouTube transcripts via APIFY API — works from cloud IPs</p>
-                  </div>
-                </div>
-                <div class="flex gap-3 mt-8 sm:mt-0">
-                  <a href="https://github.com/robbyczgw-cla/youtube-apify-transcript" target="_blank" rel="noreferrer" 
-                     class="px-4 py-2 rounded-lg bg-white/10 hover:bg-white/20 transition-colors text-sm font-medium flex items-center gap-2">
-                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
-                    GitHub
-                  </a>
-                  <a href="https://www.clawhub.ai/robbyczgw-cla/youtube-apify-transcript" target="_blank" rel="noreferrer" 
-                     class="px-4 py-2 rounded-lg bg-red-600 hover:bg-red-500 transition-colors text-sm font-medium">
-                    ClawHub →
-                  </a>
-                </div>
-              </div>
-            </div>
-            
-            <!-- Content -->
-            <div class="p-8">
-              <div class="prose prose-invert max-w-none mb-8">
-                <p class="text-lg text-slate-300 leading-relaxed">
-                  Extract transcripts from any YouTube video, even from cloud servers. <strong class="text-white">youtube-apify-transcript</strong> bypasses YouTube's bot detection using <span class="text-red-400">APIFY's proxy infrastructure</span>, making it perfect for <span class="text-orange-400">Hetzner, AWS, or any datacenter IP</span>. With a generous free tier, you can transcript ~714 videos monthly at zero cost.
-                </p>
-              </div>
-
-              <!-- Free Tier Highlight -->
-              <div class="bg-gradient-to-r from-emerald-600/20 to-green-600/20 rounded-xl p-6 mb-8 border border-emerald-500/30">
-                <div class="flex items-start gap-4">
-                  <span class="text-4xl">💰</span>
-                  <div>
-                    <h4 class="text-xl font-bold text-emerald-300 mb-2">Free Tier: $5/month</h4>
-                    <p class="text-slate-300 mb-3">APIFY offers $5 in free monthly credits — no credit card required!</p>
-                    <div class="grid sm:grid-cols-3 gap-3">
-                      <div class="bg-slate-800/50 rounded-lg p-3 text-center border border-emerald-500/20">
-                        <div class="text-2xl font-bold text-emerald-400">~714</div>
-                        <div class="text-xs text-slate-400">Videos/Month</div>
-                      </div>
-                      <div class="bg-slate-800/50 rounded-lg p-3 text-center border border-emerald-500/20">
-                        <div class="text-2xl font-bold text-emerald-400">$0.007</div>
-                        <div class="text-xs text-slate-400">Per Video</div>
-                      </div>
-                      <div class="bg-slate-800/50 rounded-lg p-3 text-center border border-emerald-500/20">
-                        <div class="text-2xl font-bold text-emerald-400">$0</div>
-                        <div class="text-xs text-slate-400">Setup Cost</div>
-                      </div>
-                    </div>
-                    <p class="text-sm text-slate-400 mt-3">Get started: <a href="https://apify.com/pricing" class="text-emerald-400 hover:underline" target="_blank">apify.com/pricing</a></p>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Real-World Use Cases -->
-              <h4 class="text-lg font-semibold mb-4 flex items-center gap-2">
-                <span class="text-amber-400">🎯</span> Real-World Use Cases
-              </h4>
-              <div class="grid sm:grid-cols-3 gap-3 mb-8">
-                <div class="use-case-card bg-red-500/10 rounded-xl p-4 border border-red-500/20">
-                  <div class="text-red-400 font-medium mb-2">📝 Content Analysis</div>
-                  <div class="text-sm text-slate-300">"Extract transcript from competitor videos"</div>
-                </div>
-                <div class="use-case-card bg-red-500/10 rounded-xl p-4 border border-red-500/20">
-                  <div class="text-red-400 font-medium mb-2">🔍 Research</div>
-                  <div class="text-sm text-slate-300">"Analyze lecture series for key concepts"</div>
-                </div>
-                <div class="use-case-card bg-red-500/10 rounded-xl p-4 border border-red-500/20">
-                  <div class="text-red-400 font-medium mb-2">🤖 AI Training Data</div>
-                  <div class="text-sm text-slate-300">"Build datasets from tutorial playlists"</div>
-                </div>
-              </div>
-
-              <!-- Key Features -->
-              <h4 class="text-lg font-semibold mb-4 flex items-center gap-2">
-                <span class="text-red-400">✨</span> Key Features
-              </h4>
-              <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-3 mb-8">
-                <div class="flex items-start gap-3 bg-slate-800/30 rounded-lg p-3">
-                  <span class="text-2xl">🌐</span>
-                  <div>
-                    <div class="font-medium">Cloud IP Support</div>
-                    <div class="text-sm text-slate-400">Works from Hetzner, AWS, DO, etc.</div>
-                  </div>
-                </div>
-                <div class="flex items-start gap-3 bg-slate-800/30 rounded-lg p-3">
-                  <span class="text-2xl">🔓</span>
-                  <div>
-                    <div class="font-medium">Bot Detection Bypass</div>
-                    <div class="text-sm text-slate-400">APIFY proxy handles YouTube blocks</div>
-                  </div>
-                </div>
-                <div class="flex items-start gap-3 bg-slate-800/30 rounded-lg p-3">
-                  <span class="text-2xl">🌍</span>
-                  <div>
-                    <div class="font-medium">Multi-Language</div>
-                    <div class="text-sm text-slate-400">Auto-detect or specify language</div>
-                  </div>
-                </div>
-                <div class="flex items-start gap-3 bg-slate-800/30 rounded-lg p-3">
-                  <span class="text-2xl">📄</span>
-                  <div>
-                    <div class="font-medium">JSON/Text Output</div>
-                    <div class="text-sm text-slate-400">Timestamps or plain text</div>
-                  </div>
-                </div>
-                <div class="flex items-start gap-3 bg-slate-800/30 rounded-lg p-3">
-                  <span class="text-2xl">⚡</span>
-                  <div>
-                    <div class="font-medium">Fast Processing</div>
-                    <div class="text-sm text-slate-400">~60 seconds per video</div>
-                  </div>
-                </div>
-                <div class="flex items-start gap-3 bg-slate-800/30 rounded-lg p-3">
-                  <span class="text-2xl">🔗</span>
-                  <div>
-                    <div class="font-medium">All URL Formats</div>
-                    <div class="text-sm text-slate-400">youtube.com, youtu.be, shorts</div>
-                  </div>
-                </div>
-                <div class="flex items-start gap-3 bg-emerald-800/30 rounded-lg p-3 border border-emerald-500/20">
-                  <span class="text-2xl">💾</span>
-                  <div>
-                    <div class="font-medium">Local Caching <span class="text-emerald-400 text-xs">NEW</span></div>
-                    <div class="text-sm text-slate-400">Permanent cache by video ID — save $0.007/video</div>
-                  </div>
-                </div>
-                <div class="flex items-start gap-3 bg-emerald-800/30 rounded-lg p-3 border border-emerald-500/20">
-                  <span class="text-2xl">📦</span>
-                  <div>
-                    <div class="font-medium">Batch Mode <span class="text-emerald-400 text-xs">NEW</span></div>
-                    <div class="text-sm text-slate-400">--batch file.txt for bulk processing</div>
-                  </div>
-                </div>
-                <div class="flex items-start gap-3 bg-emerald-800/30 rounded-lg p-3 border border-emerald-500/20">
-                  <span class="text-2xl">📊</span>
-                  <div>
-                    <div class="font-medium">Cache Stats <span class="text-emerald-400 text-xs">NEW</span></div>
-                    <div class="text-sm text-slate-400">--cache-stats for cache overview</div>
-                  </div>
-                </div>
-                <div class="flex items-start gap-3 bg-emerald-800/30 rounded-lg p-3 border border-emerald-500/20">
-                  <span class="text-2xl">🛡️</span>
-                  <div>
-                    <div class="font-medium">Bearer Auth Upgrade <span class="text-emerald-400 text-xs">NEW</span></div>
-                    <div class="text-sm text-slate-400">APIFY auth moved from query params to Authorization: Bearer header</div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Usage Examples -->
-              <h4 class="text-lg font-semibold mb-4 flex items-center gap-2">
-                <span class="text-red-400">💻</span> Usage Examples
-              </h4>
-              <div class="bg-slate-900/80 rounded-xl p-4 code-block text-sm mb-6 border border-slate-800 overflow-x-auto">
-                <div class="text-slate-400 mb-2"># Basic transcript fetch</div>
-                <div><span class="text-slate-500">$</span> python3 scripts/fetch_transcript.py <span class="text-red-300">"https://youtu.be/VIDEO_ID"</span></div>
-                <div class="mt-2 text-slate-400"># JSON output with timestamps</div>
-                <div><span class="text-slate-500">$</span> python3 scripts/fetch_transcript.py <span class="text-red-300">"https://youtu.be/VIDEO_ID"</span> <span class="text-red-300">--json</span></div>
-                <div class="mt-2 text-slate-400"># Save to file</div>
-                <div><span class="text-slate-500">$</span> python3 scripts/fetch_transcript.py <span class="text-red-300">"https://youtu.be/VIDEO_ID"</span> <span class="text-red-300">--output</span> transcript.txt</div>
-                <div class="mt-2 text-slate-400"># Specify language preference</div>
-                <div><span class="text-slate-500">$</span> python3 scripts/fetch_transcript.py <span class="text-red-300">"https://youtu.be/VIDEO_ID"</span> <span class="text-red-300">--lang</span> de</div>
-                <div class="mt-2 text-emerald-400"># NEW: Batch processing (save costs!)</div>
-                <div><span class="text-slate-500">$</span> python3 scripts/fetch_transcript.py <span class="text-red-300">--batch</span> video_urls.txt <span class="text-red-300">--output-dir</span> ./transcripts</div>
-                <div class="mt-2 text-emerald-400"># NEW: Check cache statistics</div>
-                <div><span class="text-slate-500">$</span> python3 scripts/fetch_transcript.py <span class="text-red-300">--cache-stats</span></div>
-              </div>
-
-              <!-- Setup -->
-              <div class="bg-gradient-to-r from-red-600/10 to-orange-600/10 rounded-xl p-4 border border-red-500/20 mb-6">
-                <h4 class="font-semibold mb-3 flex items-center gap-2">
-                  <span>🔑</span> Setup Required
-                </h4>
-                <ol class="list-decimal list-inside space-y-2 text-slate-300 text-sm mb-4">
-                  <li>Create free APIFY account at <a href="https://apify.com/pricing" class="text-red-400 hover:underline" target="_blank">apify.com</a></li>
-                  <li>Get API token from <a href="https://console.apify.com/account/integrations" class="text-red-400 hover:underline" target="_blank">console.apify.com</a></li>
-                  <li>Set environment variable: <code class="bg-slate-800 px-2 py-1 rounded text-xs">export APIFY_API_TOKEN="your_token"</code></li>
-                </ol>
-                <p class="text-xs text-slate-400">💡 Free tier resets monthly — no credit card required!</p>
-              </div>
-
-              <!-- Install -->
-              <div class="bg-gradient-to-r from-red-600/10 to-orange-600/10 rounded-xl p-4 border border-red-500/20">
-                <div class="flex flex-wrap items-center justify-between gap-4">
-                  <div class="code-block text-lg">
-                    <span class="text-slate-500">$</span> <span class="text-white">clawhub install</span> <span class="text-red-400">youtube-apify-transcript</span>
-                  </div>
-                  <div class="text-sm text-slate-400">Free tier: $5/month (~714 videos)</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <!-- ==================== SKILL 9: x-apify ==================== -->
-        <section id="x-apify" class="skill-section mb-20">
-          <div class="glass rounded-3xl overflow-hidden card-hover">
-            <!-- Header -->
-            <div class="bg-gradient-to-r from-blue-600/20 to-cyan-600/20 p-8 border-b border-white/5 relative">
-              <!-- New Badge -->
-              <div class="absolute top-4 right-4">
-                <span class="px-4 py-1.5 rounded-full text-sm flex items-center gap-1.5 bg-green-500/80 text-green-950 font-bold">
-                  🆕 NEW SKILL
-                </span>
-              </div>
-              <div class="flex flex-wrap items-start justify-between gap-4">
-                <div class="flex items-center gap-4">
-                  <div class="text-5xl">🐦</div>
-                  <div>
-                    <div class="flex items-center gap-3">
-                      <h3 class="text-3xl font-bold">x-apify</h3>
-                      <span class="px-3 py-1 rounded-full bg-blue-500/30 text-blue-200 text-xs font-medium">v1.0.6</span>
-                    </div>
-                    <p class="text-slate-300 mt-1">Fetch X/Twitter data via Apify actors — works from cloud IPs</p>
-                  </div>
-                </div>
-                <div class="flex gap-3 mt-8 sm:mt-0">
-                  <a href="https://github.com/robbyczgw-cla/x-apify" target="_blank" rel="noreferrer" 
-                     class="px-4 py-2 rounded-lg bg-white/10 hover:bg-white/20 transition-colors text-sm font-medium flex items-center gap-2">
-                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
-                    GitHub
-                  </a>
-                  <a href="https://www.clawhub.ai/robbyczgw-cla/x-apify" target="_blank" rel="noreferrer" 
-                     class="px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-500 transition-colors text-sm font-medium">
-                    ClawHub →
-                  </a>
-                </div>
-              </div>
-            </div>
-            
-            <!-- Content -->
-            <div class="p-8">
-              <div class="prose prose-invert max-w-none mb-8">
-                <p class="text-lg text-slate-300 leading-relaxed">
-                  Fetch X/Twitter data at scale with <strong class="text-white">x-apify</strong>. Search tweets, get user profiles, and retrieve specific tweets with replies using <span class="text-blue-400">Apify actors</span>. Built-in local caching helps reduce API spend, and it works reliably from <span class="text-cyan-400">Hetzner, AWS, and other cloud IPs</span> via Apify proxy infrastructure — just like youtube-apify-transcript.
-                </p>
-              </div>
-
-              <!-- Free Tier Highlight -->
-              <div class="bg-gradient-to-r from-emerald-600/20 to-green-600/20 rounded-xl p-6 mb-8 border border-emerald-500/30">
-                <div class="flex items-start gap-4">
-                  <span class="text-4xl">💰</span>
-                  <div>
-                    <h4 class="text-xl font-bold text-emerald-300 mb-2">Free Tier: $5/month (shared with youtube-apify)</h4>
-                    <p class="text-slate-300">Uses the same Apify free tier credits as youtube-apify-transcript — ideal for testing and low-volume production workflows.</p>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Key Features -->
-              <h4 class="text-lg font-semibold mb-4 flex items-center gap-2">
-                <span class="text-blue-400">✨</span> Key Features
-              </h4>
-              <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-3 mb-8">
-                <div class="flex items-start gap-3 bg-slate-800/30 rounded-lg p-3">
-                  <span class="text-2xl">🔍</span>
-                  <div>
-                    <div class="font-medium">Tweet Search</div>
-                    <div class="text-sm text-slate-400">Keywords, hashtags, and mentions</div>
-                  </div>
-                </div>
-                <div class="flex items-start gap-3 bg-slate-800/30 rounded-lg p-3">
-                  <span class="text-2xl">👤</span>
-                  <div>
-                    <div class="font-medium">User Profiles</div>
-                    <div class="text-sm text-slate-400">Tweets, bio, and profile stats</div>
-                  </div>
-                </div>
-                <div class="flex items-start gap-3 bg-slate-800/30 rounded-lg p-3">
-                  <span class="text-2xl">💬</span>
-                  <div>
-                    <div class="font-medium">Tweet Detail + Replies</div>
-                    <div class="text-sm text-slate-400">Retrieve a tweet with reply context</div>
-                  </div>
-                </div>
-                <div class="flex items-start gap-3 bg-emerald-800/30 rounded-lg p-3 border border-emerald-500/20">
-                  <span class="text-2xl">💾</span>
-                  <div>
-                    <div class="font-medium">Smart Caching</div>
-                    <div class="text-sm text-slate-400">1h search cache, 24h profile cache</div>
-                  </div>
-                </div>
-                <div class="flex items-start gap-3 bg-slate-800/30 rounded-lg p-3">
-                  <span class="text-2xl">🔐</span>
-                  <div>
-                    <div class="font-medium">Bearer Auth</div>
-                    <div class="text-sm text-slate-400">Secure token handling</div>
-                  </div>
-                </div>
-                <div class="flex items-start gap-3 bg-slate-800/30 rounded-lg p-3">
-                  <span class="text-2xl">📊</span>
-                  <div>
-                    <div class="font-medium">JSON + Summary Output</div>
-                    <div class="text-sm text-slate-400">Structured and readable formats</div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Install -->
-              <div class="bg-gradient-to-r from-blue-600/10 to-cyan-600/10 rounded-xl p-4 border border-blue-500/20">
-                <div class="flex flex-wrap items-center justify-between gap-4">
-                  <div class="code-block text-lg">
-                    <span class="text-slate-500">$</span> <span class="text-white">clawhub install</span> <span class="text-blue-400">x-apify</span>
-                  </div>
-                  <div class="text-sm text-slate-400">Cloud-ready via Apify proxies • Hetzner/AWS compatible</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <!-- ==================== SKILL 10: roundtable ==================== -->
-        <section id="roundtable" class="skill-section mb-20">
-          <div class="glass rounded-3xl overflow-hidden card-hover">
-            <!-- Header -->
-            <div class="bg-gradient-to-r from-amber-600/20 to-orange-600/20 p-8 border-b border-white/5 relative">
-              <!-- New Badge -->
-              <div class="absolute top-4 right-4">
-                <span class="px-4 py-1.5 rounded-full text-sm flex items-center gap-1.5 bg-green-500/80 text-green-950 font-bold">
-                  🆕 NEW SKILL
-                </span>
-              </div>
-              <div class="flex flex-wrap items-start justify-between gap-4">
-                <div class="flex items-center gap-4">
-                  <div class="text-5xl">⚔️</div>
-                  <div>
-                    <div class="flex items-center gap-3">
-                      <h3 class="text-3xl font-bold">roundtable</h3>
-                      <span class="px-3 py-1 rounded-full bg-amber-500/30 text-amber-200 text-xs font-medium">v0.4.1</span>
-                    </div>
-                    <p class="text-slate-300 mt-1">Multi-agent debate council — Scholar, Engineer &amp; Muse debate your toughest questions</p>
-                  </div>
-                </div>
-                <div class="flex gap-3 mt-8 sm:mt-0">
-                  <a href="https://github.com/robbyczgw-cla/roundtable" target="_blank" rel="noreferrer"
-                     class="px-4 py-2 rounded-lg bg-white/10 hover:bg-white/20 transition-colors text-sm font-medium flex items-center gap-2">
-                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
-                    GitHub
-                  </a>
-                  <a href="https://www.clawhub.ai/robbyczgw-cla/roundtable" target="_blank" rel="noreferrer"
-                     class="px-4 py-2 rounded-lg bg-amber-600 hover:bg-amber-500 transition-colors text-sm font-medium">
-                    ClawHub →
-                  </a>
-                </div>
-              </div>
-            </div>
-
-            <!-- Content -->
-            <div class="p-8">
-              <div class="prose prose-invert max-w-none mb-8">
-                <p class="text-lg text-slate-300 leading-relaxed">
-                  Bring your toughest questions to the council. <strong class="text-white">roundtable</strong> spawns <span class="text-amber-400">three specialized sub-agents</span> — <span class="text-violet-300">Scholar</span> (deep research), <span class="text-cyan-300">Engineer</span> (practical solutions), and <span class="text-pink-300">Muse</span> (creative thinking) — who first share their perspectives in parallel, then challenge each other in a structured cross-examination round. The result: richer, multi-angle answers you won't get from a single model.
-                </p>
-              </div>
-
-              <!-- Real-World Use Cases -->
-              <h4 class="text-lg font-semibold mb-4 flex items-center gap-2">
-                <span class="text-amber-400">🎯</span> Real-World Use Cases
-              </h4>
-              <div class="grid sm:grid-cols-3 gap-3 mb-8">
-                <div class="use-case-card bg-amber-500/10 rounded-xl p-4 border border-amber-500/20">
-                  <div class="text-amber-400 font-medium mb-2">⚖️ Ethics Dilemmas</div>
-                  <div class="text-sm text-slate-300">"Should AI be allowed to vote?" — get three genuine perspectives</div>
-                </div>
-                <div class="use-case-card bg-amber-500/10 rounded-xl p-4 border border-amber-500/20">
-                  <div class="text-amber-400 font-medium mb-2">🛠️ Tech Decisions</div>
-                  <div class="text-sm text-slate-300">"Monolith vs microservices for our startup?" — debate it out</div>
-                </div>
-                <div class="use-case-card bg-amber-500/10 rounded-xl p-4 border border-amber-500/20">
-                  <div class="text-amber-400 font-medium mb-2">🚀 Product Strategy</div>
-                  <div class="text-sm text-slate-300">"B2B or B2C first?" — cross-examined by all three agents</div>
-                </div>
-              </div>
-
-              <!-- The Three Agents -->
-              <h4 class="text-lg font-semibold mb-4 flex items-center gap-2">
-                <span class="text-amber-400">🏰</span> The Council
-              </h4>
-              <div class="grid sm:grid-cols-3 gap-4 mb-8">
-                <div class="bg-violet-500/10 rounded-xl p-5 border border-violet-500/20">
-                  <div class="text-3xl mb-2">📚</div>
-                  <div class="font-bold text-violet-300 mb-1">Scholar</div>
-                  <div class="text-sm text-slate-400">Research-driven. Cites evidence, historical precedent, and academic perspective. Brings depth and context to every question.</div>
-                </div>
-                <div class="bg-cyan-500/10 rounded-xl p-5 border border-cyan-500/20">
-                  <div class="text-3xl mb-2">⚙️</div>
-                  <div class="font-bold text-cyan-300 mb-1">Engineer</div>
-                  <div class="text-sm text-slate-400">Pragmatic and solution-focused. Cuts through theory to what actually works. Thinks in systems, tradeoffs, and implementation.</div>
-                </div>
-                <div class="bg-pink-500/10 rounded-xl p-5 border border-pink-500/20">
-                  <div class="text-3xl mb-2">🎨</div>
-                  <div class="font-bold text-pink-300 mb-1">Muse</div>
-                  <div class="text-sm text-slate-400">Lateral and imaginative. Challenges assumptions, finds unexpected angles, and brings creative leaps the others miss.</div>
-                </div>
-              </div>
-
-              <!-- Debate Structure -->
-              <h4 class="text-lg font-semibold mb-4 flex items-center gap-2">
-                <span class="text-amber-400">⚔️</span> Two-Round Debate Structure
-              </h4>
-              <div class="grid sm:grid-cols-2 gap-4 mb-8">
-                <div class="bg-amber-500/10 rounded-xl p-5 border border-amber-500/20">
-                  <div class="font-semibold text-amber-300 mb-2">Round 1 — Parallel Perspectives</div>
-                  <div class="text-sm text-slate-400">All three agents independently share their take on your question. No groupthink — genuine separate analysis from each perspective.</div>
-                </div>
-                <div class="bg-orange-500/10 rounded-xl p-5 border border-orange-500/20">
-                  <div class="font-semibold text-orange-300 mb-2">Round 2 — Cross-Examination</div>
-                  <div class="text-sm text-slate-400">Agents challenge each other's arguments. Scholar questions Engineer's pragmatism, Muse disrupts Scholar's orthodoxy — ideas get stress-tested.</div>
-                </div>
-              </div>
-
-              <!-- Key Features -->
-              <h4 class="text-lg font-semibold mb-4 flex items-center gap-2">
-                <span class="text-amber-400">✨</span> Key Features
-              </h4>
-              <div class="grid sm:grid-cols-2 gap-3 mb-8">
-                <div class="flex items-start gap-3 bg-slate-800/30 rounded-lg p-3">
-                  <span class="text-amber-400 mt-0.5">✓</span>
-                  <div>
-                    <div class="font-medium">5 Debate Templates</div>
-                    <div class="text-sm text-slate-400">Ethics, Tech, Product, Philosophy, Open — pick your battlefield</div>
-                  </div>
-                </div>
-                <div class="flex items-start gap-3 bg-slate-800/30 rounded-lg p-3">
-                  <span class="text-amber-400 mt-0.5">✓</span>
-                  <div>
-                    <div class="font-medium">Budget Controls</div>
-                    <div class="text-sm text-slate-400">Cost preview before running — no surprise bills</div>
-                  </div>
-                </div>
-                <div class="flex items-start gap-3 bg-slate-800/30 rounded-lg p-3">
-                  <span class="text-amber-400 mt-0.5">✓</span>
-                  <div>
-                    <div class="font-medium">Session Logging</div>
-                    <div class="text-sm text-slate-400">Full debate transcripts saved for later review</div>
-                  </div>
-                </div>
-                <div class="flex items-start gap-3 bg-slate-800/30 rounded-lg p-3">
-                  <span class="text-amber-400 mt-0.5">✓</span>
-                  <div>
-                    <div class="font-medium">Trust Boundaries</div>
-                    <div class="text-sm text-slate-400">3-layer security model keeps agent interactions safe</div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Example Debate -->
-              <h4 class="text-lg font-semibold mb-4 flex items-center gap-2">
-                <span class="text-amber-400">💬</span> Example Session
-              </h4>
-              <div class="bg-slate-900/80 rounded-xl p-5 border border-slate-800 mb-6 text-sm">
-                <div class="text-slate-400 mb-3"># Start a roundtable debate</div>
-                <div><span class="text-blue-400">You:</span> <span class="text-slate-300">roundtable: "Is open-source AI a net positive for humanity?"</span></div>
-                <div class="mt-3 pl-4 border-l-2 border-violet-500/50">
-                  <div class="text-violet-300 font-medium">📚 Scholar (Round 1):</div>
-                  <div class="text-slate-400 text-xs mt-1">Historical precedent shows open scientific collaboration accelerated human progress across every domain. The Linux ecosystem demonstrates...</div>
-                </div>
-                <div class="mt-2 pl-4 border-l-2 border-cyan-500/50">
-                  <div class="text-cyan-300 font-medium">⚙️ Engineer (Round 1):</div>
-                  <div class="text-slate-400 text-xs mt-1">Practically speaking, open weights enable local deployment that protects privacy and reduces API costs. The real risk is dual-use misuse, which we can mitigate with...</div>
-                </div>
-                <div class="mt-2 pl-4 border-l-2 border-pink-500/50">
-                  <div class="text-pink-300 font-medium">🎨 Muse (Round 2 — challenging Engineer):</div>
-                  <div class="text-slate-400 text-xs mt-1">But your mitigation assumes rational actors. What if the bottleneck isn't technical — what if open AI accelerates whoever moves fastest, and speed itself is the danger?</div>
-                </div>
-              </div>
-
-              <!-- Install -->
-              <div class="bg-gradient-to-r from-amber-600/10 to-orange-600/10 rounded-xl p-4 border border-amber-500/20">
-                <div class="flex flex-wrap items-center justify-between gap-4">
-                  <div class="code-block text-lg">
-                    <span class="text-slate-500">$</span> <span class="text-white">clawhub install</span> <span class="text-amber-400">roundtable</span>
-                  </div>
-                  <div class="text-sm text-slate-400">No extra API key needed • OpenClaw-native sub-agents</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-                <!-- ==================== CTA Section ==================== -->
-        <section class="mt-8 relative">
-          <div class="absolute inset-0 bg-gradient-to-r from-violet-600/10 via-cyan-600/10 to-emerald-600/10 rounded-3xl blur-xl"></div>
-          <div class="relative glass rounded-3xl p-10 sm:p-14 text-center">
-            <div class="text-6xl mb-6">🦞</div>
-            <h3 class="text-3xl sm:text-4xl font-bold mb-4">Ready to Supercharge Your Agent?</h3>
-            <p class="text-slate-400 text-lg max-w-xl mx-auto mb-8">
-              All skills are open source, well-documented, and install in seconds. Pick one or install them all.
-            </p>
-            <div class="inline-block code-block rounded-xl bg-slate-900/80 px-6 py-4 text-lg text-slate-200 border border-slate-700 mb-8">
-              <span class="text-violet-400">$</span> clawhub install <span class="text-cyan-400">&lt;skill-name&gt;</span>
-            </div>
-            <div class="flex flex-wrap justify-center gap-4">
-              <a href="https://clawhub.ai" target="_blank" rel="noreferrer" 
-                 class="inline-flex items-center gap-2 bg-gradient-to-r from-violet-600 to-indigo-600 px-6 py-3 rounded-full font-semibold text-white hover:scale-105 transition-transform">
-                Browse ClawHub
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
-              </a>
-              <a href="https://openclaw.ai" target="_blank" rel="noreferrer" 
-                 class="inline-flex items-center gap-2 glass px-6 py-3 rounded-full font-semibold hover:bg-white/10 transition-colors">
-                Get OpenClaw
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
-              </a>
-            </div>
-          </div>
-        </section>
-      </div>
-    </main>
-
-    <!-- Footer -->
-    <footer class="bg-slate-950 border-t border-slate-800/50">
-      <div class="max-w-7xl mx-auto px-6 py-14">
-        <div class="flex flex-col sm:flex-row items-center justify-between gap-8">
-          <div class="flex items-center gap-3">
-            <span class="text-3xl">🦞</span>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="hero-line"></div>
+    <p class="hero-eyebrow reveal">Open Source · Production Ready · One Command Install</p>
+    <h1 class="reveal">Skills that make<br>your agent <em>actually</em><br>useful</h1>
+    <p class="hero-desc reveal">Eleven battle-tested OpenClaw skills for intelligent search, voice synthesis, live sports, AI personas, proactive monitoring, and more. Built by Robby.</p>
+    <div class="hero-stats reveal">
+      <div class="hero-stat"><strong>11</strong><span>Published Skills</span></div>
+      <div class="hero-stat"><strong>50k+</strong><span>Downloads</span></div>
+      <div class="hero-stat"><strong>7</strong><span>Search Providers</span></div>
+      <div class="hero-stat"><strong>20</strong><span>AI Personas</span></div>
+    </div>
+  </header>
+
+  <main id="skills">
+
+    <!-- ====== web-search-plus ====== -->
+    <div class="section">
+      <p class="section-label reveal">Search & Discovery</p>
+      <h2 class="section-title reveal">Intelligent <em>search</em></h2>
+      <div class="divider reveal"></div>
+
+      <div class="skill reveal" id="web-search-plus">
+        <div class="skill-head">
+          <div class="skill-meta">
+            <span class="skill-icon">🔍</span>
             <div>
-              <div class="font-bold">Built with OpenClaw</div>
-              <div class="text-sm text-slate-500">The agent platform for builders</div>
+              <div style="display:flex;align-items:center;gap:.8rem;flex-wrap:wrap">
+                <span class="skill-name">web-search-plus</span>
+                <span class="skill-ver">v2.8.6</span>
+              </div>
+              <p style="margin-top:.3rem;font-size:.9rem">Unified web search with intelligent auto-routing across 7 providers</p>
             </div>
           </div>
-          
-          <div class="flex items-center gap-6">
-            <a href="https://github.com/robbyczgw-cla" target="_blank" rel="noreferrer" 
-               class="text-slate-400 hover:text-white transition-colors" title="GitHub">
-              <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
-            </a>
-            <a href="https://x.com/CamiAi__" target="_blank" rel="noreferrer" 
-               class="text-slate-400 hover:text-white transition-colors" title="X (Twitter)">
-              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-            </a>
-            <a href="https://www.clawhub.ai/u/robbyczgw-cla" target="_blank" rel="noreferrer" 
-               class="text-slate-400 hover:text-white transition-colors" title="ClawHub Profile">
-              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
-            </a>
-            <a href="https://openclaw.ai" target="_blank" rel="noreferrer" 
-               class="text-slate-400 hover:text-white transition-colors" title="OpenClaw">
-              <span class="text-2xl">🦞</span>
-            </a>
+        </div>
+        <p class="skill-desc">Auto-selects the best search provider based on query intent — Serper (Google), Tavily (deep research), Querit (multilingual AI), Exa (neural/semantic), Perplexity (AI answers), You.com (RAG), and SearXNG (privacy). Includes local caching, provider health tracking, and confidence scoring.</p>
+        <div class="skill-features">
+          <span class="skill-feat">7 Search Providers</span>
+          <span class="skill-feat">Auto-Routing</span>
+          <span class="skill-feat">Confidence Scoring</span>
+          <span class="skill-feat">Local Cache</span>
+          <span class="skill-feat">Health Tracking</span>
+          <span class="skill-feat">Multilingual</span>
+          <span class="skill-feat">Zero Config</span>
+        </div>
+        <div class="skill-code"><span style="color:#555">$</span> <span class="cmd">clawhub install</span> <span class="arg">web-search-plus</span></div>
+        <div class="skill-links" style="margin-top:1.2rem">
+          <a href="https://github.com/robbyczgw-cla/web-search-plus" target="_blank" rel="noreferrer" class="skill-link">GitHub</a>
+          <a href="https://www.clawhub.ai/robbyczgw-cla/web-search-plus" target="_blank" rel="noreferrer" class="skill-link primary">ClawHub →</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ====== topic-monitor ====== -->
+    <div class="section">
+      <p class="section-label reveal">Monitoring & Intelligence</p>
+      <h2 class="section-title reveal">Proactive, not <em>reactive</em></h2>
+      <div class="divider reveal"></div>
+
+      <div class="skills-grid">
+        <div class="skill featured reveal" id="topic-monitor">
+          <div class="skill-head">
+            <div class="skill-meta">
+              <span class="skill-icon">📡</span>
+              <div>
+                <div style="display:flex;align-items:center;gap:.8rem;flex-wrap:wrap">
+                  <span class="skill-name">topic-monitor</span>
+                  <span class="skill-ver">v1.5.0</span>
+                  <span class="skill-badge">★ DigitalOcean Featured</span>
+                </div>
+                <p style="margin-top:.3rem;font-size:.9rem">Monitor what matters. Get notified when it happens.</p>
+              </div>
+            </div>
+          </div>
+          <p class="skill-desc">Continuously monitors topics via web search and RSS feeds with AI-powered importance scoring. Smart alerts vs weekly digests. Featured in DigitalOcean's "What are OpenClaw Skills?" article. New in v1.5: RSS/Atom feeds, sentiment analysis, GitHub release monitoring, boolean filters, OPML import.</p>
+          <div class="skill-features">
+            <span class="skill-feat">RSS/Atom Feeds</span>
+            <span class="skill-feat">Sentiment Analysis</span>
+            <span class="skill-feat">AI Importance Scoring</span>
+            <span class="skill-feat">GitHub Releases</span>
+            <span class="skill-feat">Smart Alerts</span>
+            <span class="skill-feat">Weekly Digests</span>
+            <span class="skill-feat">Boolean Filters</span>
+            <span class="skill-feat">OPML Import</span>
+          </div>
+          <div class="skill-code"><span style="color:#555">$</span> <span class="cmd">clawhub install</span> <span class="arg">topic-monitor</span></div>
+          <div class="skill-links" style="margin-top:1.2rem">
+            <a href="https://github.com/robbyczgw-cla/topic-monitor" target="_blank" rel="noreferrer" class="skill-link">GitHub</a>
+            <a href="https://www.clawhub.ai/robbyczgw-cla/topic-monitor" target="_blank" rel="noreferrer" class="skill-link primary">ClawHub →</a>
           </div>
         </div>
-        
-        <div class="mt-10 pt-8 border-t border-slate-800/50 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-slate-500">
-          <div>© 2026 Robby • Made with ❤️ in the Clawiverse</div>
-          <div class="flex items-center gap-2">
-            <span class="relative flex h-2 w-2">
-              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-              <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-            </span>
-            All skills actively maintained
+
+        <div class="skill reveal" id="sports-ticker">
+          <div class="skill-head">
+            <div class="skill-meta">
+              <span class="skill-icon">⚽</span>
+              <div>
+                <span class="skill-name">sports-ticker</span>
+                <span class="skill-ver" style="margin-left:.8rem">v3.1.1</span>
+              </div>
+            </div>
+          </div>
+          <p class="skill-desc">Live sports alerts for Soccer, NFL, NBA, NHL, MLB, F1 and more. Real-time scoring with free ESPN API. Track any team from any major league worldwide.</p>
+          <div class="skill-features">
+            <span class="skill-feat">Live Scores</span>
+            <span class="skill-feat">Multi-League</span>
+            <span class="skill-feat">ESPN API</span>
+            <span class="skill-feat">Team Tracking</span>
+          </div>
+          <div class="skill-code"><span style="color:#555">$</span> <span class="cmd">clawhub install</span> <span class="arg">sports-ticker</span></div>
+          <div class="skill-links" style="margin-top:1.2rem">
+            <a href="https://github.com/robbyczgw-cla/sports-ticker" target="_blank" rel="noreferrer" class="skill-link">GitHub</a>
+            <a href="https://www.clawhub.ai/robbyczgw-cla/sports-ticker" target="_blank" rel="noreferrer" class="skill-link primary">ClawHub →</a>
           </div>
         </div>
       </div>
-    </footer>
-  </div>
+    </div>
 
-  <!-- Smooth scroll -->
+    <!-- ====== Memory & Reasoning ====== -->
+    <div class="section">
+      <p class="section-label reveal">Memory & Reasoning</p>
+      <h2 class="section-title reveal">Your agent <em>dreams</em></h2>
+      <div class="divider reveal"></div>
+
+      <div class="skills-duo">
+        <div class="skill reveal" id="lucid-dreamer">
+          <div class="skill-head">
+            <div class="skill-meta">
+              <span class="skill-icon">🧠</span>
+              <div>
+                <span class="skill-name">lucid-dreamer</span>
+                <span class="skill-ver" style="margin-left:.8rem">v0.4.1</span>
+              </div>
+            </div>
+          </div>
+          <p class="skill-desc">Nightly AI memory reasoning — your agent dreams while you sleep. Detects stale facts, unresolved todos, recurring problems, and forgotten decisions. Generates review reports with suggestions. You approve, it applies. Zero dependencies — no database, no embeddings, just a prompt and markdown files.</p>
+          <div class="skill-features">
+            <span class="skill-feat">Nightly Reviews</span>
+            <span class="skill-feat">Trend Detection</span>
+            <span class="skill-feat">Auto-Apply</span>
+            <span class="skill-feat">Zero Dependencies</span>
+            <span class="skill-feat">Per-Feature Config</span>
+          </div>
+          <div class="skill-code"><span style="color:#555">$</span> <span class="cmd">clawhub install</span> <span class="arg">lucid-dreamer</span></div>
+          <div class="skill-links" style="margin-top:1.2rem">
+            <a href="https://github.com/robbyczgw-cla/lucid-dreamer" target="_blank" rel="noreferrer" class="skill-link">GitHub</a>
+            <a href="https://www.clawhub.ai/robbyczgw-cla/lucid-dreamer" target="_blank" rel="noreferrer" class="skill-link primary">ClawHub →</a>
+          </div>
+        </div>
+
+        <div class="skill reveal" id="agent-chronicle">
+          <div class="skill-head">
+            <div class="skill-meta">
+              <span class="skill-icon">📔</span>
+              <div>
+                <span class="skill-name">agent-chronicle</span>
+                <span class="skill-ver" style="margin-left:.8rem">v0.7.0</span>
+              </div>
+            </div>
+          </div>
+          <p class="skill-desc">AI-powered diary generation — rich, reflective journal entries with Quote Hall of Fame, Curiosity Backlog, Decision Archaeology, and Relationship Evolution. New in v0.7: "On This Day" resurfacing, mood analytics, auto-generation via cron, and weekly digests.</p>
+          <div class="skill-features">
+            <span class="skill-feat">Daily Journals</span>
+            <span class="skill-feat">On This Day</span>
+            <span class="skill-feat">Mood Analytics</span>
+            <span class="skill-feat">Auto-Generation</span>
+            <span class="skill-feat">Weekly Digest</span>
+            <span class="skill-feat">PDF Export</span>
+            <span class="skill-feat">Quote Archive</span>
+          </div>
+          <div class="skill-code"><span style="color:#555">$</span> <span class="cmd">clawhub install</span> <span class="arg">agent-chronicle</span></div>
+          <div class="skill-links" style="margin-top:1.2rem">
+            <a href="https://github.com/robbyczgw-cla/agent-chronicle" target="_blank" rel="noreferrer" class="skill-link">GitHub</a>
+            <a href="https://www.clawhub.ai/robbyczgw-cla/agent-chronicle" target="_blank" rel="noreferrer" class="skill-link primary">ClawHub →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ====== AI & Voice ====== -->
+    <div class="section">
+      <p class="section-label reveal">AI & Voice</p>
+      <h2 class="section-title reveal">Personality <em>meets</em> presence</h2>
+      <div class="divider reveal"></div>
+
+      <div class="skills-duo">
+        <div class="skill reveal" id="personas">
+          <div class="skill-head">
+            <div class="skill-meta">
+              <span class="skill-icon">🎭</span>
+              <div>
+                <span class="skill-name">personas</span>
+                <span class="skill-ver" style="margin-left:.8rem">v2.2.6</span>
+              </div>
+            </div>
+          </div>
+          <p class="skill-desc">20 specialized AI personalities on demand. Switch mid-conversation. From Socratic philosopher to stand-up comedian, cyberpunk hacker to zen monk.</p>
+          <div class="skill-features">
+            <span class="skill-feat">20 Personas</span>
+            <span class="skill-feat">Mid-Chat Switch</span>
+            <span class="skill-feat">Lazy Loading</span>
+          </div>
+          <div class="skill-code"><span style="color:#555">$</span> <span class="cmd">clawhub install</span> <span class="arg">personas</span></div>
+          <div class="skill-links" style="margin-top:1.2rem">
+            <a href="https://github.com/robbyczgw-cla/clawdbot-personas" target="_blank" rel="noreferrer" class="skill-link">GitHub</a>
+            <a href="https://www.clawhub.ai/robbyczgw-cla/personas" target="_blank" rel="noreferrer" class="skill-link primary">ClawHub →</a>
+          </div>
+        </div>
+
+        <div class="skill reveal" id="elevenlabs-voices">
+          <div class="skill-head">
+            <div class="skill-meta">
+              <span class="skill-icon">🎙️</span>
+              <div>
+                <span class="skill-name">elevenlabs-voices</span>
+                <span class="skill-ver" style="margin-left:.8rem">v2.1.6</span>
+              </div>
+            </div>
+          </div>
+          <p class="skill-desc">High-quality voice synthesis with 18 personas, 32 languages, sound effects, batch processing, and voice design using ElevenLabs API.</p>
+          <div class="skill-features">
+            <span class="skill-feat">18 Voice Personas</span>
+            <span class="skill-feat">32 Languages</span>
+            <span class="skill-feat">Sound Effects</span>
+            <span class="skill-feat">Batch Mode</span>
+          </div>
+          <div class="skill-code"><span style="color:#555">$</span> <span class="cmd">clawhub install</span> <span class="arg">elevenlabs-voices</span></div>
+          <div class="skill-links" style="margin-top:1.2rem">
+            <a href="https://github.com/robbyczgw-cla/elevenlabs-voices" target="_blank" rel="noreferrer" class="skill-link">GitHub</a>
+            <a href="https://www.clawhub.ai/robbyczgw-cla/elevenlabs-voices" target="_blank" rel="noreferrer" class="skill-link primary">ClawHub →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ====== Conversation ====== -->
+    <div class="section">
+      <p class="section-label reveal">Conversation</p>
+      <h2 class="section-title reveal">Smarter <em>interactions</em></h2>
+      <div class="divider reveal"></div>
+
+      <div class="skills-duo">
+        <div class="skill reveal" id="smart-followups">
+          <div class="skill-head">
+            <div class="skill-meta">
+              <span class="skill-icon">💡</span>
+              <div>
+                <span class="skill-name">smart-followups</span>
+                <span class="skill-ver" style="margin-left:.8rem">v2.1.6</span>
+              </div>
+            </div>
+          </div>
+          <p class="skill-desc">Generate contextual follow-up suggestions after AI responses. Shows 3 clickable buttons — Quick, Deep Dive, Related — adapted to the conversation context.</p>
+          <div class="skill-features">
+            <span class="skill-feat">3 Suggestion Types</span>
+            <span class="skill-feat">Context-Aware</span>
+            <span class="skill-feat">Inline Buttons</span>
+          </div>
+          <div class="skill-code"><span style="color:#555">$</span> <span class="cmd">clawhub install</span> <span class="arg">smart-followups</span></div>
+          <div class="skill-links" style="margin-top:1.2rem">
+            <a href="https://github.com/robbyczgw-cla/smart-followups" target="_blank" rel="noreferrer" class="skill-link">GitHub</a>
+            <a href="https://www.clawhub.ai/robbyczgw-cla/smart-followups" target="_blank" rel="noreferrer" class="skill-link primary">ClawHub →</a>
+          </div>
+        </div>
+
+        <div class="skill reveal" id="roundtable">
+          <div class="skill-head">
+            <div class="skill-meta">
+              <span class="skill-icon">🏛️</span>
+              <div>
+                <span class="skill-name">roundtable</span>
+                <span class="skill-ver" style="margin-left:.8rem">v1.0.0</span>
+              </div>
+            </div>
+          </div>
+          <p class="skill-desc">Multi-agent debate council — spawns 3 specialized sub-agents (Scholar, Engineer, Muse) in parallel, then optional cross-examination to challenge assumptions and synthesize insights.</p>
+          <div class="skill-features">
+            <span class="skill-feat">3 Agent Roles</span>
+            <span class="skill-feat">Parallel Spawning</span>
+            <span class="skill-feat">Cross-Examination</span>
+            <span class="skill-feat">Configurable Models</span>
+          </div>
+          <div class="skill-code"><span style="color:#555">$</span> <span class="cmd">clawhub install</span> <span class="arg">roundtable</span></div>
+          <div class="skill-links" style="margin-top:1.2rem">
+            <a href="https://github.com/robbyczgw-cla/roundtable" target="_blank" rel="noreferrer" class="skill-link">GitHub</a>
+            <a href="https://www.clawhub.ai/robbyczgw-cla/roundtable" target="_blank" rel="noreferrer" class="skill-link primary">ClawHub →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ====== Data & Media ====== -->
+    <div class="section">
+      <p class="section-label reveal">Data & Media</p>
+      <h2 class="section-title reveal">External <em>sources</em></h2>
+      <div class="divider reveal"></div>
+
+      <div class="skills-duo">
+        <div class="skill reveal" id="youtube-apify-transcript">
+          <div class="skill-head">
+            <div class="skill-meta">
+              <span class="skill-icon">📺</span>
+              <div>
+                <span class="skill-name">youtube-apify-transcript</span>
+                <span class="skill-ver" style="margin-left:.8rem">v1.2.0</span>
+              </div>
+            </div>
+          </div>
+          <p class="skill-desc">Fetch YouTube transcripts via Apify API. Works from cloud IPs, bypasses bot detection. Local caching for free repeat requests. Batch mode supported.</p>
+          <div class="skill-features">
+            <span class="skill-feat">Cloud IP Compatible</span>
+            <span class="skill-feat">Local Cache</span>
+            <span class="skill-feat">Batch Mode</span>
+          </div>
+          <div class="skill-code"><span style="color:#555">$</span> <span class="cmd">clawhub install</span> <span class="arg">youtube-apify-transcript</span></div>
+          <div class="skill-links" style="margin-top:1.2rem">
+            <a href="https://github.com/robbyczgw-cla/youtube-apify-transcript" target="_blank" rel="noreferrer" class="skill-link">GitHub</a>
+            <a href="https://www.clawhub.ai/robbyczgw-cla/youtube-apify-transcript" target="_blank" rel="noreferrer" class="skill-link primary">ClawHub →</a>
+          </div>
+        </div>
+
+        <div class="skill reveal" id="x-apify">
+          <div class="skill-head">
+            <div class="skill-meta">
+              <span class="skill-icon">𝕏</span>
+              <div>
+                <span class="skill-name">x-apify</span>
+                <span class="skill-ver" style="margin-left:.8rem">v1.0.0</span>
+              </div>
+            </div>
+          </div>
+          <p class="skill-desc">Fetch X/Twitter data via Apify actors. Search tweets, get user profiles, retrieve specific tweets with replies. Local caching to save API costs.</p>
+          <div class="skill-features">
+            <span class="skill-feat">Tweet Search</span>
+            <span class="skill-feat">User Profiles</span>
+            <span class="skill-feat">Reply Threads</span>
+            <span class="skill-feat">Local Cache</span>
+          </div>
+          <div class="skill-code"><span style="color:#555">$</span> <span class="cmd">clawhub install</span> <span class="arg">x-apify</span></div>
+          <div class="skill-links" style="margin-top:1.2rem">
+            <a href="https://github.com/robbyczgw-cla/x-apify" target="_blank" rel="noreferrer" class="skill-link">GitHub</a>
+            <a href="https://www.clawhub.ai/robbyczgw-cla/x-apify" target="_blank" rel="noreferrer" class="skill-link primary">ClawHub →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <footer>
+    <p>Built by <a href="https://github.com/robbyczgw-cla" target="_blank" rel="noreferrer">Robby</a> 🦞 — OpenClaw Top Contributor</p>
+    <p><a href="https://clawhub.ai/u/robbyczgw-cla" target="_blank" rel="noreferrer">ClawHub Profile</a></p>
+  </footer>
+
   <script>
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        document.querySelector(this.getAttribute('href')).scrollIntoView({
-          behavior: 'smooth'
-        });
-      });
-    });
+    const obs=new IntersectionObserver((entries)=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target)}})},{threshold:.1});
+    document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+    function toggleTheme(){document.body.classList.toggle('light');const b=document.querySelector('.theme-toggle');const l=document.body.classList.contains('light');b.textContent=l?'🌙':'☀️';localStorage.setItem('theme',l?'light':'dark')}
+    if(localStorage.getItem('theme')==='light'){document.body.classList.add('light');document.querySelector('.theme-toggle').textContent='🌙'}
   </script>
 </body>
 </html>
